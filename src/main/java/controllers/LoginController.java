@@ -44,7 +44,19 @@ public class LoginController {
         } else {
             errorMessage.setText("Login Successful");
             errorMessage.setVisible(true);
-            // Load the next scene or dashboard here
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/user-profile-view.fxml"));
+                Parent profileRoot = loader.load();
+
+                // Inject user into the profile controller
+                UserProfileController profileController = loader.getController();
+                profileController.setUser(user);
+
+                Stage stage = (Stage) phoneField.getScene().getWindow();
+                stage.setScene(new Scene(profileRoot));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
     @FXML
