@@ -58,7 +58,7 @@ CREATE TABLE payments (
                           amount DECIMAL(10,2) NOT NULL,
                           payment_date DATETIME DEFAULT CURRENT_TIMESTAMP,
                           method VARCHAR(50),  -- e.g. 'credit_card', 'paypal', 'cash'
-                          status ENUM('payé', 'en_attente', 'échoué') DEFAULT 'en_attente',
+                          status ENUM('payé', 'en_attente', 'échoué', 'en_retard') DEFAULT 'en_attente',
                           FOREIGN KEY (booking_id) REFERENCES bookings(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
