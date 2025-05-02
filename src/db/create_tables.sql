@@ -47,8 +47,8 @@ CREATE TABLE bookings (
                           total_price DECIMAL(10,2),
                           status ENUM('en_attente', 'confirmée', 'annulée', 'terminée') DEFAULT 'en_attente',
                           created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                          FOREIGN KEY (user_id) REFERENCES users(id),
-                          FOREIGN KEY (vehicle_license_plate) REFERENCES vehicles(license_plate)
+                          FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+                          FOREIGN KEY (vehicle_license_plate) REFERENCES vehicles(license_plate) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Table: payments
@@ -59,7 +59,7 @@ CREATE TABLE payments (
                           payment_date DATETIME DEFAULT CURRENT_TIMESTAMP,
                           method VARCHAR(50),  -- e.g. 'credit_card', 'paypal', 'cash'
                           status ENUM('payé', 'en_attente', 'échoué') DEFAULT 'en_attente',
-                          FOREIGN KEY (booking_id) REFERENCES bookings(id)
+                          FOREIGN KEY (booking_id) REFERENCES bookings(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Table: reviews
@@ -70,8 +70,8 @@ CREATE TABLE reviews (
                          rating INT CHECK (rating BETWEEN 1 AND 5),
                          comment TEXT,
                          created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                         FOREIGN KEY (user_id) REFERENCES users(id),
-                         FOREIGN KEY (vehicle_license_plate) REFERENCES vehicles(license_plate)
+                         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+                         FOREIGN KEY (vehicle_license_plate) REFERENCES vehicles(license_plate) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Table: notifications
@@ -81,5 +81,5 @@ CREATE TABLE notifications (
                                message TEXT NOT NULL,
                                is_read BOOLEAN DEFAULT FALSE,
                                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                               FOREIGN KEY (user_id) REFERENCES users(id)
+                               FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
