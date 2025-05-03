@@ -5,11 +5,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 import entities.User;
+import services.UserService;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 import java.io.IOException;
 
@@ -24,9 +27,10 @@ public class UserProfileController {
     @FXML private Label createdAtLabel;
 
     private User loggedInUser;
+    private final UserService userService = new UserService();
 
     // Call this after loading the controller to inject the user
-    public void setUser(User user) {
+    public void setLoggedInUser(User user) {
         this.loggedInUser = user;
 
         // Set the values to the labels
@@ -66,4 +70,36 @@ public class UserProfileController {
             e.printStackTrace();
         }
     }
+    @FXML
+    private void handleDeleteAccount() {
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Confirm Deletion");
+        confirm.setHeaderText("Are you sure you want to delete your account?");
+        confirm.setContentText("This action cannot be undone.");
+
+        confirm.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                if (userService.deleteUser(this.loggedInUser.getId())) {
+                    Alert success = new Alert(Alert.AlertType.INFORMATION);
+                    success.setContentText("Your account has been deleted.");
+                    success.showAndWait();
+
+                    // Redirect to login
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/login-view.fxml"));
+                        Parent loginRoot = loader.load();
+                        Stage stage = (Stage) usernameLabel.getScene().getWindow(); // or any other element
+                        stage.setScene(new Scene(loginRoot));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Alert error = new Alert(Alert.AlertType.ERROR);
+                    error.setContentText("Error deleting account. Please try again.");
+                    error.show();
+                }
+            }
+        });
+    }
+
 }

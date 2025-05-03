@@ -36,24 +36,32 @@ public class LoginController {
         if (user == null) {
             errorMessage.setText("User Not Found");
             errorMessage.setVisible(true);
-
-        } else if (!user.getPassword().equals(password)){
+        } else if (!user.getPassword().equals(password)) {
             errorMessage.setText("Wrong Password");
             errorMessage.setVisible(true);
-
         } else {
-            errorMessage.setText("Login Successful");
-            errorMessage.setVisible(true);
+            errorMessage.setVisible(false);
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/user-profile-view.fxml"));
-                Parent profileRoot = loader.load();
+                FXMLLoader loader;
+                if ("admin".equals(user.getRole())) {
+                    loader = new FXMLLoader(getClass().getResource("/admin-view.fxml"));
+                } else {
+                    loader = new FXMLLoader(getClass().getResource("/user-profile-view.fxml"));
+                }
 
-                // Inject user into the profile controller
-                UserProfileController profileController = loader.getController();
-                profileController.setUser(user);
+                Parent root = loader.load();
+
+                // Optionally, pass the logged-in user to the controller
+                if ("admin".equals(user.getRole())) {
+                    AdminController adminController = loader.getController();
+                    adminController.setLoggedInAdmin(user); // You define this method
+                } else {
+                    UserProfileController userController = loader.getController();
+                    userController.setLoggedInUser(user);
+                }
 
                 Stage stage = (Stage) phoneField.getScene().getWindow();
-                stage.setScene(new Scene(profileRoot));
+                stage.setScene(new Scene(root));
             } catch (IOException e) {
                 e.printStackTrace();
             }
