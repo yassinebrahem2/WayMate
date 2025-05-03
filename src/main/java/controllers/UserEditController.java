@@ -76,7 +76,7 @@ public class UserEditController {
 
             // Optional: Pass back the current user
             UserProfileController controller = loader.getController();
-            controller.setUser(currentUser);
+            controller.setLoggedInUser(currentUser);
 
             Stage stage = (Stage) firstNameField.getScene().getWindow();
             stage.setScene(new Scene(profileRoot));

@@ -30,7 +30,7 @@ public class UserProfileController {
     private final UserService userService = new UserService();
 
     // Call this after loading the controller to inject the user
-    public void setUser(User user) {
+    public void setLoggedInUser(User user) {
         this.loggedInUser = user;
 
         // Set the values to the labels
