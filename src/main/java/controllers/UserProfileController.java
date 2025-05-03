@@ -27,7 +27,7 @@ public class UserProfileController {
     @FXML private Label createdAtLabel;
 
     private User loggedInUser;
-    private UserService userService = new UserService();
+    private final UserService userService = new UserService();
 
     // Call this after loading the controller to inject the user
     public void setUser(User user) {
