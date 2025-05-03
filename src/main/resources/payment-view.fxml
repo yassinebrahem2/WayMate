@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<VBox xmlns="http://javafx.com/javafx/8.0.171"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.PaymentController"
+      alignment="CENTER"
+      spacing="10"
+      style="-fx-padding: 20;">
+
+    <!-- Titre -->
+    <Label text="Gérer le paiement" style="-fx-font-size: 18px;" />
+
+    <!-- Champs pour la gestion du paiement -->
+    <TextField fx:id="idField" promptText="ID du paiement" />
+    <TextField fx:id="bookingIdField" promptText="ID de la réservation" />
+    <TextField fx:id="amountField" promptText="Montant (ex: 49.99)" />
+    <TextField fx:id="paymentDateField" promptText="Date du paiement (AAAA-MM-JJ HH:MM:SS)" />
+
+    <!-- ComboBox pour choisir la méthode de paiement (sans transfert bancaire) -->
+    <ComboBox fx:id="methodComboBox" promptText="Sélectionner la méthode de paiement">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="carte_bancaire" />
+                <String fx:value="paypal" />
+                <String fx:value="cash" />
+            </FXCollections>
+        </items>
+    </ComboBox>
+
+    <TextField fx:id="statusField" promptText="Statut (ex: payé, en attente, échoué, en retard)" />
+
+    <CheckBox fx:id="termsCheckBox" text="J'accepte les conditions d'utilisation" />
+
+    <HBox spacing="10">
+        <Button text="Ajouter" onAction="#handleAddPayment" />
+        <Button text="Modifier" onAction="#handleModifyPayment" />
+        <Button text="Supprimer" onAction="#handleDeletePayment" />
+        <Button text="Payer" onAction="#handlePayPayment" />
+    </HBox>
+
+    <Label fx:id="messageLabel" textFill="red" />
+
+    <!-- TableView pour afficher les paiements de la base de données -->
+    <TableView fx:id="paymentTableView" prefWidth="600" prefHeight="300">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID" prefWidth="100" />
+            <TableColumn fx:id="bookingIdColumn" text="ID de la réservation" prefWidth="100" />
+            <TableColumn fx:id="amountColumn" text="Montant" prefWidth="100" />
+            <TableColumn fx:id="paymentDateColumn" text="Date du paiement" prefWidth="150" />
+            <TableColumn fx:id="methodColumn" text="Méthode" prefWidth="100" />
+            <TableColumn fx:id="statusColumn" text="Statut" prefWidth="100" />
+        </columns>
+    </TableView>
+
+    <!-- Détails du paiement à afficher lors du paiement -->
+    <Label fx:id="paymentDetailsLabel" text="Détails du paiement" style="-fx-font-weight: bold;" />
+
+    <TextField fx:id="displayAmountField" promptText="Montant" editable="false" />
+    <TextField fx:id="displayMethodField" promptText="Méthode de paiement" editable="false" />
+
+    <!-- Champs pour la carte bancaire (visible uniquement si méthode = carte_bancaire) -->
+    <TextField fx:id="cardNumberField" promptText="Numéro de carte" visible="false" />
+    <PasswordField fx:id="cardPasswordField" promptText="Mot de passe de la carte" visible="false" />
+
+    <!-- Boutons pour confirmer ou annuler le paiement -->
+    <HBox spacing="10">
+        <Button text="Confirmer" onAction="#handleConfirmPayment" visible="false" fx:id="confirmButton" />
+        <Button text="Annuler" onAction="#handleCancelPayment" visible="false" fx:id="cancelButton" />
+    </HBox>
+
+    <!-- Nouveau Label pour afficher le message après confirmation -->
+    <Label fx:id="confirmationMessageLabel" text="" style="-fx-font-size: 16px; -fx-text-fill: green;" />
+</VBox>
