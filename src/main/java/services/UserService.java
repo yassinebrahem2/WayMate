@@ -81,4 +81,69 @@ public class UserService {
         user.setCreatedAt(rs.getString("created_at"));
         return user;
     }
+
+    // Update an existing user
+    public boolean updateUser(User user) {
+        String sql = "UPDATE users SET first_name = ?, last_name = ?, username = ?, email = ?, phone = ?, password = ?, role = ? WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, user.getFirstName());
+            stmt.setString(2, user.getLastName());
+            stmt.setString(3, user.getUsername());
+            stmt.setString(4, user.getEmail());
+            stmt.setString(5, user.getPhone());
+            stmt.setString(6, user.getPassword());
+            stmt.setString(7, user.getRole());
+            stmt.setInt(8, user.getId());
+
+            int affected = stmt.executeUpdate();
+            return affected > 0;
+        } catch (SQLException e) {
+            System.out.println("Error updating user: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // Delete a user by ID
+    public boolean deleteUser(int id) {
+        String sql = "DELETE FROM users WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            int affected = stmt.executeUpdate();
+            return affected > 0;
+        } catch (SQLException e) {
+            System.out.println("Error deleting user: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // Find user by username
+    public User findUserByUsername(String username) {
+        String sql = "SELECT * FROM users WHERE username = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return extractUserFromResultSet(rs);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error finding user by username: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public User findUserByPhone(String phone) {
+        String sql = "SELECT * FROM users WHERE phone = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, phone);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return extractUserFromResultSet(rs);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error finding user by phone: " + e.getMessage());
+        }
+        return null;
+    }
 }
