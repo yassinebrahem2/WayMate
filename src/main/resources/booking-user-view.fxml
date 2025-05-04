@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.UserBookingController">
+    <VBox alignment="CENTER" layoutX="100.0" layoutY="29.0" spacing="20.0" style="-fx-background-color: #FFFFFF; -fx-padding: 30; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 5);" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.79999999999995" AnchorPane.topAnchor="29.0">
+
+        <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #0D47A1;" text="Formulaire de Réservation" />
+
+        <!-- ID Utilisateur -->
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label style="-fx-font-weight: bold; -fx-text-fill: #0D47A1;" text="ID Utilisateur:" />
+            <TextField fx:id="idUserField" promptText="Entrez l'ID utilisateur" style="-fx-pref-width: 200; -fx-border-color: #2196F3; -fx-border-radius: 5; -fx-background-radius: 5;" />
+        </HBox>
+
+        <!-- Matricule -->
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label style="-fx-font-weight: bold; -fx-text-fill: #0D47A1;" text="Matricule:" />
+            <TextField fx:id="licenseplateField" promptText="Entrez le matricule" style="-fx-pref-width: 200; -fx-border-color: #2196F3; -fx-border-radius: 5; -fx-background-radius: 5;" />
+        </HBox>
+
+        <!-- Dates -->
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label style="-fx-font-weight: bold; -fx-text-fill: #0D47A1;" text="Date de Début:" />
+            <DatePicker fx:id="StartdateField" style="-fx-border-color: #2196F3; -fx-border-radius: 5; -fx-background-radius: 5;" />
+        </HBox>
+
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label style="-fx-font-weight: bold; -fx-text-fill: #0D47A1;" text="Date de Fin:" />
+            <DatePicker fx:id="endDateField" style="-fx-border-color: #2196F3; -fx-border-radius: 5; -fx-background-radius: 5;" />
+        </HBox>
+
+        <!-- Réduction -->
+        <HBox alignment="CENTER_LEFT" spacing="10" />
+
+        <!-- Boutons -->
+        <HBox alignment="CENTER" spacing="20">
+            <Button fx:id="addbooking" onAction="#handleAddBooking" style="-fx-background-color: #1976D2; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 8 20;" text="Ajouter" />
+        </HBox>
+    </VBox>
+
+
+</AnchorPane>

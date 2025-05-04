@@ -66,4 +66,11 @@ public class UserProfileController {
             e.printStackTrace();
         }
     }
+        private int connectedUserId;
+
+        public void setConnectedUserId(int id) {
+            this.connectedUserId = id;
+            // Load profile data for user
+        }
+
 }

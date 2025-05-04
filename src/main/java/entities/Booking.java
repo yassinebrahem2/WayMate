@@ -9,6 +9,15 @@ public class Booking {
     private double totalPrice;
     private String status; // 'en_attente', 'confirmée', 'annulée', 'terminée'
     private String createdAt;
+    private int connectedUserId;
+
+    public int getConnectedUserId() {
+        return connectedUserId;
+    }
+
+    public void setConnectedUserId(int connectedUserId) {
+        this.connectedUserId = connectedUserId;
+    }
 
     // Constructors
     public Booking() {}
@@ -23,6 +32,7 @@ public class Booking {
         this.totalPrice = totalPrice;
         this.status = status;
         this.createdAt = createdAt;
+
     }
 
     public Booking(int userId, String vehicleLicensePlate, String startTime, String endTime,
