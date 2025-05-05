@@ -53,8 +53,6 @@ public class UserBookingController {
             totalPrice = Double.parseDouble(rawPrice);
 
 
-
-
             if (licenseplate.isEmpty() || dateDebut == null || dateFin == null) {
                 showAlert(Alert.AlertType.ERROR, "Champs vides", "Veuillez remplir tous les champs requis.");
                 return;
@@ -92,8 +90,6 @@ public class UserBookingController {
             showAlert(Alert.AlertType.ERROR, "Erreur", "Une erreur s'est produite : " + e.getMessage());
         }
     }
-
-
 
 
     // Helper method to show alert dialog

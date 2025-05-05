@@ -9,9 +9,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import services.BookingService;
-import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.IntegerStringConverter;
+import services.BookingService;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -77,6 +77,7 @@ public class AdminEditBookingController {
         alert.show();
 
     }
+
     @FXML
     void initialize() {
         BookingService bookingService = new BookingService();
@@ -138,9 +139,6 @@ public class AdminEditBookingController {
             System.out.println("Erreur de chargement : " + e.getMessage());
         }
     }
-
-
-
 
 
 }

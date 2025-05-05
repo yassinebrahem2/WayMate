@@ -33,7 +33,7 @@ public class Main {
         updatedBooking.setEndTime("2025-05-10 12:00:00");
         updatedBooking.setTotalPrice(50.0);
         updatedBooking.setStatus("confirmée");
-        try{
+        try {
             //bookingService.addBooking(booking);
             //bookingService.deleteBooking(10);
             bookingService.updateBooking(updatedBooking);

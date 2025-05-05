@@ -46,7 +46,7 @@ public class VehicleService {
         String query = "SELECT * FROM vehicles WHERE license_plate = ?";
 
         try (
-             PreparedStatement pstmt = connection.prepareStatement(query)) {
+                PreparedStatement pstmt = connection.prepareStatement(query)) {
 
             pstmt.setString(1, licensePlate);
 
@@ -68,8 +68,8 @@ public class VehicleService {
         String query = "SELECT * FROM vehicles";
 
         try (
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+                Statement stmt = connection.createStatement();
+                ResultSet rs = stmt.executeQuery(query)) {
 
             while (rs.next()) {
                 vehicles.add(mapResultSetToVehicle(rs));
@@ -113,7 +113,7 @@ public class VehicleService {
         String query = "DELETE FROM vehicles WHERE license_plate = ?";
 
         try (
-             PreparedStatement pstmt = connection.prepareStatement(query)) {
+                PreparedStatement pstmt = connection.prepareStatement(query)) {
 
             pstmt.setString(1, licensePlate);
 
@@ -131,7 +131,7 @@ public class VehicleService {
         String query = "SELECT * FROM vehicles WHERE type = ?";
 
         try (
-             PreparedStatement pstmt = connection.prepareStatement(query)) {
+                PreparedStatement pstmt = connection.prepareStatement(query)) {
 
             pstmt.setString(1, type);
 
@@ -153,7 +153,7 @@ public class VehicleService {
         String query = "SELECT * FROM vehicles WHERE status = ?";
 
         try (
-             PreparedStatement pstmt = connection.prepareStatement(query)) {
+                PreparedStatement pstmt = connection.prepareStatement(query)) {
 
             pstmt.setString(1, status);
 
