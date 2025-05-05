@@ -66,4 +66,11 @@ public class UserProfileController {
             e.printStackTrace();
         }
     }
+
+    public void setLoggedInUser(User user) {
+    }
+
+    public void handleDeleteAccount(ActionEvent actionEvent) {
+
+    }
 }

@@ -17,7 +17,7 @@ import java.util.List;
 
 public class UserBookingListController {
     @FXML
-    private TableView<Booking> bookingTable;
+    private TableView<Booking> bookingTableUser;
 
     @FXML
     private TableColumn<Booking, String> colEndTime;
@@ -45,7 +45,7 @@ public class UserBookingListController {
         colTotalPrice.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
 
         // Load bookings for current user
-        loadUserBookings();
+        //loadUserBookings();
     }
 
     private int connectedUserId;
@@ -61,19 +61,17 @@ public class UserBookingListController {
         BookingService bookingService = new BookingService();
         List<Booking> userBookings = bookingService.getBookingsByUserId(connectedUserId);
         ObservableList<Booking> bookingList = FXCollections.observableArrayList(userBookings);
-        bookingTable.setItems(bookingList);
+        bookingTableUser.setItems(bookingList);
     }
     @FXML
     private void handleBackToProfile() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/user-profile-view.fxml")); // ✅ Correct path
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/user-profile-view.fxml")); //
             Parent root = loader.load();
 
-            // OPTIONAL: pass user ID to user profile controller
-            // UserProfileController controller = loader.getController();
-            // controller.setConnectedUserId(connectedUserId);
 
-            bookingTable.getScene().setRoot(root);
+
+            bookingTableUser.getScene().setRoot(root);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -85,14 +83,14 @@ public class UserBookingListController {
 
     @FXML
     private void handleDeleteBooking() {
-        Booking selectedBooking = bookingTable.getSelectionModel().getSelectedItem();
+        Booking selectedBooking = bookingTableUser.getSelectionModel().getSelectedItem();
 
         if (selectedBooking != null) {
             BookingService bookingService = new BookingService();
             boolean success = bookingService.deleteBookingById(selectedBooking.getId());
 
             if (success) {
-                bookingTable.getItems().remove(selectedBooking); // update UI
+                bookingTableUser.getItems().remove(selectedBooking); // update UI
                 System.out.println("Booking deleted successfully.");
             } else {
                 System.out.println("Failed to delete booking.");

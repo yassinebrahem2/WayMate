@@ -14,7 +14,7 @@
         <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #0D47A1;" text="Mes Réservations" />
 
         <!-- TableView -->
-        <TableView fx:id="bookingTable" prefHeight="390.0" prefWidth="754.0">
+        <TableView fx:id="bookingTableUser" prefHeight="390.0" prefWidth="754.0">
             <columns>
                 <TableColumn fx:id="colLicensePlate" prefWidth="150.0" text="Matricule" />
                 <TableColumn fx:id="colStartTime" prefWidth="180.0" text="Date Début" />
