@@ -20,7 +20,8 @@ public class Booking {
     }
 
     // Constructors
-    public Booking() {}
+    public Booking() {
+    }
 
     public Booking(int id, int userId, String vehicleLicensePlate, String startTime, String endTime,
                    double totalPrice, String status, String createdAt) {

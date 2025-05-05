@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.paint.Color?>
-
-<AnchorPane prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.VehiculeMainController">
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.VehiculeMainController">
     <children>
         <BorderPane prefHeight="900.0" prefWidth="1600.0" styleClass="root">
             <top>
@@ -15,26 +13,29 @@
                     <children>
                         <Label text="Gestion des Véhicules" styleClass="header-title">
                             <VBox.margin>
-                                <Insets top="10.0" />
+                                <Insets top="10.0"/>
                             </VBox.margin>
                         </Label>
                         <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="1600.0" spacing="15.0">
                             <children>
-                                <Button mnemonicParsing="false" onAction="#addVehicle" prefHeight="40.0" prefWidth="180.0"
-                                        styleClass="button, add-button" text="Ajouter un Véhicule" />
-                                <Button mnemonicParsing="false" onAction="#delVehicle" prefHeight="40.0" prefWidth="180.0"
-                                        styleClass="button, delete-button" text="Supprimer un Véhicule" />
+                                <Button mnemonicParsing="false" onAction="#addVehicle" prefHeight="40.0"
+                                        prefWidth="180.0"
+                                        styleClass="button, add-button" text="Ajouter un Véhicule"/>
+                                <Button mnemonicParsing="false" onAction="#delVehicle" prefHeight="40.0"
+                                        prefWidth="180.0"
+                                        styleClass="button, delete-button" text="Supprimer un Véhicule"/>
                                 <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="180.0"
-                                        styleClass="button, details-button" text="Détails" />
-                                <TextField fx:id="searchField" promptText="Rechercher un véhicule..." prefHeight="40.0" prefWidth="300.0"
+                                        styleClass="button, details-button" text="Détails"/>
+                                <TextField fx:id="searchField" promptText="Rechercher un véhicule..." prefHeight="40.0"
+                                           prefWidth="300.0"
                                            styleClass="search-field">
                                     <HBox.margin>
-                                        <Insets left="50.0" />
+                                        <Insets left="50.0"/>
                                     </HBox.margin>
                                 </TextField>
                             </children>
                             <padding>
-                                <Insets bottom="15.0" left="20.0" right="20.0" top="5.0" />
+                                <Insets bottom="15.0" left="20.0" right="20.0" top="5.0"/>
                             </padding>
                         </HBox>
                     </children>
@@ -43,37 +44,38 @@
             <center>
                 <VBox spacing="15.0" styleClass="content-container" BorderPane.alignment="CENTER">
                     <BorderPane.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
                     </BorderPane.margin>
                     <children>
                         <HBox alignment="CENTER">
                             <children>
                                 <Label text="Liste des Véhicules" styleClass="section-title" textAlignment="CENTER">
                                     <font>
-                                        <Font name="System Bold" size="20.0" />
+                                        <Font name="System Bold" size="20.0"/>
                                     </font>
                                 </Label>
                             </children>
                         </HBox>
                         <TableView fx:id="vehiclesTable" prefHeight="750.0" prefWidth="1560.0">
                             <columns>
-                                <TableColumn fx:id="licensePlateColumn" prefWidth="160.0" text="Plaque d'immatriculation" />
-                                <TableColumn fx:id="typeColumn" prefWidth="120.0" text="Type" />
-                                <TableColumn fx:id="brandColumn" prefWidth="200.0" text="Marque" />
-                                <TableColumn fx:id="modelColumn" prefWidth="200.0" text="Modèle" />
-                                <TableColumn fx:id="yearColumn" prefWidth="100.0" text="Année" />
-                                <TableColumn fx:id="statusColumn" prefWidth="150.0" text="Statut" />
-                                <TableColumn fx:id="priceColumn" prefWidth="120.0" text="Prix/heure" />
-                                <TableColumn fx:id="actionsColumn" prefWidth="200.0" text="Actions" />
+                                <TableColumn fx:id="licensePlateColumn" prefWidth="160.0"
+                                             text="Plaque d'immatriculation"/>
+                                <TableColumn fx:id="typeColumn" prefWidth="120.0" text="Type"/>
+                                <TableColumn fx:id="brandColumn" prefWidth="200.0" text="Marque"/>
+                                <TableColumn fx:id="modelColumn" prefWidth="200.0" text="Modèle"/>
+                                <TableColumn fx:id="yearColumn" prefWidth="100.0" text="Année"/>
+                                <TableColumn fx:id="statusColumn" prefWidth="150.0" text="Statut"/>
+                                <TableColumn fx:id="priceColumn" prefWidth="120.0" text="Prix/heure"/>
+                                <TableColumn fx:id="actionsColumn" prefWidth="200.0" text="Actions"/>
                             </columns>
                         </TableView>
                         <HBox alignment="CENTER_RIGHT" spacing="10.0">
                             <children>
-                                <Label text="Nombre total de véhicules: " styleClass="summary-text" />
-                                <Label text="0" fx:id="totalVehiclesLabel" styleClass="count-value" />
+                                <Label text="Nombre total de véhicules: " styleClass="summary-text"/>
+                                <Label text="0" fx:id="totalVehiclesLabel" styleClass="count-value"/>
                             </children>
                             <padding>
-                                <Insets right="10.0" />
+                                <Insets right="10.0"/>
                             </padding>
                         </HBox>
                     </children>
@@ -84,7 +86,7 @@
                     <children>
                         <Label text="© 2025 Système de Gestion de Véhicules" styleClass="footer-text">
                             <HBox.margin>
-                                <Insets right="20.0" />
+                                <Insets right="20.0"/>
                             </HBox.margin>
                         </Label>
                     </children>

@@ -1,20 +1,20 @@
 package services;
 
 import entities.Booking;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import utils.DatabaseConnection;
+
 import java.sql.*;
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class BookingService {
     private Connection connection;
-    public BookingService() { connection = DatabaseConnection.getInstance().getConnection(); }
+
+    public BookingService() {
+        connection = DatabaseConnection.getInstance().getConnection();
+    }
+
     public void addBooking(Booking booking) throws SQLException {
         String sql = "INSERT INTO bookings (user_id, vehicle_license_plate, start_time, end_time, total_price, status) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = connection.prepareStatement(sql);
@@ -117,9 +117,6 @@ public class BookingService {
 
         return bookings;
     }
-
-
-
 
 
 }

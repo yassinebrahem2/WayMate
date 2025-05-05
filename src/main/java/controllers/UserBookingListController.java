@@ -11,7 +11,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import services.BookingService;
 
-import java.awt.print.Book;
 import java.io.IOException;
 import java.util.List;
 
@@ -49,6 +48,7 @@ public class UserBookingListController {
     }
 
     private int connectedUserId;
+
     public void setConnectedUserId(int connectedUserId) {
         this.connectedUserId = connectedUserId;
         loadUserBookings(); // Optionally trigger data loading here
@@ -63,12 +63,12 @@ public class UserBookingListController {
         ObservableList<Booking> bookingList = FXCollections.observableArrayList(userBookings);
         bookingTableUser.setItems(bookingList);
     }
+
     @FXML
     private void handleBackToProfile() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/user-profile-view.fxml")); //
             Parent root = loader.load();
-
 
 
             bookingTableUser.getScene().setRoot(root);
@@ -77,8 +77,6 @@ public class UserBookingListController {
             e.printStackTrace();
         }
     }
-
-
 
 
     @FXML

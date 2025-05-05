@@ -9,7 +9,8 @@ public class Payment {
     private String status;      // 'payé', 'en_attente', 'échoué'
 
     // Constructors
-    public Payment() {}
+    public Payment() {
+    }
 
     public Payment(int id, int bookingId, double amount, String paymentDate, String method, String status) {
         this.id = id;
