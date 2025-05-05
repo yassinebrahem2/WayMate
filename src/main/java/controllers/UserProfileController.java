@@ -67,10 +67,7 @@ public class UserProfileController {
         }
     }
 
+
     public void setLoggedInUser(User user) {
-    }
-
-    public void handleDeleteAccount(ActionEvent actionEvent) {
-
     }
 }
