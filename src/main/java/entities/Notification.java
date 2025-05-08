@@ -8,7 +8,8 @@ public class Notification {
     private String createdAt; // Consider using LocalDateTime in real projects
 
     // Constructors
-    public Notification() {}
+    public Notification() {
+    }
 
     public Notification(int id, int userId, String message, boolean isRead, String createdAt) {
         this.id = id;

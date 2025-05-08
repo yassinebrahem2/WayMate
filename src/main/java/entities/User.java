@@ -12,7 +12,8 @@ public class User {
     private String createdAt;
 
     // Constructors
-    public User() {}
+    public User() {
+    }
 
     public User(int id, String firstName, String lastName, String username, String email, String phone, String password, String role, String createdAt) {
         this.id = id;

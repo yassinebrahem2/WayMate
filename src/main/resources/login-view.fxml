@@ -3,18 +3,19 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
-
-<VBox alignment="CENTER" spacing="15.0" style="-fx-background-color: #f0f4f8;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="controllers.LoginController">
+<VBox alignment="CENTER" spacing="15.0" style="-fx-background-color: #f0f4f8;" xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
     <padding>
-        <Insets top="40" right="30" bottom="40" left="30"/>
+        <Insets bottom="40" left="30" right="30" top="40"/>
     </padding>
 
-    <Label text="WayMate Login" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+    <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="WayMate Login"/>
 
-    <TextField fx:id="usernameField" promptText="Username or Email" />
-    <PasswordField fx:id="passwordField" promptText="Password" />
+    <TextField fx:id="phoneField" promptText="Phone Number"/>
+    <PasswordField fx:id="passwordField" promptText="Password"/>
 
-    <Button text="Login" onAction="#handleLogin" prefWidth="150"/>
+    <Button onAction="#handleLogin" prefWidth="150" text="Login"/>
+    <Button onAction="#goToRegister" prefWidth="150" text="Register"/>
 
-    <Label fx:id="errorMessage" textFill="red" visible="false" />
+    <Label fx:id="errorMessage" textFill="red" visible="false"/>
 </VBox>

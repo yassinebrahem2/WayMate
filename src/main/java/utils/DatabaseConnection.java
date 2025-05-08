@@ -14,18 +14,18 @@ public class DatabaseConnection {
     private static DatabaseConnection instance;
 
     // Private constructor to prevent instantiation
-    private DatabaseConnection(){
-        try{
+    private DatabaseConnection() {
+        try {
             connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
             System.out.println("Connection established");
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
     }
 
     // Singleton access
-    public static DatabaseConnection getInstance(){
-        if(instance == null) {
+    public static DatabaseConnection getInstance() {
+        if (instance == null) {
             instance = new DatabaseConnection();
         }
         return instance;
