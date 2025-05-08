@@ -6,11 +6,10 @@ import services.PaymentService;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        // Create a user object using the constructor
+        // Création d'un utilisateur fictif (non utilisé ici, mais utile dans un scénario complet)
         User user = new User(
                 "Alice",
                 "Smith",
@@ -21,40 +20,38 @@ public class Main {
                 "client"
         );
 
-        // Print the user object
-        System.out.println(user);
+        System.out.println("Utilisateur : " + user);
 
-        // Create a PaymentService object to interact with the database
         PaymentService paymentService = new PaymentService();
 
-        // Example test data for a Payment object
+        // Création d’un nouveau paiement
         Payment payment = new Payment(
-                0,
-                2,                            // bookingId
-                150.0,                        // amount
-                LocalDateTime.now(),          // paymentDate (LocalDateTime object)
-                "carte_bancaire",             // payment method
-                "en_attente"                  // initial status
+                0,                    // ID (auto-incrémenté)
+                2,                    // bookingId
+                150.0,                // montant
+                null,                // date de paiement (sera définie automatiquement)
+                "carte_bancaire",    // méthode de paiement
+                "en_attente"         // statut initial
         );
 
-        // Updating the payment data
-        payment.setAmount(150);  // New amount
-        payment.setStatus("payé");  // New status
-        payment.setPaymentDate(LocalDateTime.now());  // Set current payment date (LocalDateTime)
-
         try {
-            // Try updating the payment
-            paymentService.updatePayment(payment, payment.getId());
-            System.out.println("Paiement mis à jour avec succès!");
+            // Ajout du paiement
+            paymentService.addPayment(payment);
 
-            // Calculate total amount (if needed)
-            double calculatedAmount = paymentService.calculatePayment(List.of(150.0));  // Use List of Double
+            // Récupération de l'ID généré
+            int paymentId = paymentService.getLastInsertedPaymentId();
+            payment.setId(paymentId);
 
-            // Add payment to the database
-            paymentService.addPayment(payment, calculatedAmount);
+            // Simuler un paiement effectué (status = "payé")
+            payment.setStatus("payé");
 
-            // Check payment status
+            // La date sera mise à jour automatiquement dans updatePayment() si status == "payé"
+            paymentService.updatePayment(payment, paymentId);
+            System.out.println("Paiement mis à jour avec succès !");
+
+            // Affichage du statut final
             System.out.println("Statut du paiement : " + paymentService.getStatus(payment));
+
         } catch (SQLException e) {
             System.out.println("Erreur lors de l'opération de paiement : " + e.getMessage());
         }

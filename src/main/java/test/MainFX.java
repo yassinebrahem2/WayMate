@@ -12,7 +12,7 @@ public class MainFX extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainFX.class.getResource("/payment-view.fxml"));
-        Scene scene = new Scene((Parent) fxmlLoader.load(), 720, 720);
+        Scene scene = new Scene((Parent) fxmlLoader.load(), 900, 800);
         stage.setTitle("Paiement");
         stage.setScene(scene);
         stage.show();
