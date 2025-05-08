@@ -36,6 +36,8 @@ public class UserBookingListController {
 
     @FXML
     public void initialize() {
+        bookingTableUser.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
         // Setup column bindings
         colLicensePlate.setCellValueFactory(new PropertyValueFactory<>("vehicleLicensePlate"));
         colStartTime.setCellValueFactory(new PropertyValueFactory<>("startTime"));

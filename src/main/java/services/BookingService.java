@@ -194,6 +194,23 @@ public class BookingService {
     }
 
 
+    public void updateBookingDates(Booking booking) throws SQLException {
+        String sql = "UPDATE bookings SET start_time = ?, end_time = ? WHERE id = ?";
+
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setTimestamp(1, Timestamp.valueOf(booking.getStartTime()));
+            stmt.setTimestamp(2, Timestamp.valueOf(booking.getEndTime()));
+            stmt.setInt(3, booking.getId());
+
+            stmt.executeUpdate();
+            System.out.println("Booking ID " + booking.getId() + " updated successfully.");
+        }
+    }
+
+
+
 
 
 

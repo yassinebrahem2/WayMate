@@ -60,21 +60,44 @@ public class BookingAdminCalendarController {
         try {
             List<Booking> bookings = bookingService.getAllBookings();
             for (Booking booking : bookings) {
-                LocalDateTime start = booking.getStartTime();
-                LocalDateTime end = booking.getEndTime();
+                // Vérifier si la réservation est confirmée (selon le statut de la réservation)
+                if ("confirmée".equalsIgnoreCase(booking.getStatus())) {  // Remplacez "confirmed" par le statut exact utilisé dans votre système
+                    LocalDateTime start = booking.getStartTime();
+                    LocalDateTime end = booking.getEndTime();
 
-                Entry<String> entry = new Entry<>(booking.getVehicleLicensePlate());
-                entry.setInterval(start, end);
-                entry.setLocation("Booking ID: " + booking.getId());
-                entry.setTitle("Plate: " + booking.getVehicleLicensePlate());
-                entry.setTitle("Status: " + booking.getStatus() + "\nPrice: " + booking.getTotalPrice());
+                    Entry<String> entry = new Entry<>(booking.getVehicleLicensePlate());
+                    entry.setInterval(start, end);
+                    entry.setLocation("Booking ID: " + booking.getId());
+                    entry.setTitle("Status: " + booking.getStatus() + "\nPrice: " + booking.getTotalPrice());
 
-                calendar.addEntry(entry);
+                    // Ajouter l'entrée au calendrier
+                    calendar.addEntry(entry);
+
+                    // Écouter les modifications d'intervalle
+                    entry.intervalProperty().addListener((obs, oldInterval, newInterval) -> {
+                        try {
+                            Booking updatedBooking = new Booking();
+                            updatedBooking.setId(booking.getId());
+                            updatedBooking.setStartTime(entry.getStartAsLocalDateTime());
+                            updatedBooking.setEndTime(entry.getEndAsLocalDateTime());
+
+                            bookingService.updateBookingDates(updatedBooking); // Méthode à implémenter dans BookingService
+                            System.out.println("Booking updated in database: ID = " + booking.getId());
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    });
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+
+
+
+
 
     @FXML
     private void handleAddBooking() {
