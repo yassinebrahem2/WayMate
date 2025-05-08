@@ -1,6 +1,9 @@
 package test;
 
-import controllers.UserBookingController;
+//import controllers.AdminEditBookingController;
+
+//import controllers.BookingAdminCalendarController;
+import controllers.BookingAdminCalendarController;
 import entities.User;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -23,13 +26,13 @@ public class MainFX extends Application {
             return;
         }
 
+
         // Load the booking user view
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/booking-user-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/booking-admin-calendar.fxml"));
         Parent root = fxmlLoader.load();
 
-        // Retrieve the controller and pass the connected user's ID
-        UserBookingController controller = fxmlLoader.getController();
-        controller.setConnectedUserId(loggedInUser.getId()); // Pass the logged-in user's ID to the controller
+        BookingAdminCalendarController controller = fxmlLoader.getController();
+        //controller.setConnectedUserId(loggedInUser.getId()); // Pass the logged-in user's ID to the controller
 // Débogage
 
         // Set up the scene and show the stage
@@ -38,6 +41,7 @@ public class MainFX extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
 
     public static void main(String[] args) {
         launch();

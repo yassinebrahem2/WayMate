@@ -5,6 +5,8 @@ import entities.User;
 import services.BookingService;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class Main {
@@ -29,8 +31,11 @@ public class Main {
         updatedBooking.setId(1);
         updatedBooking.setUserId(2);
         updatedBooking.setVehicleLicensePlate("CC456DD");
-        updatedBooking.setStartTime("2025-05-10 10:00:00");
-        updatedBooking.setEndTime("2025-05-10 12:00:00");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        updatedBooking.setStartTime(LocalDateTime.parse("2025-05-10 10:00:00", formatter));
+        updatedBooking.setEndTime(LocalDateTime.parse("2025-05-10 12:00:00", formatter));
+
         updatedBooking.setTotalPrice(50.0);
         updatedBooking.setStatus("confirmée");
         try {

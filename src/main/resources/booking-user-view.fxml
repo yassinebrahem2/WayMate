@@ -47,12 +47,26 @@
                 <DatePicker fx:id="StartdateField"
                             style="-fx-border-color: #2196F3; -fx-border-radius: 5; -fx-background-radius: 5;"/>
             </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Label style="-fx-font-weight: bold; -fx-text-fill: #0D47A1;" text="Heure Début:"/>
+                <ComboBox fx:id="startHourCombo" prefWidth="60"/>
+                <Label text=":"/>
+                <ComboBox fx:id="startMinuteCombo" prefWidth="60"/>
+            </HBox>
+
 
             <HBox alignment="CENTER_LEFT" spacing="10">
                 <Label style="-fx-font-weight: bold; -fx-text-fill: #0D47A1;" text="Date de Fin:"/>
                 <DatePicker fx:id="endDateField"
                             style="-fx-border-color: #2196F3; -fx-border-radius: 5; -fx-background-radius: 5;"/>
             </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Label style="-fx-font-weight: bold; -fx-text-fill: #0D47A1;" text="Heure Fin:"/>
+                <ComboBox fx:id="endHourCombo" prefWidth="60"/>
+                <Label text=":"/>
+                <ComboBox fx:id="endMinuteCombo" prefWidth="60"/>
+            </HBox>
+
 
             <!-- Prix Total -->
             <HBox alignment="CENTER_LEFT" spacing="10">

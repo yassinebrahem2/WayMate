@@ -1,15 +1,32 @@
 package entities;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 public class Booking {
     private int id;
     private int userId;
     private String vehicleLicensePlate;
-    private String startTime; // Use java.time.LocalDateTime in real apps
-    private String endTime;
+    private LocalDateTime startTime; // Use java.time.LocalDateTime in real apps
+    private LocalDateTime endTime;
     private double totalPrice;
     private String status; // 'en_attente', 'confirmée', 'annulée', 'terminée'
-    private String createdAt;
+    private LocalDateTime createdAt;
     private int connectedUserId;
+
+    public Booking(int id, int userId, String vehicleLicensePlate, Timestamp startTime, Timestamp endTime, double totalPrice, String status) {
+        this.id = id;
+        this.userId = userId;
+        this.vehicleLicensePlate = vehicleLicensePlate;
+        this.startTime = startTime.toLocalDateTime();
+        this.endTime = endTime.toLocalDateTime();
+        this.totalPrice = totalPrice;
+        this.status = status;
+        this.createdAt = LocalDateTime.now();
+
+
+
+    }
 
     public int getConnectedUserId() {
         return connectedUserId;
@@ -23,8 +40,8 @@ public class Booking {
     public Booking() {
     }
 
-    public Booking(int id, int userId, String vehicleLicensePlate, String startTime, String endTime,
-                   double totalPrice, String status, String createdAt) {
+    public Booking(int id, int userId, String vehicleLicensePlate, LocalDateTime startTime, LocalDateTime endTime,
+                   double totalPrice, String status, LocalDateTime createdAt) {
         this.id = id;
         this.userId = userId;
         this.vehicleLicensePlate = vehicleLicensePlate;
@@ -36,7 +53,7 @@ public class Booking {
 
     }
 
-    public Booking(int userId, String vehicleLicensePlate, String startTime, String endTime,
+    public Booking(int userId, String vehicleLicensePlate, LocalDateTime startTime, LocalDateTime endTime,
                    double totalPrice, String status) {
         this.userId = userId;
         this.vehicleLicensePlate = vehicleLicensePlate;
@@ -71,19 +88,19 @@ public class Booking {
         this.vehicleLicensePlate = vehicleLicensePlate;
     }
 
-    public String getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 
@@ -103,11 +120,11 @@ public class Booking {
         this.status = status;
     }
 
-    public String getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -125,4 +142,6 @@ public class Booking {
                 ", createdAt='" + createdAt + '\'' +
                 '}';
     }
+
+
 }

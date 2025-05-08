@@ -4,6 +4,9 @@ import entities.Booking;
 import utils.DatabaseConnection;
 
 import java.sql.*;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,13 +18,39 @@ public class BookingService {
         connection = DatabaseConnection.getInstance().getConnection();
     }
 
+
     public void addBooking(Booking booking) throws SQLException {
+        // Step 1: Retrieve price_per_hour from vehicles table
+        String getPriceSql = "SELECT price_per_hour FROM vehicles WHERE license_plate = ?";
+        PreparedStatement priceStmt = connection.prepareStatement(getPriceSql);
+        priceStmt.setString(1, booking.getVehicleLicensePlate());
+        ResultSet priceRs = priceStmt.executeQuery();
+
+        double pricePerHour = 0.0;
+        if (priceRs.next()) {
+            pricePerHour = priceRs.getDouble("price_per_hour");
+        } else {
+            throw new SQLException("Vehicle not found: " + booking.getVehicleLicensePlate());
+        }
+
+        priceRs.close();
+        priceStmt.close();
+
+        // Step 2: Calculate duration
+        Duration duration = Duration.between(booking.getStartTime(), booking.getEndTime());
+        double durationHours = duration.toMinutes() / 60.0;
+
+        // Step 3: Calculate total price
+        double totalPrice = durationHours * pricePerHour;
+        booking.setTotalPrice(totalPrice);
+
         String sql = "INSERT INTO bookings (user_id, vehicle_license_plate, start_time, end_time, total_price, status) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = connection.prepareStatement(sql);
         stmt.setInt(1, booking.getUserId());
         stmt.setString(2, booking.getVehicleLicensePlate());
-        stmt.setString(3, booking.getStartTime());
-        stmt.setString(4, booking.getEndTime());
+        stmt.setObject(3, booking.getStartTime());
+        stmt.setObject(4, booking.getEndTime());
+
         stmt.setDouble(5, booking.getTotalPrice());
         stmt.setString(6, booking.getStatus());
         stmt.executeUpdate();
@@ -39,11 +68,12 @@ public class BookingService {
             b.setId(rs.getInt("id"));
             b.setUserId(rs.getInt("user_id"));
             b.setVehicleLicensePlate(rs.getString("vehicle_license_plate"));
-            b.setStartTime(rs.getString("start_time"));
-            b.setEndTime(rs.getString("end_time"));
             b.setTotalPrice(rs.getDouble("total_price"));
             b.setStatus(rs.getString("status"));
-            b.setCreatedAt(rs.getString("created_at"));
+            b.setStartTime(rs.getTimestamp("start_time").toLocalDateTime());
+            b.setEndTime(rs.getTimestamp("end_time").toLocalDateTime());
+            b.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+
             bookings.add(b);
         }
 
@@ -57,8 +87,9 @@ public class BookingService {
         PreparedStatement stmt = connection.prepareStatement(sql);
         stmt.setInt(1, booking.getUserId());
         stmt.setString(2, booking.getVehicleLicensePlate());
-        stmt.setString(3, booking.getStartTime());
-        stmt.setString(4, booking.getEndTime());
+        stmt.setObject(3, booking.getStartTime());
+        stmt.setObject(4, booking.getEndTime());
+
         stmt.setDouble(5, booking.getTotalPrice());
         stmt.setString(6, booking.getStatus());
         stmt.setInt(7, booking.getId());
@@ -105,8 +136,9 @@ public class BookingService {
                 booking.setId(rs.getInt("id"));
                 booking.setUserId(rs.getInt("user_id"));
                 booking.setVehicleLicensePlate(rs.getString("vehicle_license_plate"));
-                booking.setStartTime(rs.getString("start_time"));
-                booking.setEndTime(rs.getString("end_time"));
+                booking.setStartTime(rs.getTimestamp("start_time").toLocalDateTime());
+                booking.setEndTime(rs.getTimestamp("end_time").toLocalDateTime());
+
                 booking.setStatus(rs.getString("status"));
                 booking.setTotalPrice(rs.getDouble("total_price"));
                 bookings.add(booking);
@@ -117,6 +149,55 @@ public class BookingService {
 
         return bookings;
     }
+
+    public double getPricePerHourByLicensePlate(String licensePlate) {
+        double pricePerHour = 0.0;
+        String query = "SELECT price_per_hour FROM vehicles WHERE license_plate = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, licensePlate);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                pricePerHour = resultSet.getDouble("price_per_hour");
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return pricePerHour;
+    }
+
+    public Booking getBookingById(int bookingId) throws SQLException {
+        String sql = "SELECT * FROM bookings WHERE id = ?";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setInt(1, bookingId);
+
+        ResultSet resultSet = stmt.executeQuery();
+
+        if (resultSet.next()) {
+            // Assuming your Booking class has a constructor that takes these values
+            Booking booking = new Booking(
+                    resultSet.getInt("id"),
+                    resultSet.getInt("user_id"),
+                    resultSet.getString("vehicle_license_plate"),
+                    resultSet.getTimestamp("start_time"),
+                    resultSet.getTimestamp("end_time"),
+                    resultSet.getDouble("total_price"),
+                    resultSet.getString("status")
+            );
+            stmt.close();
+            return booking;
+        } else {
+            stmt.close();
+            return null; // If no booking found
+        }
+    }
+
+
+
+
+
+
 
 
 }
