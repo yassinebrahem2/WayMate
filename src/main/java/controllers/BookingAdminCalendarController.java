@@ -123,12 +123,9 @@ public class BookingAdminCalendarController {
 
     @FXML
     private void handleDeleteBooking() {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Delete Booking");
-        alert.setHeaderText(null);
-        alert.setContentText("Booking deleted!");
-        alert.showAndWait();
 
-        loadBookings();
+    }
+
+    public void setConnectedUserId(int id) {
     }
 }

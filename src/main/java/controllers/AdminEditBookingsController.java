@@ -90,6 +90,7 @@ public class AdminEditBookingsController {
                             .filter(b -> "en_attente".equalsIgnoreCase(b.getStatus()))
                             .toList()
             );
+
             bookingTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
             // Enable editing for the table view

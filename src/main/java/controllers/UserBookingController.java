@@ -94,9 +94,10 @@ public class UserBookingController {
             double pricePerHour = new BookingService().getPricePerHourByLicensePlate(licenseplate);
 
             double totalPrice = hours * pricePerHour;
+
             priceLabel.setText(String.format("%.2f DT", totalPrice));
 
-            // Prepare booking object
+            // Prepare+ booking object
             Booking booking = new Booking();
             booking.setUserId(connectedUserId);
             booking.setVehicleLicensePlate(licenseplate);
