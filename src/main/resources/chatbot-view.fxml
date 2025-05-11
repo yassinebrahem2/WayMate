@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.ChatController"
+            style="-fx-background-color: #F5F5F5;">
+
+    <top>
+        <ToolBar>
+            <Label text="ChatBot Assistant" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+        </ToolBar>
+    </top>
+
+    <center>
+        <ScrollPane fx:id="scrollPane" fitToWidth="true" fitToHeight="true" style="-fx-background: #F5F5F5;">
+            <VBox fx:id="chatArea" spacing="10" style="-fx-padding: 10; -fx-background-color: #F5F5F5;" />
+        </ScrollPane>
+    </center>
+
+    <bottom>
+        <GridPane style="-fx-padding: 10; -fx-background-color: #F5F5F5;" hgap="10" vgap="10">
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" />
+                <ColumnConstraints hgrow="NEVER" />
+            </columnConstraints>
+
+            <rowConstraints>
+                <RowConstraints vgrow="NEVER" />
+            </rowConstraints>
+
+            <TextField fx:id="messageField"
+                       onAction="#handleSendMessage"
+                       promptText="Type your message here..."
+                       style="-fx-background-radius: 15; -fx-border-radius: 15; -fx-padding: 5 10;" />
+
+            <Button fx:id="sendButton"
+                    text="Send"
+                    onAction="#handleSendMessage"
+                    GridPane.columnIndex="1"
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 15; -fx-font-weight: bold;" />
+        </GridPane>
+    </bottom>
+</BorderPane>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.animation.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.util.Duration?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.ModifyVehicleController"
+            style="-fx-background-color: #f0f8ff;">
+
+    <children>
+        <VBox alignment="TOP_CENTER" spacing="20.0" AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+            <padding>
+                <Insets top="20.0" left="40.0" right="40.0" bottom="20.0"/>
+            </padding>
+
+            <Label text="Modifier Cette Véhicule"
+                   style="-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: #007bff; -fx-effect: dropshadow(gaussian, lightblue, 3, 0.5, 0, 1);" />
+
+            <GridPane hgap="20" vgap="15">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="30"/>
+                    <ColumnConstraints percentWidth="70"/>
+                </columnConstraints>
+
+                <children>
+                    <Label text="Plaque d'immatriculation:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="licensePlateField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <Label text="Type:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <ComboBox fx:id="typeCombo" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="Marque:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="brandField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                    <Label text="Modèle:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <TextField fx:id="modelField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                    <Label text="Année:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <TextField fx:id="yearField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                    <Label text="Statut:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                    <ComboBox fx:id="statusCombo" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                    <Label text="Prix/heure:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                    <TextField fx:id="priceField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+                    <Label text="Latitude:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                    <TextField fx:id="latField" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+
+                    <Label text="Longitude:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                    <TextField fx:id="lngField" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+
+                    <Label text="Image:" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
+                    <HBox spacing="10.0" GridPane.rowIndex="9" GridPane.columnIndex="1" alignment="CENTER_LEFT">
+                        <children>
+                            <Button text="Choisir Image" onAction="#chooseImage"
+                                    style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-background-radius: 10;">
+
+                            </Button>
+                            <ImageView fx:id="vehicleImageView"
+                                       fitHeight="80.0"
+                                       fitWidth="100.0"
+                                       preserveRatio="true"
+                                       style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 8, 0, 2, 2); -fx-border-color: #007bff; -fx-border-radius: 5;">
+
+                            </ImageView>
+                        </children>
+                    </HBox>
+                </children>
+            </GridPane>
+
+            <HBox alignment="CENTER_RIGHT" spacing="20">
+                <Button text="Annuler" onAction="#cancel"
+                        style="-fx-background-color: lightgray; -fx-background-radius: 10;">
+
+                    <ScaleTransition duration="0.2s" toX="1.1" toY="1.1"/>
+
+                </Button>
+                <Button text="Enregistrer" onAction="#saveVehicle"
+                        style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;">
+
+                    <ScaleTransition duration="0.2s" toX="1.1" toY="1.1"/>
+
+                </Button>
+            </HBox>
+        </VBox>
+    </children>
+</AnchorPane>

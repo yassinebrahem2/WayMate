@@ -85,7 +85,7 @@ public class VehicleService {
     // In VehicleService.java - Fix the parameter indices in updateVehicle
     public boolean updateVehicle(Vehicle vehicle) {
         String query = "UPDATE vehicles SET type = ?, brand = ?, model = ?, year = ?, status = ?, " +
-                "price_per_hour = ?, location_lat = ?, location_lng = ?, image_url = ? " +
+                "price_per_hour = ?, location_lat = ?, location_lng = ?, image = ? " +
                 "WHERE license_plate = ?";
 
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
