@@ -113,7 +113,7 @@ public class ChatController {
     }
 
     // API Key for Google Gemini API
-    private final String GEMINI_API_KEY = "AIzaSyB2rU4iGz4w_NHlE5W1aYKx9DvR5Nbl-UI";
+    private final String GEMINI_API_KEY = "";
     private final String GEMINI_MODEL = "gemini-1.5-flash-latest"; // Supported model
 
     private String generateBotResponse(String userMessage) {
