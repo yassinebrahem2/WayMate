@@ -76,6 +76,21 @@ public class UserProfileController {
         }
     }
 
+    private boolean isValidEmail(String email) {
+        // A basic email validation using regex
+        return email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
+    }
+
+    private boolean isValidPhoneNumber(String phone) {
+        // A basic phone number validation (you might need a more specific pattern)
+        return phone.matches("^\\d{8,}$"); // Assuming at least 8 digits
+    }
+
+    private boolean isValidUsername(String username) {
+        // Username should be alphanumeric and can include underscores and hyphens
+        return username.matches("^[a-zA-Z0-9_-]+$");
+    }
+
     @FXML
     private void handleDeleteAccount() {
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);

@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import services.UserService;
 import utils.Session;
@@ -28,9 +29,9 @@ public class LoginController {
 
     private final UserService userService = new UserService();
 
+
     @FXML
     private void handleLogin() {
-
         String phone = phoneField.getText();
         String password = passwordField.getText();
 
@@ -58,18 +59,26 @@ public class LoginController {
                 // Optionally, pass the logged-in user to the controller
                 if ("admin".equals(user.getRole())) {
                     AdminController adminController = loader.getController();
-                    adminController.setLoggedInAdmin(user); // You define this method
+
                 } else {
                     UserProfileController userController = loader.getController();
+                    // Optionally do something with the controller
                 }
 
                 Stage stage = (Stage) phoneField.getScene().getWindow();
+
+                // Set scene with dimensions 1400x700
+
                 stage.setScene(new Scene(root));
+                stage.setResizable(false); // Optional: lock resizing
+                stage.show();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
+
 
     @FXML
     private void goToRegister() {
@@ -77,6 +86,7 @@ public class LoginController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/register-view.fxml"));
             Parent registerRoot = loader.load();
             Stage stage = (Stage) phoneField.getScene().getWindow();
+
             stage.setScene(new Scene(registerRoot));
         } catch (IOException e) {
             e.printStackTrace();

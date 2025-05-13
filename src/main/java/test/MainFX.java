@@ -86,9 +86,8 @@ public class MainFX extends Application {
 
         // Set up the scene and show the stage
         FXMLLoader fxmlLoader = new FXMLLoader(MainFX.class.getResource("/login-view.fxml"));
-        Scene scene = new Scene((Parent) fxmlLoader.load(), 1400, 700);
         stage.setTitle("Login!");
-        stage.setScene(scene);
+        stage.setScene(new Scene((Parent) fxmlLoader.load()));
         stage.show();
     }
 

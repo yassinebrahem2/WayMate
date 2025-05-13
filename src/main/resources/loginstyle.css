@@ -1,0 +1,211 @@
+.root {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-background-color: #b4d3ff;
+
+    -fx-min-width: 1600px;
+    -fx-pref-width: 1600px;
+    -fx-max-width: 1600px;
+    -fx-min-height: 900px;
+    -fx-pref-height: 900px;
+    -fx-max-height: 900px;
+
+}
+
+.main-container {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 5, 5);
+}
+
+/* Panneau gauche (bleu) */
+.left-panel {
+    -fx-background-color: linear-gradient(to bottom right, #1a72dd, #0056b3);
+}
+/* Make both panels match the container height */
+.left-panel, .right-panel {
+    -fx-pref-height: 600px;
+    -fx-min-height: 600px;
+    -fx-max-height: 600px;
+}
+
+/* Ensure the main container has proper height */
+.main-container {
+    -fx-pref-height: 600px;
+    -fx-min-height: 600px;
+    -fx-max-height: 600px;
+}
+
+/* Cercles sur le panneau gauche */
+.big-circle {
+    -fx-fill: rgba(255, 255, 255, 0.2);
+    -fx-stroke: rgba(255, 255, 255, 0.1);
+    -fx-stroke-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);
+}
+
+/* Texte du panneau gauche */
+.welcome-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.headline-text {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.subtitle-text {
+    -fx-font-size: 14px;
+    -fx-text-fill: rgba(255, 255, 255, 0.8);
+    -fx-line-spacing: 5px;
+}
+
+/* Panneau droit (blanc) */
+.right-panel {
+    -fx-background-color: white;
+}
+
+/* Titre et sous-titre du formulaire */
+.signin-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.info-text {
+    -fx-font-size: 13px;
+    -fx-text-fill: #666666;
+}
+
+.error-message {
+    -fx-text-fill: #d32f2f;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-wrap-text: true;
+    -fx-max-width: 350px;
+    -fx-padding: 8px;
+    -fx-background-color: #ffebee;
+    -fx-background-radius: 4px;
+    -fx-border-color: #ef9a9a;
+    -fx-border-radius: 4px;
+    -fx-border-width: 1px;
+}
+
+/* Container des champs */
+.input-container {
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 5px;
+    -fx-border-color: #e9ecef;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-min-height: 45px;
+    -fx-pref-height: 45px;
+}
+
+/* Champs de saisie modernisés */
+.modern-field {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 8px 0px;
+    -fx-font-size: 14px;
+    -fx-pref-width: 280px;
+}
+
+.modern-field:focused {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* Bouton de connexion principal */
+.signin-button {
+    -fx-background-color: #0056b3;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5px;
+    -fx-padding: 12px;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 2);
+    -fx-transition: all 0.3s ease;
+}
+
+.signin-button:hover {
+    -fx-background-color: #004494;
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+
+
+/* Bouton de connexion alternatif */
+.alt-signin-button {
+    -fx-background-color: white;
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5px;
+    -fx-border-color: #d0d0d0;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-padding: 12px;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+.alt-signin-button:hover {
+    -fx-background-color: #f8f9fa;
+}
+
+/* Liens */
+.forgot-password {
+    -fx-text-fill: #0056b3;
+    -fx-underline: false;
+    -fx-font-size: 13px;
+}
+
+.signup-link {
+    -fx-text-fill: #0056b3;
+    -fx-font-weight: bold;
+    -fx-underline: false;
+    -fx-font-size: 14px;
+}
+
+Hyperlink {
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+Hyperlink:hover {
+    -fx-text-fill: #004494;
+}
+
+
+/* Additional styles for register view */
+.secondary-button {
+    -fx-background-color: #e0e0e0;
+    -fx-text-fill: #333;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-padding: 12;
+    -fx-cursor: hand;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #bdbdbd;
+}
+
+/* Adjust spacing for more fields */
+.right-panel {
+    -fx-padding: 20;
+}
+
+/* Scrollable container if needed */
+.scrollable-container {
+    -fx-pref-height: 350;
+    -fx-max-height: 350;
+}
