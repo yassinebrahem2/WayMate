@@ -4,9 +4,10 @@ import entities.Booking;
 import utils.DatabaseConnection;
 
 import java.sql.*;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class BookingService {
     private Connection connection;
@@ -16,70 +17,134 @@ public class BookingService {
     }
 
     public void addBooking(Booking booking) throws SQLException {
-        String sql = "INSERT INTO bookings (user_id, vehicle_license_plate, start_time, end_time, total_price, status) VALUES (?, ?, ?, ?, ?, ?)";
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        stmt.setInt(1, booking.getUserId());
-        stmt.setString(2, booking.getVehicleLicensePlate());
-        stmt.setString(3, booking.getStartTime());
-        stmt.setString(4, booking.getEndTime());
-        stmt.setDouble(5, booking.getTotalPrice());
-        stmt.setString(6, booking.getStatus());
-        stmt.executeUpdate();
-        stmt.close();
+
+
+        // Validate user
+        String checkUserSql = "SELECT COUNT(*) FROM users WHERE id = ?";
+        try (PreparedStatement userStmt = connection.prepareStatement(checkUserSql)) {
+            userStmt.setInt(1, booking.getUserId());
+            try (ResultSet userRs = userStmt.executeQuery()) {
+                userRs.next();
+                if (userRs.getInt(1) == 0) {
+                    throw new SQLException("Utilisateur non trouvé: ID " + booking.getUserId());
+                }
+            }
+        }
+
+        // Get vehicle price
+        String getPriceSql = "SELECT price_per_hour FROM vehicles WHERE license_plate = ?";
+        try (PreparedStatement priceStmt = connection.prepareStatement(getPriceSql)) {
+            priceStmt.setString(1, booking.getVehicleLicensePlate());
+            try (ResultSet priceRs = priceStmt.executeQuery()) {
+                if (priceRs.next()) {
+                    double pricePerHour = priceRs.getDouble("price_per_hour");
+                    Duration duration = Duration.between(booking.getStartTime(), booking.getEndTime());
+                    double durationHours = duration.toMinutes() / 60.0;
+                    double totalPrice = durationHours * pricePerHour;
+                    booking.setTotalPrice(totalPrice);
+                } else {
+                    throw new SQLException("Véhicule non trouvé: " + booking.getVehicleLicensePlate());
+                }
+            }
+        }
+
+        // Insert with transaction
+        connection.setAutoCommit(false);
+        try {
+            String sql = "INSERT INTO bookings (user_id, vehicle_license_plate, start_time, end_time, total_price, status) VALUES (?, ?, ?, ?, ?, ?)";
+            try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                stmt.setInt(1, booking.getUserId());
+                stmt.setString(2, booking.getVehicleLicensePlate());
+                stmt.setTimestamp(3, Timestamp.valueOf(booking.getStartTime()));
+                stmt.setTimestamp(4, Timestamp.valueOf(booking.getEndTime()));
+                stmt.setDouble(5, booking.getTotalPrice());
+                stmt.setString(6, booking.getStatus());
+
+                int rowsAffected = stmt.executeUpdate();
+                System.out.println("Rows affected by insert: " + rowsAffected);
+
+                connection.commit();
+                System.out.println("Transaction committed.");
+
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        int generatedId = generatedKeys.getInt(1);
+                        booking.setId(generatedId);
+                        System.out.println("Generated booking ID: " + generatedId);
+                    } else {
+                        System.out.println("No generated keys returned.");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            connection.rollback();
+            System.out.println("Transaction rolled back due to: " + e.getMessage());
+            throw e;
+        } finally {
+            connection.setAutoCommit(true);
+        }
     }
 
     public List<Booking> getAllBookings() throws SQLException {
         List<Booking> bookings = new ArrayList<>();
-        String sql = "SELECT * FROM bookings";
-        Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery(sql);
+        String sql = "SELECT * FROM bookings ORDER BY created_at DESC";
 
-        while (rs.next()) {
-            Booking b = new Booking();
-            b.setId(rs.getInt("id"));
-            b.setUserId(rs.getInt("user_id"));
-            b.setVehicleLicensePlate(rs.getString("vehicle_license_plate"));
-            b.setStartTime(rs.getString("start_time"));
-            b.setEndTime(rs.getString("end_time"));
-            b.setTotalPrice(rs.getDouble("total_price"));
-            b.setStatus(rs.getString("status"));
-            b.setCreatedAt(rs.getString("created_at"));
-            bookings.add(b);
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Booking b = new Booking();
+                b.setId(rs.getInt("id"));
+                b.setUserId(rs.getInt("user_id"));
+                b.setVehicleLicensePlate(rs.getString("vehicle_license_plate"));
+                b.setTotalPrice(rs.getDouble("total_price"));
+                b.setStatus(rs.getString("status"));
+
+                Timestamp startTimestamp = rs.getTimestamp("start_time");
+                Timestamp endTimestamp = rs.getTimestamp("end_time");
+                Timestamp createdAtTimestamp = rs.getTimestamp("created_at");
+
+                b.setStartTime(startTimestamp != null ? startTimestamp.toLocalDateTime() : null);
+                b.setEndTime(endTimestamp != null ? endTimestamp.toLocalDateTime() : null);
+                b.setCreatedAt(createdAtTimestamp != null ? createdAtTimestamp.toLocalDateTime() : null);
+
+                bookings.add(b);
+            }
         }
 
-        rs.close();
-        stmt.close();
         return bookings;
     }
 
     public void updateBooking(Booking booking) throws SQLException {
         String sql = "UPDATE bookings SET user_id = ?, vehicle_license_plate = ?, start_time = ?, end_time = ?, total_price = ?, status = ? WHERE id = ?";
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        stmt.setInt(1, booking.getUserId());
-        stmt.setString(2, booking.getVehicleLicensePlate());
-        stmt.setString(3, booking.getStartTime());
-        stmt.setString(4, booking.getEndTime());
-        stmt.setDouble(5, booking.getTotalPrice());
-        stmt.setString(6, booking.getStatus());
-        stmt.setInt(7, booking.getId());
-        stmt.executeUpdate();
-        stmt.close();
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, booking.getUserId());
+            stmt.setString(2, booking.getVehicleLicensePlate());
+            stmt.setTimestamp(3, Timestamp.valueOf(booking.getStartTime()));
+            stmt.setTimestamp(4, Timestamp.valueOf(booking.getEndTime()));
+            stmt.setDouble(5, booking.getTotalPrice());
+            stmt.setString(6, booking.getStatus());
+            stmt.setInt(7, booking.getId());
+
+            stmt.executeUpdate();
+        }
     }
 
     public void deleteBooking(int id) throws SQLException {
-        // Delete payments first (child table)
+        // Supprimer d'abord les paiements (table enfant)
         String deletePaymentsSQL = "DELETE FROM payments WHERE booking_id = ?";
-        PreparedStatement paymentStmt = connection.prepareStatement(deletePaymentsSQL);
-        paymentStmt.setInt(1, id);
-        paymentStmt.executeUpdate();
-        paymentStmt.close();
+        try (PreparedStatement paymentStmt = connection.prepareStatement(deletePaymentsSQL)) {
+            paymentStmt.setInt(1, id);
+            paymentStmt.executeUpdate();
+        }
 
-        // Then delete booking (parent table)
+        // Puis supprimer la réservation (table parent)
         String deleteBookingSQL = "DELETE FROM bookings WHERE id = ?";
-        PreparedStatement bookingStmt = connection.prepareStatement(deleteBookingSQL);
-        bookingStmt.setInt(1, id);
-        bookingStmt.executeUpdate();
-        bookingStmt.close();
+        try (PreparedStatement bookingStmt = connection.prepareStatement(deleteBookingSQL)) {
+            bookingStmt.setInt(1, id);
+            bookingStmt.executeUpdate();
+        }
     }
 
     public boolean deleteBookingById(int id) {
@@ -95,21 +160,27 @@ public class BookingService {
     public List<Booking> getBookingsByUserId(int userId) {
         List<Booking> bookings = new ArrayList<>();
 
-        String sql = "SELECT * FROM bookings WHERE user_id = ?";
+        String sql = "SELECT * FROM bookings WHERE user_id = ? ORDER BY created_at DESC";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, userId);
-            ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()) {
-                Booking booking = new Booking();
-                booking.setId(rs.getInt("id"));
-                booking.setUserId(rs.getInt("user_id"));
-                booking.setVehicleLicensePlate(rs.getString("vehicle_license_plate"));
-                booking.setStartTime(rs.getString("start_time"));
-                booking.setEndTime(rs.getString("end_time"));
-                booking.setStatus(rs.getString("status"));
-                booking.setTotalPrice(rs.getDouble("total_price"));
-                bookings.add(booking);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Booking booking = new Booking();
+                    booking.setId(rs.getInt("id"));
+                    booking.setUserId(rs.getInt("user_id"));
+                    booking.setVehicleLicensePlate(rs.getString("vehicle_license_plate"));
+
+                    Timestamp startTimestamp = rs.getTimestamp("start_time");
+                    Timestamp endTimestamp = rs.getTimestamp("end_time");
+
+                    booking.setStartTime(startTimestamp != null ? startTimestamp.toLocalDateTime() : null);
+                    booking.setEndTime(endTimestamp != null ? endTimestamp.toLocalDateTime() : null);
+                    booking.setStatus(rs.getString("status"));
+                    booking.setTotalPrice(rs.getDouble("total_price"));
+
+                    bookings.add(booking);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -118,5 +189,82 @@ public class BookingService {
         return bookings;
     }
 
+    public double getPricePerHourByLicensePlate(String licensePlate) {
+        double pricePerHour = 0.0;
+        String query = "SELECT price_per_hour FROM vehicles WHERE license_plate = ?";
 
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, licensePlate);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    pricePerHour = resultSet.getDouble("price_per_hour");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return pricePerHour;
+    }
+
+    public Booking getBookingById(int bookingId) throws SQLException {
+        String sql = "SELECT * FROM bookings WHERE id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, bookingId);
+
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                if (resultSet.next()) {
+                    // Création de l'objet booking à partir des données
+                    Booking booking = new Booking();
+                    booking.setId(resultSet.getInt("id"));
+                    booking.setUserId(resultSet.getInt("user_id"));
+                    booking.setVehicleLicensePlate(resultSet.getString("vehicle_license_plate"));
+
+                    Timestamp startTimestamp = resultSet.getTimestamp("start_time");
+                    Timestamp endTimestamp = resultSet.getTimestamp("end_time");
+
+                    booking.setStartTime(startTimestamp.toLocalDateTime());
+                    booking.setEndTime(endTimestamp.toLocalDateTime());
+                    booking.setTotalPrice(resultSet.getDouble("total_price"));
+                    booking.setStatus(resultSet.getString("status"));
+
+                    return booking;
+                }
+            }
+        }
+
+        return null; // Si aucune réservation trouvée
+    }
+
+    public void updateBookingDates(Booking booking) throws SQLException {
+        String sql = "UPDATE bookings SET start_time = ?, end_time = ? WHERE id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setTimestamp(1, Timestamp.valueOf(booking.getStartTime()));
+            stmt.setTimestamp(2, Timestamp.valueOf(booking.getEndTime()));
+            stmt.setInt(3, booking.getId());
+
+            stmt.executeUpdate();
+            System.out.println("Réservation ID " + booking.getId() + " mise à jour avec succès.");
+        }
+    }
+
+
+    public void updateBookingStatuses() throws SQLException {
+        String sql = "UPDATE bookings SET status = CASE " +
+                "WHEN start_time > NOW() THEN 'confirmée' " +
+                "WHEN end_time > NOW() AND start_time <= NOW() THEN 'en_cours' " +
+                "WHEN end_time <= NOW() AND status != 'annulée' THEN 'terminée' " +
+                "ELSE status END " +
+                "WHERE status IN ('confirmée', 'en_cours') OR " +
+                "(status = 'terminée' AND end_time > NOW()) OR " +
+                "(status = 'confirmée' AND start_time <= NOW())";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            int updatedRows = stmt.executeUpdate();
+            System.out.println(updatedRows + " réservations ont été mises à jour.");
+        }
+    }
 }

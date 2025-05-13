@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane prefHeight="495.0" prefWidth="782.0" xmlns="http://javafx.com/javafx/23.0.1"
+<AnchorPane prefHeight="495.0" prefWidth="782.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.UserBookingListController">
     <VBox alignment="TOP_CENTER" layoutX="33.0" layoutY="20.0" prefHeight="470.0" prefWidth="724.0" spacing="20.0"
           AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="20.0">

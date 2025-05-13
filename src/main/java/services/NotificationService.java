@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import static java.lang.Integer.parseInt;
 
 public class NotificationService {
+
     private Connection cnx;
 
     public NotificationService() {
@@ -196,10 +197,6 @@ public class NotificationService {
         }
         return stats;
     }
-
-
-
-
 
 
 }

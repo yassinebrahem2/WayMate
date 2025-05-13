@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminEditBookingsController">
+    <TableView fx:id="bookingTable" prefHeight="530.0" prefWidth="722.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="68.0" AnchorPane.topAnchor="10.0">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID" />
+            <TableColumn fx:id="userIdColumn" text="User ID" />
+            <TableColumn fx:id="vehicleColumn" text="Vehicle" />
+            <TableColumn fx:id="startTimeColumn" text="Start Time" />
+            <TableColumn fx:id="endTimeColumn" text="End Time" />
+            <TableColumn fx:id="createdAtColumn" text="Created At" />
+            <TableColumn fx:id="priceColumn" text="Price" />
+            <TableColumn fx:id="statusColumn" text="Status" />
+            <TableColumn fx:id="actionColumn" text="Actions" />
+        </columns>
+    </TableView>
+    <Button fx:id="saveChangesButton" onAction="#handleSaveChanges" text="Enregistrer les modifications" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+</AnchorPane>
