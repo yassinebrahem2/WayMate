@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import services.UserService;
+import utils.Session;
 
 
 public class AdminController {
@@ -34,9 +35,11 @@ public class AdminController {
 
     private final UserService userService = new UserService();
 
-    private User loggedInUser;
+    private User currentUser;
 
     public void initialize() {
+        this.currentUser = Session.getInstance().getCurrentUser();
+
         idColumn.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().getId()));
         firstNameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getFirstName()));
         lastNameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getLastName()));
@@ -50,9 +53,5 @@ public class AdminController {
         usersTable.setItems(users);
     }
 
-    public void setLoggedInAdmin(User user) {
-        this.loggedInUser = user;
-
-    }
 }
 
