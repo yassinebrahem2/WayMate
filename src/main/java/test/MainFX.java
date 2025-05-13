@@ -19,6 +19,7 @@ import services.UserService;
 import utils.Session;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class MainFX extends Application {
 
@@ -186,6 +187,22 @@ public class MainFX extends Application {
 
 // }
 //ya mohamed zid traitement open cv l tsawer(bch el matricule tetaba wa7dha)
+
+
+//     @Override
+//     public void start(Stage primaryStage) {
+//         FXMLLoader loader = new FXMLLoader(getClass().getResource("/afficherNotification.fxml"));
+//         URL url = getClass().getResource("/ajouterNotification.fxml");
+//         if(url==null)
+//             System.out.println("FXML loaded from: " +"vide");
+//         try {
+//             Parent root = loader.load();
+//             Scene s = new Scene(root);
+//             primaryStage.setScene(s);
+//             primaryStage.setTitle("Nouvelle Notification");
+//             primaryStage.show();
+//         } catch (IOException e) {
+//             System.out.println(e.getMessage());
 
 //    @Override
 //    public void start(Stage stage) throws IOException {

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+
+<?import java.net.URL?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.StatistiqueNotificationController"
+            prefHeight="600.0" prefWidth="800.0"
+            style="-fx-background-color: linear-gradient(to bottom right, #f8fafc, #e2e8f0);"
+            stylesheets="@css/styles.css">
+
+    <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent;"
+                AnchorPane.topAnchor="20" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
+        <VBox alignment="TOP_CENTER" spacing="15" prefWidth="760">
+            <!-- Titre avec emoji -->
+            <Label text="📊 Statistiques des Notifications"
+                   style="-fx-font-size: 24px; -fx-text-fill: #2c3e50; -fx-font-weight: bold;">
+                <effect>
+                    <DropShadow color="rgba(0,0,0,0.1)" radius="2" offsetX="1" offsetY="1"/>
+                </effect>
+            </Label>
+
+            <!-- Carte principale -->
+            <StackPane style="-fx-background-color: white; -fx-background-radius: 15;
+                            -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 3);">
+                <VBox spacing="15" style="-fx-padding: 20;">
+                    <!-- Première ligne de statistiques -->
+                    <GridPane hgap="15" vgap="15" alignment="CENTER">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="33"/>
+                            <ColumnConstraints percentWidth="33"/>
+                            <ColumnConstraints percentWidth="33"/>
+                        </columnConstraints>
+
+                        <!-- Total -->
+                        <VBox style="-fx-background-color: #f8f9fa; -fx-background-radius: 10; -fx-padding: 15;"
+                              GridPane.columnIndex="0" alignment="CENTER">
+                            <Label text="TOTAL" style="-fx-font-size: 14px; -fx-text-fill: #7f8c8d; -fx-font-weight: bold;"/>
+                            <Label fx:id="totalNotificationsLabel" text="0"
+                                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                            <Label fx:id="totalPercentageLabel" text="~ 0%"
+                                   style="-fx-font-size: 12px; -fx-text-fill: #4CAF50;"/>
+                        </VBox>
+
+                        <!-- Lues -->
+                        <VBox style="-fx-background-color: #f8f9fa; -fx-background-radius: 10; -fx-padding: 15;"
+                              GridPane.columnIndex="1" alignment="CENTER">
+                            <Label text="LUE" style="-fx-font-size: 14px; -fx-text-fill: #7f8c8d; -fx-font-weight: bold;"/>
+                            <Label fx:id="notificationsLuesLabel" text="0"
+                                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;"/>
+                            <Label fx:id="luesPercentageLabel" text="~ 0%"
+                                   style="-fx-font-size: 12px; -fx-text-fill: #4CAF50;"/>
+                        </VBox>
+
+                        <!-- Non lues -->
+                        <VBox style="-fx-background-color: #f8f9fa; -fx-background-radius: 10; -fx-padding: 15;"
+                              GridPane.columnIndex="2" alignment="CENTER">
+                            <Label text="NON LUE" style="-fx-font-size: 14px; -fx-text-fill: #7f8c8d; -fx-font-weight: bold;"/>
+                            <Label fx:id="notificationsNonLuesLabel" text="0"
+                                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #F44336;"/>
+                            <Label fx:id="nonLuesPercentageLabel" text="~ 0%"
+                                   style="-fx-font-size: 12px; -fx-text-fill: #F44336;"/>
+                        </VBox>
+                    </GridPane>
+
+                    <!-- Deuxième ligne -->
+                    <GridPane hgap="15" vgap="15" alignment="CENTER">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="50"/>
+                            <ColumnConstraints percentWidth="50"/>
+                        </columnConstraints>
+
+                        <!-- Par utilisateur -->
+                        <VBox style="-fx-background-color: #f8f9fa; -fx-background-radius: 10; -fx-padding: 15;"
+                              GridPane.columnIndex="0">
+                            <Label text="PAR UTILISATEUR" style="-fx-font-size: 14px; -fx-text-fill: #7f8c8d; -fx-font-weight: bold;"/>
+                            <VBox fx:id="userStatsContainer" spacing="5" style="-fx-padding: 5 0;">
+                                <!-- Contenu généré dynamiquement -->
+                            </VBox>
+                        </VBox>
+
+                        <!-- Par période -->
+                        <VBox style="-fx-background-color: #f8f9fa; -fx-background-radius: 10; -fx-padding: 15;"
+                              GridPane.columnIndex="1">
+                            <Label text="PAR PÉRIODE" style="-fx-font-size: 14px; -fx-text-fill: #7f8c8d; -fx-font-weight: bold;"/>
+                            <VBox fx:id="periodStatsContainer" spacing="5" style="-fx-padding: 5 0;">
+                                <!-- Contenu généré dynamiquement -->
+                            </VBox>
+                        </VBox>
+                    </GridPane>
+
+                    <!-- Graphique avec axes en noir -->
+                    <VBox style="-fx-background-color: #f8f9fa; -fx-background-radius: 10; -fx-padding: 15;">
+                        <Label text="ÉVOLUTION (30 JOURS)" style="-fx-font-size: 14px; -fx-text-fill: #7f8c8d; -fx-font-weight: bold;"/>
+                        <LineChart fx:id="notificationChart" prefHeight="200">
+                            <xAxis>
+                                <CategoryAxis label="Jours" styleClass="axis-black"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis label="Nombre" styleClass="axis-black"/>
+                            </yAxis>
+
+                        </LineChart>
+                    </VBox>
+
+                    <!-- Boutons -->
+                    <HBox spacing="15" alignment="CENTER_RIGHT" style="-fx-padding: 10 0 0 0;">
+                        <Button fx:id="downloadReportButton" text="Télécharger"
+                                style="-fx-background-color: linear-gradient(to right, #3498db, #2ecc71);
+                                      -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;
+                                      -fx-background-radius: 15; -fx-padding: 8 20;">
+                            <effect>
+                                <DropShadow color="rgba(46,204,113,0.3)" radius="3" offsetX="0" offsetY="2"/>
+                            </effect>
+                        </Button>
+                        <Button fx:id="backButton" text="Retour"
+                                style="-fx-background-color: #e2e8f0; -fx-text-fill: #4a5568;
+                                      -fx-font-size: 14px; -fx-background-radius: 15;
+                                      -fx-padding: 8 20;">
+                        </Button>
+                    </HBox>
+                </VBox>
+            </StackPane>
+        </VBox>
+    </ScrollPane>
+</AnchorPane>

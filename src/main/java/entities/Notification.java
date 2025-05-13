@@ -1,31 +1,31 @@
 package entities;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.Objects;
+
 public class Notification {
-    private int id;
-    private int userId;
+    private int id,user_id;
     private String message;
-    private boolean isRead;
-    private String createdAt; // Consider using LocalDateTime in real projects
+    private Boolean is_read;
+    private Timestamp created_at;
 
-    // Constructors
-    public Notification() {
-    }
+    public Notification(){}
 
-    public Notification(int id, int userId, String message, boolean isRead, String createdAt) {
+    public Notification(int id, int user_id, String message, Boolean is_read, Timestamp created_at) {
         this.id = id;
-        this.userId = userId;
+        this.user_id = user_id;
         this.message = message;
-        this.isRead = isRead;
-        this.createdAt = createdAt;
+        this.is_read = is_read;
+        this.created_at = created_at;
+    }
+    public Notification(int user_id, String message, Boolean is_read, Timestamp created_at) {
+        this.user_id = user_id;
+        this.message = message;
+        this.is_read = is_read;
+        this.created_at = created_at;
     }
 
-    public Notification(int userId, String message) {
-        this.userId = userId;
-        this.message = message;
-        this.isRead = false; // default
-    }
-
-    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -34,12 +34,12 @@ public class Notification {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public String getMessage() {
@@ -50,31 +50,43 @@ public class Notification {
         this.message = message;
     }
 
-    public boolean isRead() {
-        return isRead;
+    public Boolean getIs_read() {
+        return is_read;
     }
 
-    public void setRead(boolean isRead) {
-        this.isRead = isRead;
+    public void setIs_read(Boolean is_read) {
+        this.is_read = is_read;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    public Timestamp getCreated_at() {
+        return created_at;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setCreated_at(Timestamp created_at) {
+        this.created_at = created_at;
     }
 
-    // toString
     @Override
     public String toString() {
-        return "Notification {" +
+        return "Notification{" +
                 "id=" + id +
-                ", userId=" + userId +
+                ", user_id=" + user_id +
                 ", message='" + message + '\'' +
-                ", isRead=" + isRead +
-                ", createdAt='" + createdAt + '\'' +
+                ", is_read=" + is_read +
+                ", created_at=" + created_at +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Notification that)) return false;
+        return id == that.id && user_id == that.user_id;
+    }
+
+    public int hashCode(){
+        int hash=30;
+        hash=60+50*this.id;
+        return hash;
+    }
+
 }
