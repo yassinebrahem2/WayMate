@@ -13,8 +13,6 @@ import services.PaymentService;
 
 
 
-
-
 public class Main {
     public static void main(String[] args) {
         // Création d'un utilisateur fictif (non utilisé ici, mais utile dans un scénario complet)
@@ -110,8 +108,6 @@ public class Main {
 //         } catch (SQLException e) {
 //             System.out.println(e.getMessage());
 //         }
-
-
 
 
     }

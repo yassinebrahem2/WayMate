@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.ReviewFormController">
+    <children>
+        <GridPane layoutX="20" layoutY="20" hgap="10" vgap="10">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            <!-- ID -->
+            <Label text="ID:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="idField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+
+            <!-- User ID -->
+            <Label text="User ID:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TextField fx:id="userIdField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <!-- Vehicle License Plate -->
+            <Label text="Vehicle Plate:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <TextField fx:id="vehiclePlateField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <!-- Rating -->
+            <Label text="Rating (1-5):" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <TextField fx:id="ratingField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+            <!-- Comment -->
+            <Label text="Comment:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <TextArea fx:id="commentTextArea" prefHeight="100" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+            <!-- Created At -->
+            <Label text="Created At (YYYY-MM-DD HH:MM:SS):" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+            <TextField fx:id="createdAtField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+            <!-- Buttons -->
+            <HBox spacing="10" alignment="CENTER_RIGHT" GridPane.rowIndex="6" GridPane.columnIndex="1">
+                <children>
+                    <Button fx:id="ajouterButton" text="Ajouter" onAction="#handleAjouter"/>
+                    <Button fx:id="modifierButton" text="Modifier" onAction="#handleModifier"/>
+                    <Button fx:id="supprimerButton" text="Supprimer" onAction="#handleSupprimer"/>
+                </children>
+            </HBox>
+        </GridPane>
+    </children>
+</AnchorPane>
+
+

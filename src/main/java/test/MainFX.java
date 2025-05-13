@@ -259,6 +259,7 @@ public class MainFX extends Application {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger la vue de connexion.");
         }
+
     }
 
     private void showAlert(Alert.AlertType type, String title, String message) {

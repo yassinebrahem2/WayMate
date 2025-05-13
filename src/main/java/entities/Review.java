@@ -1,96 +1,52 @@
 package entities;
 
-public class Review {
+public class Review {;
     private int id;
-    private int userId;
-    private String vehicleLicensePlate;
-    private int rating;           // 1 to 5
+    private String user_id;
+    private String vehicle_license_plate;
+    private int rating;
     private String comment;
-    private String createdAt;     // Ideally use java.time.LocalDateTime
+    private String created_at;
+
 
     // Constructors
     public Review() {
     }
 
-    public Review(int id, int userId, String vehicleLicensePlate, int rating, String comment, String createdAt) {
+
+    public Review(int id, String user_id, String vehicle_license_plate,
+                  int rating, String comment, String created_at) {
         this.id = id;
-        this.userId = userId;
-        this.vehicleLicensePlate = vehicleLicensePlate;
+        this.user_id = user_id;
+        this.vehicle_license_plate = vehicle_license_plate;
         this.rating = rating;
         this.comment = comment;
-        this.createdAt = createdAt;
+        this.created_at = created_at;
     }
 
-    public Review(int userId, String vehicleLicensePlate, int rating, String comment) {
-        this.userId = userId;
-        this.vehicleLicensePlate = vehicleLicensePlate;
-        this.rating = rating;
-        this.comment = comment;
+
+    public int getId() { return id; }
+    public String getUser_id() { return user_id; }
+    public String getVehicle_license_plate() { return vehicle_license_plate; }
+    public int getRating() { return rating; }
+    public String getComment() { return comment; }
+    public String getCreated_at() { return created_at; }
+
+
+    public void setId(int id) { this.id = id; }
+    public void setUser_id(String user_id) { this.user_id = user_id; }
+    public void setVehicle_license_plate(String vehicle_license_plate) {
+        this.vehicle_license_plate = vehicle_license_plate;
+    }
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
-    // Getters and Setters
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public String getVehicleLicensePlate() {
-        return vehicleLicensePlate;
-    }
-
-    public void setVehicleLicensePlate(String vehicleLicensePlate) {
-        this.vehicleLicensePlate = vehicleLicensePlate;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        if (rating >= 1 && rating <= 5) {
-            this.rating = rating;
-        } else {
-            throw new IllegalArgumentException("Rating must be between 1 and 5.");
-        }
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    // toString
     @Override
     public String toString() {
-        return "Review {" +
-                "id=" + id +
-                ", userId=" + userId +
-                ", vehicleLicensePlate='" + vehicleLicensePlate + '\'' +
-                ", rating=" + rating +
-                ", comment='" + comment + '\'' +
-                ", createdAt='" + createdAt + '\'' +
-                '}';
+        return String.format(
+                "Review[id=%d, user_id='%s', vehicle_license_plate='%s', rating=%d, comment='%s', created_at='%s']",
+                id, user_id, vehicle_license_plate, rating, comment, created_at
+        );
     }
 }
