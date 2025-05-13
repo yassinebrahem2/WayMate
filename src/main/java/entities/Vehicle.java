@@ -13,7 +13,8 @@ public class Vehicle {
     private String imageUrl;
 
     // Constructors
-    public Vehicle() {}
+    public Vehicle() {
+    }
 
     public Vehicle(String licensePlate, String type, String brand, String model, int year, String status,
                    double pricePerHour, double locationLat, double locationLng, String imageUrl) {
@@ -28,6 +29,7 @@ public class Vehicle {
         this.locationLng = locationLng;
         this.imageUrl = imageUrl;
     }
+
 
     // Getters and Setters
     public String getLicensePlate() {

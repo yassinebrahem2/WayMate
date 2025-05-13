@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="paymentVBox"
+      xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controllers.PaymentController"
+      alignment="TOP_CENTER"
+      spacing="15"
+      style="-fx-padding: 30; -fx-background-color: #f4f6f9;">
+
+    <Label text="Gérer le paiement"
+           style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
+
+    <GridPane hgap="10" vgap="10" alignment="CENTER">
+        <columnConstraints>
+            <ColumnConstraints halignment="RIGHT" />
+            <ColumnConstraints halignment="LEFT" />
+        </columnConstraints>
+
+        <Label text="ID du paiement :" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="idField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="ID réservation :" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="bookingIdField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Montant :" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <TextField fx:id="amountField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Date paiement :" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <TextField fx:id="paymentDateField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="Méthode :" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="methodComboBox" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+        <Label text="Statut :" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="statusComboBox" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+        <CheckBox fx:id="termsCheckBox"
+                  text="J'accepte les conditions d'utilisation"
+                  GridPane.rowIndex="6" GridPane.columnIndex="1"
+                  style="-fx-text-fill: #2c3e50;" />
+    </GridPane>
+
+    <HBox spacing="12" alignment="CENTER">
+        <Button text="Ajouter" onAction="#handleAddPayment"
+                style="-fx-background-color: #2980b9; -fx-text-fill: white;" />
+        <Button text="Modifier" onAction="#handleModifyPayment"
+                style="-fx-background-color: #2980b9; -fx-text-fill: white;" />
+        <Button text="Supprimer" onAction="#handleDeletePayment"
+                style="-fx-background-color: #2980b9; -fx-text-fill: white;" />
+        <Button text="Payer" onAction="#handlePayPayment"
+                style="-fx-background-color: #2980b9; -fx-text-fill: white;" />
+        <Button fx:id="searchButton" text="Chercher" onAction="#handleSearch"
+                style="-fx-background-color: #2980b9; -fx-text-fill: white;" />
+    </HBox>
+
+    <Label fx:id="messageLabel" textFill="red" style="-fx-font-size: 14px;" />
+
+    <TableView fx:id="paymentTableView" prefWidth="800" prefHeight="300"
+               style="-fx-border-color: #dcdde1; -fx-background-radius: 10;">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID" prefWidth="100"/>
+            <TableColumn fx:id="bookingIdColumn" text="Réservation" prefWidth="100"/>
+            <TableColumn fx:id="amountColumn" text="Montant" prefWidth="100"/>
+            <TableColumn fx:id="paymentDateColumn" text="Date" prefWidth="150"/>
+            <TableColumn fx:id="methodColumn" text="Méthode" prefWidth="100"/>
+            <TableColumn fx:id="statusColumn" text="Statut" prefWidth="100"/>
+        </columns>
+    </TableView>
+
+    <Label fx:id="paymentDetailsLabel" text="Détails du paiement"
+           style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #34495e;" />
+
+    <GridPane hgap="10" vgap="10" alignment="CENTER">
+        <Label text="Montant :" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="displayAmountField" editable="false" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+        <Label text="Méthode :" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="displayMethodField" editable="false" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+        <Label text="Carte :" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <TextField fx:id="cardNumberField" promptText="Numéro de carte" visible="false" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+        <Label text="Mot de passe :" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <PasswordField fx:id="cardPasswordField" promptText="Mot de passe" visible="false" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+    </GridPane>
+
+    <HBox spacing="12" alignment="CENTER">
+        <Button fx:id="confirmButton" text="Confirmer" visible="false" onAction="#handleConfirmPayment"
+                style="-fx-background-color: #2980b9; -fx-text-fill: white;" />
+        <Button fx:id="cancelButton" text="Annuler" visible="false" onAction="#handleCancelPayment"
+                style="-fx-background-color: #2980b9; -fx-text-fill: white;" />
+    </HBox>
+
+    <Label fx:id="confirmationMessageLabel" text=""
+           style="-fx-font-size: 16px; -fx-text-fill: green;" />
+</VBox>

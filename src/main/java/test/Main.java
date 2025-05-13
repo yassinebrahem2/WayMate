@@ -1,35 +1,91 @@
 package test;
 
-import entities.Review;
-import services.ReviewService;
-
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+
+import entities.Booking;
+import services.BookingService;
+import entities.User;
+import entities.Payment;
+import services.PaymentService;
+
+
+
 
 public class Main {
     public static void main(String[] args) {
-        ReviewService service = new ReviewService();
-
-        // Création d'un nouvel avis
-        Review nouvelAvis = new Review(
-                0,                            // id (inutile si auto-incrément)
-                "5",                          // user_id
-                "AA123BB",                    // vehicle_license_plate
-                1,                            // rating
-                "expérience traumatisante",   // comment
-                "2025-01-01 14:30:00"         // created_at
+        // Création d'un utilisateur fictif (non utilisé ici, mais utile dans un scénario complet)
+        User user = new User(
+                "Alice",
+                "Smith",
+                "alice_smith",
+                "alice@example.com",
+                "+1234567890",
+                "securePassword123",
+                "client"
         );
 
-        try {
-            // ➕ Ajouter un avis
-            service.ajouter(nouvelAvis);
-            System.out.println("Avis ajouté : " + nouvelAvis);
 
-            // 📋 Afficher tous les avis
-            System.out.println("Liste des avis :");
-            service.afficher().forEach(System.out::println);
+        System.out.println("Utilisateur : " + user);
 
-        } catch (SQLException e) {
-            System.err.println("Erreur : " + e.getMessage());
-        }
+//       <<<<<<< feature/payments
+//         PaymentService paymentService = new PaymentService();
+
+//         // Création d’un nouveau paiement
+//         Payment payment = new Payment(
+//                 0,                    // ID (auto-incrémenté)
+//                 2,                    // bookingId
+//                 150.0,                // montant
+//                 null,                // date de paiement (sera définie automatiquement)
+//                 "carte_bancaire",    // méthode de paiement
+//                 "en_attente"         // statut initial
+//         );
+
+//         try {
+//             // Ajout du paiement
+//             paymentService.addPayment(payment);
+
+//             // Récupération de l'ID généré
+//             int paymentId = paymentService.getLastInsertedPaymentId();
+//             payment.setId(paymentId);
+
+//             // Simuler un paiement effectué (status = "payé")
+//             payment.setStatus("payé");
+
+//             // La date sera mise à jour automatiquement dans updatePayment() si status == "payé"
+//             paymentService.updatePayment(payment, paymentId);
+//             System.out.println("Paiement mis à jour avec succès !");
+
+//             // Affichage du statut final
+//             System.out.println("Statut du paiement : " + paymentService.getStatus(payment));
+
+//         } catch (SQLException e) {
+//             System.out.println("Erreur lors de l'opération de paiement : " + e.getMessage());
+//         }
+      
+// >>>>>>> feature/bookings
+//         // Print the user object
+//         System.out.println(user);
+//         BookingService bookingService = new BookingService();
+
+//         //Booking booking = new Booking(4, "KK987LL", "2026-05-20 12:00:08", "2026-05-20 12:00:08" ,  20.00, "confirmée" );
+//         Booking updatedBooking = new Booking();
+//         updatedBooking.setId(1);
+//         updatedBooking.setUserId(2);
+//         updatedBooking.setVehicleLicensePlate("CC456DD");
+//         updatedBooking.setStartTime("2025-05-10 10:00:00");
+//         updatedBooking.setEndTime("2025-05-10 12:00:00");
+//         updatedBooking.setTotalPrice(50.0);
+//         updatedBooking.setStatus("confirmée");
+//         try {
+//             //bookingService.addBooking(booking);
+//             //bookingService.deleteBooking(10);
+//             bookingService.updateBooking(updatedBooking);
+//         } catch (SQLException e) {
+//             System.out.println(e.getMessage());
+//         }
+
+
     }
+
 }

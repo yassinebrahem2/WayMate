@@ -9,6 +9,11 @@ public class Review {;
     private String created_at;
 
 
+    // Constructors
+    public Review() {
+    }
+
+
     public Review(int id, String user_id, String vehicle_license_plate,
                   int rating, String comment, String created_at) {
         this.id = id;

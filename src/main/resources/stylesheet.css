@@ -1,0 +1,232 @@
+
+/* styles.css - Place this file in the same package as your FXML or in a resources folder */
+
+/* Root styles and global variables */
+.root {
+    -fx-font-family: 'Arial', sans-serif;
+    -fx-background-color: #f5f5f7;
+
+    /* Define color variables */
+    -primary-color: #3498db;
+    -secondary-color: #2980b9;
+    -success-color: #2ecc71;
+    -success-hover: #27ae60;
+    -danger-color: #e74c3c;
+    -danger-hover: #c0392b;
+    -warning-color: #f39c12;
+    -warning-hover: #d35400;
+    -light-color: #f5f5f7;
+    -dark-color: #2c3e50;
+    -border-color: #e0e0e0;
+}
+
+/* Header styles */
+.header-container {
+    -fx-background-color: -primary-color;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 0 0 10 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 5);
+}
+
+.header-title {
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+/* Button styles */
+.button {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-padding: 10px 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2);
+    -fx-transition: all 0.3s ease;
+}
+
+.button:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 3);
+}
+
+.button:pressed {
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0, 0, 1);
+}
+
+.add-button {
+    -fx-background-color: -success-color;
+    -fx-text-fill: white;
+}
+
+.add-button:hover {
+    -fx-background-color: -success-hover;
+}
+
+.delete-button {
+    -fx-background-color: -danger-color;
+    -fx-text-fill: white;
+}
+
+.delete-button:hover {
+    -fx-background-color: -danger-hover;
+}
+
+.details-button {
+    -fx-background-color: -warning-color;
+    -fx-text-fill: white;
+}
+
+.details-button:hover {
+    -fx-background-color: -warning-hover;
+}
+
+/* Search field styles */
+.search-field {
+    -fx-background-radius: 20;
+    -fx-padding: 8px 15px;
+    -fx-font-size: 14px;
+    -fx-prompt-text-fill: #95a5a6;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 1);
+    -fx-focus-color: -primary-color;
+    -fx-faint-focus-color: transparent;
+}
+
+.search-field:focused {
+    -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.3), 8, 0, 0, 2);
+    -fx-background-color: white;
+}
+
+/* Table styles */
+.table-view {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: -border-color;
+    -fx-border-width: 1;
+    -fx-padding: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 5);
+}
+
+.table-view .column-header {
+    -fx-background-color: -primary-color;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10 5;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: -primary-color;
+    -fx-background-radius: 10 10 0 0;
+    -fx-padding: 5px;
+}
+
+.table-view .column-header-background .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.table-view .table-row-cell {
+    -fx-border-color: transparent transparent -border-color transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 5 0;
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: rgba(52, 152, 219, 0.1);
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: rgba(52, 152, 219, 0.2);
+    -fx-text-fill: -dark-color;
+}
+
+.table-view .table-row-cell:empty {
+    -fx-background-color: white;
+}
+
+/* Status indicators in table */
+.status-available {
+    -fx-background-color: rgba(46, 204, 113, 0.2);
+    -fx-background-radius: 20;
+    -fx-padding: 5 10;
+    -fx-text-fill: #27ae60;
+    -fx-font-weight: bold;
+}
+
+.status-rented {
+    -fx-background-color: rgba(243, 156, 18, 0.2);
+    -fx-background-radius: 20;
+    -fx-padding: 5 10;
+    -fx-text-fill: #d35400;
+    -fx-font-weight: bold;
+}
+
+.status-maintenance {
+    -fx-background-color: rgba(231, 76, 60, 0.2);
+    -fx-background-radius: 20;
+    -fx-padding: 5 10;
+    -fx-text-fill: #c0392b;
+    -fx-font-weight: bold;
+}
+
+/* Action buttons in table */
+.table-action-button {
+    -fx-background-radius: 50;
+    -fx-min-width: 30px;
+    -fx-min-height: 30px;
+    -fx-max-width: 30px;
+    -fx-max-height: 30px;
+    -fx-padding: 5;
+    -fx-content-display: graphic-only;
+}
+
+.edit-icon-button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+}
+
+.view-icon-button {
+    -fx-background-color: #f39c12;
+    -fx-text-fill: white;
+}
+
+.delete-icon-button {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+}
+
+/* Footer styles */
+.footer {
+    -fx-background-color: -primary-color;
+    -fx-padding: 10;
+}
+
+.footer-text {
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+}
+
+/* Summary text */
+.summary-text {
+    -fx-font-size: 14px;
+}
+
+.count-value {
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+/* Animation classes */
+.fade-in {
+    -fx-opacity: 0;
+    -fx-animation: fadeIn 0.5s ease-in forwards;
+}
+
+@keyframes fadeIn {
+    from { -fx-opacity: 0; }
+    to { -fx-opacity: 1; }
+}
