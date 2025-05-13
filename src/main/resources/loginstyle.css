@@ -1,3 +1,4 @@
+
 .root {
     -fx-font-family: "Segoe UI", Arial, sans-serif;
     -fx-background-color: #b4d3ff;
@@ -24,6 +25,7 @@
 .left-panel {
     -fx-background-color: linear-gradient(to bottom right, #1a72dd, #0056b3);
 }
+
 /* Make both panels match the container height */
 .left-panel, .right-panel {
     -fx-pref-height: 600px;
@@ -37,6 +39,7 @@
     -fx-min-height: 600px;
     -fx-max-height: 600px;
 }
+
 
 /* Cercles sur le panneau gauche */
 .big-circle {
@@ -81,6 +84,7 @@
     -fx-font-size: 13px;
     -fx-text-fill: #666666;
 }
+
 
 .error-message {
     -fx-text-fill: #d32f2f;
@@ -132,6 +136,7 @@
     -fx-font-size: 14px;
     -fx-cursor: hand;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 2);
+
     -fx-transition: all 0.3s ease;
 }
 
@@ -140,7 +145,6 @@
     -fx-scale-x: 1.02;
     -fx-scale-y: 1.02;
 }
-
 
 
 /* Bouton de connexion alternatif */

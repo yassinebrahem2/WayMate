@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="500.0"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.AdminEditPopUpController"
+            stylesheets="/style.css"
+            styleClass="popup-pane">
+    <children>
+        <VBox spacing="20"
+              AnchorPane.topAnchor="20.0"
+              AnchorPane.leftAnchor="20.0"
+              AnchorPane.rightAnchor="20.0"
+              AnchorPane.bottomAnchor="20.0"
+              styleClass="popup-content">
+            <children>
+                <Label text="Modifier la réservation" styleClass="popup-title" />
+
+                <GridPane hgap="12" vgap="12" styleClass="form-grid">
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="120.0" hgrow="SOMETIMES"/>
+                        <ColumnConstraints minWidth="250.0" hgrow="ALWAYS"/>
+                    </columnConstraints>
+
+                    <children>
+                        <Label text="ID Réservation:" />
+                        <Label fx:id="bookingIdLabel" text="ID" GridPane.columnIndex="1" />
+
+                        <Label text="Véhicule:" GridPane.rowIndex="1" />
+                        <Label fx:id="vehicleLicensePlateLabel" text="Immatriculation"
+                               GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                        <Label text="Date de début:" GridPane.rowIndex="2" />
+                        <HBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                            <children>
+                                <DatePicker fx:id="startDatePicker" />
+                                <ComboBox fx:id="startHourCombo" promptText="Heure"/>
+                                <Label text=":" />
+                                <ComboBox fx:id="startMinuteCombo" promptText="Min"/>
+                            </children>
+                        </HBox>
+
+                        <Label text="Date de fin:" GridPane.rowIndex="3" />
+                        <HBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                            <children>
+                                <DatePicker fx:id="endDatePicker" />
+                                <ComboBox fx:id="endHourCombo" promptText="Heure"/>
+                                <Label text=":" />
+                                <ComboBox fx:id="endMinuteCombo" promptText="Min"/>
+                            </children>
+                        </HBox>
+
+                        <Label text="Statut:" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="statusComboBox" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    </children>
+                </GridPane>
+
+                <Separator />
+
+                <HBox alignment="CENTER_RIGHT" spacing="10">
+                    <children>
+                        <Button fx:id="cancelButton" text="Annuler" styleClass="btn-primary"/>
+                        <Button fx:id="saveButton" text="Enregistrer" styleClass="btn-primary"/>
+                    </children>
+                </HBox>
+            </children>
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+        </VBox>
+    </children>
+</AnchorPane>

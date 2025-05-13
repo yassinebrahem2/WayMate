@@ -1,0 +1,31 @@
+.noheader-table .column-header-background {
+    -fx-max-height: 0;
+    -fx-pref-height: 0;
+    -fx-min-height: 0;
+    -fx-background-color: transparent;
+}
+
+.table-row-cell {
+    -fx-border-color: transparent transparent #edf2f7 transparent;
+    -fx-background-insets: 0, 0 0 1 0;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f8fafc;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #ebf8ff;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #f0fff4;
+}
+.axis-black {
+     -fx-tick-label-fill: black;
+     -fx-text-fill: black; /* Pour le label de l'axe */
+ }
+
+.axis-black .axis-label {
+    -fx-text-fill: black; /* Spécifique au titre de l'axe */
+}

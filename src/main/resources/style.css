@@ -1,0 +1,209 @@
+/* Root pane styling */
+.root-pane {
+    -fx-background-color: linear-gradient(to bottom, #f5f7fa, #e4e7eb);
+    -fx-padding: 20px;
+}
+
+/* Header styling */
+.header-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-background-color: #ffffff;
+    -fx-padding: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);
+    -fx-alignment: center;
+}
+
+/* Control section (search bar and checkboxes) */
+.control-section {
+    -fx-background-color: #ffffff;
+    -fx-padding: 15px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);
+}
+
+/* Label styling for inputs */
+.input-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #34495e;
+    -fx-font-weight: bold;
+}
+
+/* Styled TextField */
+.styled-textfield {
+    -fx-background-color: #f9f9f9;
+    -fx-border-color: #dcdcdc;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 8px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #2c3e50;
+}
+
+.styled-textfield:focused {
+    -fx-border-color: #4a90e2;
+    -fx-effect: dropshadow(gaussian, rgba(74, 144, 226, 0.3), 5, 0, 0, 1);
+}
+
+/* Styled CheckBox */
+.styled-checkbox {
+    -fx-font-size: 14px;
+    -fx-text-fill: #34495e;
+}
+
+.styled-checkbox .box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dcdcdc;
+    -fx-border-radius: 3px;
+}
+
+.styled-checkbox:selected .mark {
+    -fx-background-color: #4a90e2;
+}
+
+/* Styled TableView */
+.styled-table {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dcdcdc;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);
+}
+
+.styled-table .column-header-background {
+    -fx-background-color: #4a90e2;
+    -fx-background-radius: 5px 5px 0 0;
+}
+
+.styled-table .column-header .label {
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}
+
+.styled-table .table-cell {
+    -fx-font-size: 13px;
+    -fx-text-fill: #2c3e50; /* Changed to a darker color for visibility */
+    -fx-alignment: center;
+}
+
+.styled-table .table-row-cell:odd {
+    -fx-background-color: #f9f9f9;
+}
+
+.styled-table .table-row-cell:even {
+    -fx-background-color: #ffffff;
+}
+
+.styled-table .table-row-cell:hover {
+    -fx-background-color: #e6f0fa;
+}
+
+/* Action buttons in the table */
+.action-button {
+    -fx-background-color: #4a90e2;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 12px;
+    -fx-padding: 5px 10px;
+    -fx-background-radius: 3px;
+}
+
+.action-button:hover {
+    -fx-background-color: #357abd;
+}
+
+.action-button-delete {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 12px;
+    -fx-padding: 5px 10px;
+    -fx-background-radius: 3px;
+}
+
+.action-button-delete:hover {
+    -fx-background-color: #c0392b;
+}
+/* style.css */
+
+.popup-pane {
+    -fx-background-color: #f9f9f9;
+    -fx-border-color: #336699;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+    -fx-padding: 20px;
+}
+
+.popup-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+
+.popup-button {
+    -fx-background-color: #336699;
+    -fx-text-fill: white;
+    -fx-padding: 8 16 8 16;
+    -fx-background-radius: 5px;
+}
+
+.popup-button:hover {
+    -fx-background-color: #5588cc;
+}
+
+
+.popup-pane {
+    -fx-background-color: #fffffff;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 10, 0.0, 0, 5);
+}
+
+.popup-content {
+    -fx-padding: 20;
+    -fx-spacing: 15;
+}
+
+.popup-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.form-grid {
+    -fx-background-color: #fafafa;
+    -fx-padding: 15;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+
+.combo-box, .date-picker {
+    -fx-pref-width: 120px;
+}
+
+.btn-primary {
+    -fx-background-color: #2196f3;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+    -fx-padding: 6 16;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #1976d2;
+}
+
+.btn-secondary {
+    -fx-background-color: transparent;
+    -fx-border-color: #ccc;
+    -fx-text-fill: #333;
+    -fx-background-radius: 6;
+    -fx-padding: 6 16;
+}
+
+.btn-secondary:hover {
+    -fx-background-color: #f0f0f0;
+}
+

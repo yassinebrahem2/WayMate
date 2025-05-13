@@ -2,12 +2,13 @@ package test;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-
+import java.time.format.DateTimeFormatter;
 import entities.Booking;
 import services.BookingService;
 import entities.User;
 import entities.Payment;
 import services.PaymentService;
+
 
 
 
@@ -26,7 +27,30 @@ public class Main {
         );
 
 
-        System.out.println("Utilisateur : " + user);
+        // Print the user object
+        System.out.println(user);
+        BookingService bookingService = new BookingService();
+
+        //Booking booking = new Booking(4, "KK987LL", "2026-05-20 12:00:08", "2026-05-20 12:00:08" ,  20.00, "confirmée" );
+        Booking updatedBooking = new Booking();
+        updatedBooking.setId(1);
+        updatedBooking.setUserId(2);
+        updatedBooking.setVehicleLicensePlate("CC456DD");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        updatedBooking.setStartTime(LocalDateTime.parse("2025-05-10 10:00:00", formatter));
+        updatedBooking.setEndTime(LocalDateTime.parse("2025-05-10 12:00:00", formatter));
+
+        updatedBooking.setTotalPrice(50.0);
+        updatedBooking.setStatus("confirmée");
+        try {
+            //bookingService.addBooking(booking);
+            //bookingService.deleteBooking(10);
+            bookingService.updateBooking(updatedBooking);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
 
 //       <<<<<<< feature/payments
 //         PaymentService paymentService = new PaymentService();
