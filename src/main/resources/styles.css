@@ -1,5 +1,4 @@
-/* styles.css */
-
+/* Root styling */
 .root {
     -fx-font-family: 'Segoe UI', sans-serif;
     -fx-background-color: #f4f8fc;
@@ -7,6 +6,7 @@
     -fx-pref-height: 900px;
 }
 
+/* Sidebar styling */
 .sidebar {
     -fx-background-color: #396fba;
     -fx-padding: 10px;
@@ -19,6 +19,7 @@
     -fx-translate-x: 0;
 }
 
+/* Sidebar title (not used in FXML but kept for completeness) */
 .sidebar-title {
     -fx-text-fill: #ffffff;
     -fx-font-size: 22px;
@@ -27,6 +28,7 @@
     -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.2), 2, 0, 0, 1);
 }
 
+/* Sidebar buttons */
 .sidebar-button {
     -fx-background-color: transparent;
     -fx-text-fill: #e0e0e0;
@@ -46,6 +48,7 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 6, 0.2, 0, 2);
 }
 
+/* Main content area */
 .main-area {
     -fx-background-color: #ffffff;
     -fx-border-color: #e1e8f0;
@@ -53,12 +56,83 @@
     -fx-padding: 20;
     -fx-background-radius: 10;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 20, 0.1, 0, 0);
-    -fx-opacity: 0;
-    -fx-translate-y: 20;
+    -fx-opacity: 1; /* Changed from 0 to ensure visibility */
+    -fx-translate-y: 0; /* Reset translation for visibility */
     -fx-transition: all 0.5s ease-in-out;
 }
 
-.main-area:focused {
-    -fx-opacity: 1;
-    -fx-translate-y: 0;
+/* Title labels (e.g., "Gestion des Véhicules", "Liste des Véhicules") */
+.main-area-title {
+    -fx-font-family: 'Segoe UI', sans-serif;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c5a91; /* Matches sidebar hover color for consistency */
+    -fx-padding: 5 0 10 0;
+}
+
+/* Text labels (e.g., summary, footer) */
+.main-area-text {
+    -fx-font-family: 'Segoe UI', sans-serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: #555555;
+    -fx-padding: 5;
+}
+
+/* TextField styling */
+.main-area-field {
+    -fx-font-family: 'Segoe UI', sans-serif;
+    -fx-font-size: 14px;
+    -fx-background-color: #f9f9f9;
+    -fx-border-color: #e1e8f0;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 8;
+    -fx-text-fill: #333333;
+    -fx-prompt-text-fill: #aaaaaa;
+}
+
+.main-area-field:focused {
+    -fx-border-color: #396fba;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(57,111,186,0.3), 5, 0, 0, 1);
+}
+
+/* TableView styling */
+.table-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e1e8f0;
+    -fx-border-width: 1;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-font-family: 'Segoe UI', sans-serif;
+    -fx-font-size: 14px;
+}
+
+.table-view .column-header {
+    -fx-background-color: #f4f8fc;
+    -fx-border-color: #e1e8f0;
+    -fx-border-width: 0 0 1 0;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c5a91;
+    -fx-padding: 10;
+}
+
+.table-view .table-cell {
+    -fx-padding: 10;
+    -fx-border-color: #e1e8f0;
+    -fx-border-width: 0 0 1 0;
+    -fx-text-fill: #333333;
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: #f9f9f9;
+}
+
+.table-view .table-row-cell:even {
+    -fx-background-color: #ffffff;
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: #e6effa;
 }
