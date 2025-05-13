@@ -30,6 +30,7 @@ public class Vehicle {
         this.imageUrl = imageUrl;
     }
 
+
     // Getters and Setters
     public String getLicensePlate() {
         return licensePlate;
