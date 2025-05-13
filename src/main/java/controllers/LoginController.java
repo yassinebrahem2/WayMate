@@ -1,22 +1,21 @@
 package controllers;
 
-import entities.User;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import services.UserService;
 import utils.Session;
 
-import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-
-public class LoginController {
+public class LoginController implements Initializable {
 
     @FXML
     private TextField phoneField;
@@ -27,7 +26,8 @@ public class LoginController {
     @FXML
     private Label errorMessage;
 
-    private final UserService userService = new UserService();
+    @FXML
+    private ImageView logoImage;
 
 
     @FXML
@@ -35,14 +35,17 @@ public class LoginController {
         String phone = phoneField.getText();
         String password = passwordField.getText();
 
-        User user = userService.findUserByPhone(phone);
 
-        if (user == null) {
-            errorMessage.setText("User Not Found");
+    @FXML
+    private void handleLogin() {
+        String username = phoneField.getText();
+        String password = passwordField.getText();
+
+        // Validation simple (à adapter selon vos besoins)
+        if (username.isEmpty() || password.isEmpty()) {
+            errorMessage.setText("Veuillez remplir tous les champs");
             errorMessage.setVisible(true);
-        } else if (!user.getPassword().equals(password)) {
-            errorMessage.setText("Wrong Password");
-            errorMessage.setVisible(true);
+
         } else {
             Session.getInstance().setCurrentUser(user);
             errorMessage.setVisible(false);
@@ -92,5 +95,4 @@ public class LoginController {
             e.printStackTrace();
         }
     }
-
 }
