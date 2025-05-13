@@ -2,15 +2,19 @@ package services;
 
 import entities.Booking;
 import utils.DatabaseConnection;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class BookingService {
     private Connection connection;
-    public BookingService() { connection = DatabaseConnection.getInstance().getConnection(); }
+
+    public BookingService() {
+        connection = DatabaseConnection.getInstance().getConnection();
+    }
+
     public void addBooking(Booking booking) throws SQLException {
         String sql = "INSERT INTO bookings (user_id, vehicle_license_plate, start_time, end_time, total_price, status) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = connection.prepareStatement(sql);
@@ -78,9 +82,41 @@ public class BookingService {
         bookingStmt.close();
     }
 
+    public boolean deleteBookingById(int id) {
+        try {
+            deleteBooking(id);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
+    public List<Booking> getBookingsByUserId(int userId) {
+        List<Booking> bookings = new ArrayList<>();
 
+        String sql = "SELECT * FROM bookings WHERE user_id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
 
+            while (rs.next()) {
+                Booking booking = new Booking();
+                booking.setId(rs.getInt("id"));
+                booking.setUserId(rs.getInt("user_id"));
+                booking.setVehicleLicensePlate(rs.getString("vehicle_license_plate"));
+                booking.setStartTime(rs.getString("start_time"));
+                booking.setEndTime(rs.getString("end_time"));
+                booking.setStatus(rs.getString("status"));
+                booking.setTotalPrice(rs.getDouble("total_price"));
+                bookings.add(booking);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return bookings;
+    }
 
 
 }

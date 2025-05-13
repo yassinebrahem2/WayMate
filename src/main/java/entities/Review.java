@@ -9,7 +9,8 @@ public class Review {
     private String createdAt;     // Ideally use java.time.LocalDateTime
 
     // Constructors
-    public Review() {}
+    public Review() {
+    }
 
     public Review(int id, int userId, String vehicleLicensePlate, int rating, String comment, String createdAt) {
         this.id = id;

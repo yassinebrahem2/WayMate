@@ -1,46 +1,54 @@
 package controllers;
 
+import entities.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-
-import entities.User;
-import services.UserService;
-import javafx.scene.Node;
-import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
+import services.UserService;
+import utils.Session;
 
 import java.io.IOException;
 
 public class UserProfileController {
 
-    @FXML private Label firstNameLabel;
-    @FXML private Label lastNameLabel;
-    @FXML private Label usernameLabel;
-    @FXML private Label emailLabel;
-    @FXML private Label phoneLabel;
-    @FXML private Label roleLabel;
-    @FXML private Label createdAtLabel;
+    @FXML
+    private Label firstNameLabel;
+    @FXML
+    private Label lastNameLabel;
+    @FXML
+    private Label usernameLabel;
+    @FXML
+    private Label emailLabel;
+    @FXML
+    private Label phoneLabel;
+    @FXML
+    private Label roleLabel;
+    @FXML
+    private Label createdAtLabel;
 
-    private User loggedInUser;
     private final UserService userService = new UserService();
+    private User currentUser;
 
     // Call this after loading the controller to inject the user
-    public void setLoggedInUser(User user) {
-        this.loggedInUser = user;
-
-        // Set the values to the labels
-        firstNameLabel.setText(user.getFirstName());
-        lastNameLabel.setText(user.getLastName());
-        usernameLabel.setText(user.getUsername());
-        emailLabel.setText(user.getEmail());
-        phoneLabel.setText(user.getPhone());
-        roleLabel.setText(user.getRole());
-        createdAtLabel.setText(user.getCreatedAt().toString());
+    public void initialize() {
+        this.currentUser = Session.getInstance().getCurrentUser();
+        if (this.currentUser != null) {
+            // Set the values to the labels
+            firstNameLabel.setText(this.currentUser.getFirstName());
+            lastNameLabel.setText(this.currentUser.getLastName());
+            usernameLabel.setText(this.currentUser.getUsername());
+            emailLabel.setText(this.currentUser.getEmail());
+            phoneLabel.setText(this.currentUser.getPhone());
+            roleLabel.setText(this.currentUser.getRole());
+            createdAtLabel.setText(this.currentUser.getCreatedAt().toString());
+        }
     }
 
     @FXML
@@ -60,9 +68,6 @@ public class UserProfileController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/user-edit-view.fxml"));
             Parent editRoot = loader.load();
 
-            // Pass the current user to the edit controller
-            UserEditController editController = loader.getController();
-            editController.setUser(loggedInUser); // assumes you stored `user` in this controller
 
             Stage stage = (Stage) firstNameLabel.getScene().getWindow(); // or any element
             stage.setScene(new Scene(editRoot));
@@ -70,6 +75,7 @@ public class UserProfileController {
             e.printStackTrace();
         }
     }
+
     @FXML
     private void handleDeleteAccount() {
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
@@ -79,7 +85,8 @@ public class UserProfileController {
 
         confirm.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-                if (userService.deleteUser(this.loggedInUser.getId())) {
+                if (userService.deleteUser(this.currentUser.getId())) {
+                    Session.getInstance().clear();
                     Alert success = new Alert(Alert.AlertType.INFORMATION);
                     success.setContentText("Your account has been deleted.");
                     success.showAndWait();

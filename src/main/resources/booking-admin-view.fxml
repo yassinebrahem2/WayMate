@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminEditBookingController">
+    <children>
+
+        <VBox layoutX="4.0" layoutY="4.0" minHeight="-Infinity" prefHeight="389.0" prefWidth="900.0" spacing="10"
+              AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="4.0">
+            <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Liste des Réservations"/>
+
+            <TableView fx:id="bookingTable">
+                <columns>
+
+                    <TableColumn fx:id="idColumn" prefWidth="60" text="ID"/>
+                    <TableColumn fx:id="userIdColumn" prefWidth="80" text="User ID"/>
+                    <TableColumn fx:id="vehicleColumn" prefWidth="100" text="Matricule"/>
+                    <TableColumn fx:id="startTimeColumn" prefWidth="116.0" text="Début"/>
+                    <TableColumn fx:id="endTimeColumn" prefWidth="125.5999755859375" text="Fin"/>
+                    <TableColumn fx:id="priceColumn" prefWidth="110.4000244140625" text="Prix Total"/>
+                    <TableColumn fx:id="createdAtColumn" prefWidth="102.4000244140625" text="Date Création"/>
+
+                    <!-- Editable Status Column with ComboBox -->
+                    <TableColumn fx:id="statusColumn" prefWidth="93.59995117187498" text="Statut"/>
+
+                </columns>
+            </TableView>
+
+            <Button onAction="#handleSaveChanges" text="Enregistrer les Modifications"/>
+
+        </VBox>
+
+    </children>
+
+</AnchorPane>

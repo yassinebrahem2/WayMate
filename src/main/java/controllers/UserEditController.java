@@ -1,33 +1,43 @@
 package controllers;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import entities.User;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import services.UserService;
+import utils.Session;
 
 import java.io.IOException;
 
 public class UserEditController {
 
-    @FXML private TextField firstNameField;
-    @FXML private TextField lastNameField;
-    @FXML private TextField usernameField;
-    @FXML private TextField emailField;
-    @FXML private TextField phoneField;
-    @FXML private PasswordField passwordField;
-    @FXML private PasswordField confirmPasswordField;
-    @FXML private Label messageLabel;
+    @FXML
+    private TextField firstNameField;
+    @FXML
+    private TextField lastNameField;
+    @FXML
+    private TextField usernameField;
+    @FXML
+    private TextField emailField;
+    @FXML
+    private TextField phoneField;
+    @FXML
+    private PasswordField passwordField;
+    @FXML
+    private PasswordField confirmPasswordField;
+    @FXML
+    private Label messageLabel;
 
     private final UserService userService = new UserService();
     private User currentUser;
 
-    public void setUser(User user) {
-        this.currentUser = user;
+    public void initialize() {
+        this.currentUser = Session.getInstance().getCurrentUser();
         populateFields();
     }
 
@@ -73,10 +83,6 @@ public class UserEditController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/user-profile-view.fxml"));
             Parent profileRoot = loader.load();
-
-            // Optional: Pass back the current user
-            UserProfileController controller = loader.getController();
-            controller.setLoggedInUser(currentUser);
 
             Stage stage = (Stage) firstNameField.getScene().getWindow();
             stage.setScene(new Scene(profileRoot));

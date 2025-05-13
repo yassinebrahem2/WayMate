@@ -1,15 +1,18 @@
 package controllers;
 
 import entities.User;
-import services.UserService;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.scene.control.*;
-import java.io.*;
+import services.UserService;
+import utils.Session;
+
+import java.io.IOException;
 
 
 public class LoginController {
@@ -40,6 +43,7 @@ public class LoginController {
             errorMessage.setText("Wrong Password");
             errorMessage.setVisible(true);
         } else {
+            Session.getInstance().setCurrentUser(user);
             errorMessage.setVisible(false);
             try {
                 FXMLLoader loader;
@@ -57,7 +61,6 @@ public class LoginController {
                     adminController.setLoggedInAdmin(user); // You define this method
                 } else {
                     UserProfileController userController = loader.getController();
-                    userController.setLoggedInUser(user);
                 }
 
                 Stage stage = (Stage) phoneField.getScene().getWindow();
@@ -67,6 +70,7 @@ public class LoginController {
             }
         }
     }
+
     @FXML
     private void goToRegister() {
         try {
@@ -78,5 +82,5 @@ public class LoginController {
             e.printStackTrace();
         }
     }
-    
+
 }

@@ -24,17 +24,27 @@ import java.util.ResourceBundle;
 
 public class VehiculeMainController {
 
-    @FXML private ResourceBundle resources;
-    @FXML private URL location;
+    @FXML
+    private ResourceBundle resources;
+    @FXML
+    private URL location;
 
-    @FXML private TableView<Vehicle> vehiclesTable;
-    @FXML private TableColumn<Vehicle, String> licensePlateColumn;
-    @FXML private TableColumn<Vehicle, String> typeColumn;
-    @FXML private TableColumn<Vehicle, String> brandColumn;
-    @FXML private TableColumn<Vehicle, String> modelColumn;
-    @FXML private TableColumn<Vehicle, Integer> yearColumn;
-    @FXML private TableColumn<Vehicle, String> statusColumn;
-    @FXML private TableColumn<Vehicle, Double> priceColumn;
+    @FXML
+    private TableView<Vehicle> vehiclesTable;
+    @FXML
+    private TableColumn<Vehicle, String> licensePlateColumn;
+    @FXML
+    private TableColumn<Vehicle, String> typeColumn;
+    @FXML
+    private TableColumn<Vehicle, String> brandColumn;
+    @FXML
+    private TableColumn<Vehicle, String> modelColumn;
+    @FXML
+    private TableColumn<Vehicle, Integer> yearColumn;
+    @FXML
+    private TableColumn<Vehicle, String> statusColumn;
+    @FXML
+    private TableColumn<Vehicle, Double> priceColumn;
 
     private final VehicleService vehicleService = new VehicleService();
     private final ObservableList<Vehicle> vehicleData = FXCollections.observableArrayList();
