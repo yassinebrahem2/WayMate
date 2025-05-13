@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import services.UserService;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class MainFX extends Application {
 
@@ -65,30 +66,20 @@ public class MainFX extends Application {
 //ya mohamed zid traitement open cv l tsawer(bch el matricule tetaba wa7dha)
 
     @Override
-    public void start(Stage stage) throws IOException {
-        // Fetch user info from UserService (assuming user ID 8 for this example)
-//        UserService userService = new UserService();
-//        User loggedInUser = userService.getUserById(8); // Replace with dynamic user ID
-//
-//        if (loggedInUser == null) {
-//            System.err.println("User not found!");
-//            return;
-//        }
-//
-//        // Load the booking user view
-//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/booking-user-view.fxml"));
-//        Parent root = fxmlLoader.load();
-//
-//        // Retrieve the controller and pass the connected user's ID
-//        UserBookingController controller = fxmlLoader.getController();
-//        controller.setConnectedUserId(loggedInUser.getId()); // Pass the logged-in user's ID to the controller
-// Débogage
-
-        // Set up the scene and show the stage
-        FXMLLoader fxmlLoader = new FXMLLoader(MainFX.class.getResource("/login-view.fxml"));
-        stage.setTitle("Login!");
-        stage.setScene(new Scene((Parent) fxmlLoader.load()));
-        stage.show();
+    public void start(Stage primaryStage) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/afficherNotification.fxml"));
+        URL url = getClass().getResource("/ajouterNotification.fxml");
+        if(url==null)
+            System.out.println("FXML loaded from: " +"vide");
+        try {
+            Parent root = loader.load();
+            Scene s = new Scene(root);
+            primaryStage.setScene(s);
+            primaryStage.setTitle("Nouvelle Notification");
+            primaryStage.show();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void main(String[] args) {
