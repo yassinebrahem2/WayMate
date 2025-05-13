@@ -17,20 +17,29 @@ public class BookingService {
     }
 
     public void addBooking(Booking booking) throws SQLException {
-        // Étape 1: Récupérer le tarif horaire du véhicule
+
+
+        // Validate user
+        String checkUserSql = "SELECT COUNT(*) FROM users WHERE id = ?";
+        try (PreparedStatement userStmt = connection.prepareStatement(checkUserSql)) {
+            userStmt.setInt(1, booking.getUserId());
+            try (ResultSet userRs = userStmt.executeQuery()) {
+                userRs.next();
+                if (userRs.getInt(1) == 0) {
+                    throw new SQLException("Utilisateur non trouvé: ID " + booking.getUserId());
+                }
+            }
+        }
+
+        // Get vehicle price
         String getPriceSql = "SELECT price_per_hour FROM vehicles WHERE license_plate = ?";
         try (PreparedStatement priceStmt = connection.prepareStatement(getPriceSql)) {
             priceStmt.setString(1, booking.getVehicleLicensePlate());
-
             try (ResultSet priceRs = priceStmt.executeQuery()) {
                 if (priceRs.next()) {
                     double pricePerHour = priceRs.getDouble("price_per_hour");
-
-                    // Étape 2: Calculer la durée
                     Duration duration = Duration.between(booking.getStartTime(), booking.getEndTime());
                     double durationHours = duration.toMinutes() / 60.0;
-
-                    // Étape 3: Calculer le prix total
                     double totalPrice = durationHours * pricePerHour;
                     booking.setTotalPrice(totalPrice);
                 } else {
@@ -39,24 +48,40 @@ public class BookingService {
             }
         }
 
-        // Étape 4: Insérer la réservation
-        String sql = "INSERT INTO bookings (user_id, vehicle_license_plate, start_time, end_time, total_price, status) VALUES (?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            stmt.setInt(1, booking.getUserId());
-            stmt.setString(2, booking.getVehicleLicensePlate());
-            stmt.setTimestamp(3, Timestamp.valueOf(booking.getStartTime()));
-            stmt.setTimestamp(4, Timestamp.valueOf(booking.getEndTime()));
-            stmt.setDouble(5, booking.getTotalPrice());
-            stmt.setString(6, booking.getStatus());
+        // Insert with transaction
+        connection.setAutoCommit(false);
+        try {
+            String sql = "INSERT INTO bookings (user_id, vehicle_license_plate, start_time, end_time, total_price, status) VALUES (?, ?, ?, ?, ?, ?)";
+            try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                stmt.setInt(1, booking.getUserId());
+                stmt.setString(2, booking.getVehicleLicensePlate());
+                stmt.setTimestamp(3, Timestamp.valueOf(booking.getStartTime()));
+                stmt.setTimestamp(4, Timestamp.valueOf(booking.getEndTime()));
+                stmt.setDouble(5, booking.getTotalPrice());
+                stmt.setString(6, booking.getStatus());
 
-            stmt.executeUpdate();
+                int rowsAffected = stmt.executeUpdate();
+                System.out.println("Rows affected by insert: " + rowsAffected);
 
-            // Récupérer l'ID généré
-            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    booking.setId(generatedKeys.getInt(1));
+                connection.commit();
+                System.out.println("Transaction committed.");
+
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        int generatedId = generatedKeys.getInt(1);
+                        booking.setId(generatedId);
+                        System.out.println("Generated booking ID: " + generatedId);
+                    } else {
+                        System.out.println("No generated keys returned.");
+                    }
                 }
             }
+        } catch (SQLException e) {
+            connection.rollback();
+            System.out.println("Transaction rolled back due to: " + e.getMessage());
+            throw e;
+        } finally {
+            connection.setAutoCommit(true);
         }
     }
 

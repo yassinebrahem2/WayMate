@@ -1,18 +1,20 @@
 package entities;
 
+import java.time.LocalDateTime;
+
 public class Payment {
     private int id;
     private int bookingId;
     private double amount;
-    private String paymentDate; // For simplicity; ideally use java.time.LocalDateTime
-    private String method;      // e.g. 'credit_card', 'paypal', 'cash'
-    private String status;      // 'payé', 'en_attente', 'échoué'
+    private LocalDateTime paymentDate; // Représente la date et l'heure du paiement
+    private String method;             // e.g. 'credit_card', 'paypal', 'cash'
+    private String status;             // 'payé', 'en_attente', 'échoué', 'en_retard'
 
     // Constructors
     public Payment() {
     }
 
-    public Payment(int id, int bookingId, double amount, String paymentDate, String method, String status) {
+    public Payment(int id, int bookingId, double amount, LocalDateTime paymentDate, String method, String status) {
         this.id = id;
         this.bookingId = bookingId;
         this.amount = amount;
@@ -53,11 +55,11 @@ public class Payment {
         this.amount = amount;
     }
 
-    public String getPaymentDate() {
+    public LocalDateTime getPaymentDate() {
         return paymentDate;
     }
 
-    public void setPaymentDate(String paymentDate) {
+    public void setPaymentDate(LocalDateTime paymentDate) {
         this.paymentDate = paymentDate;
     }
 
@@ -84,7 +86,7 @@ public class Payment {
                 "id=" + id +
                 ", bookingId=" + bookingId +
                 ", amount=" + amount +
-                ", paymentDate='" + paymentDate + '\'' +
+                ", paymentDate=" + paymentDate +
                 ", method='" + method + '\'' +
                 ", status='" + status + '\'' +
                 '}';

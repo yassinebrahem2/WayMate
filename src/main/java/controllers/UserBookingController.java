@@ -1,6 +1,7 @@
 package controllers;
 
 import entities.Booking;
+import entities.User;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,8 +9,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import services.BookingService;
+import services.UserService;
 import services.VehicleService;  // Assuming you have a service for vehicles
+import utils.Session;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -24,10 +28,14 @@ public class UserBookingController {
     private Button addbooking;
 
     @FXML
+    private Label usernameLabel;
+
+
+    @FXML
     private DatePicker endDateField;
 
     @FXML
-    private TextField idUserField;
+    private TextField idUsernamefield;
 
     @FXML
     private TextField licenseplateField;
@@ -49,7 +57,6 @@ public class UserBookingController {
 
     private final double DEFAULT_PRICE_PER_HOUR = 30.0; // Default price if vehicle doesn't exist
 
-    private int connectedUserId = 8;
 
     @FXML
     void handleAddBooking(ActionEvent event) {
@@ -68,7 +75,6 @@ public class UserBookingController {
                 return;
             }
 
-            // Get start and end times
             String startDate = StartdateField.getValue().toString();
             String startHour = startHourCombo.getValue();
             String startMinute = startMinuteCombo.getValue();
@@ -80,11 +86,9 @@ public class UserBookingController {
             String fullEndTime = endDate + " " + endHour + ":" + endMinute;
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
             LocalDateTime startDateTime = LocalDateTime.parse(fullStartTime, formatter);
             LocalDateTime endDateTime = LocalDateTime.parse(fullEndTime, formatter);
 
-            // Calculate the total price based on the price_per_hour and booking duration
             long hours = ChronoUnit.HOURS.between(startDateTime, endDateTime);
             if (hours < 0) {
                 showAlert(Alert.AlertType.ERROR, "Durée invalide", "La durée de la réservation ne peut pas être négative.");
@@ -92,14 +96,21 @@ public class UserBookingController {
             }
 
             double pricePerHour = new BookingService().getPricePerHourByLicensePlate(licenseplate);
-
             double totalPrice = hours * pricePerHour;
-
             priceLabel.setText(String.format("%.2f DT", totalPrice));
 
-            // Prepare+ booking object
+            User currentUser = Session.getInstance().getCurrentUser();
+            if (currentUser == null) {
+                showAlert(Alert.AlertType.ERROR, "Utilisateur non trouvé", "Aucun utilisateur connecté.");
+                return;
+            }
+            if (currentUser.getId() <= 0) {
+                showAlert(Alert.AlertType.ERROR, "Utilisateur invalide", "L'ID de l'utilisateur est invalide: " + currentUser.getId());
+                return;
+            }
+
             Booking booking = new Booking();
-            booking.setUserId(connectedUserId);
+            booking.setUserId(currentUser.getId());
             booking.setVehicleLicensePlate(licenseplate);
             booking.setStartTime(startDateTime);
             booking.setEndTime(endDateTime);
@@ -114,12 +125,14 @@ public class UserBookingController {
             StartdateField.setValue(LocalDate.now());
             endDateField.setValue(LocalDate.now().plus(1, ChronoUnit.DAYS));
 
+        } catch (SQLIntegrityConstraintViolationException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Erreur de contrainte", "L'utilisateur ou le véhicule spécifié n'existe pas dans la base de données.");
         } catch (Exception e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Erreur", "Une erreur s'est produite : " + e.getMessage());
         }
     }
-
     // Helper method to show alert dialog
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
@@ -128,25 +141,26 @@ public class UserBookingController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-
-    // Initialize listeners for date changes
     @FXML
     public void initialize() {
-        licenseplateField.textProperty().addListener((obs, oldVal, newVal) -> updateTotalPrice());
+        int userId = 7;
 
+        // Create an instance of UserService (assuming the constructor doesn't require arguments)
+        UserService userService = new UserService();
+
+        // Fetch the user from the database using the user_id
+        User user = userService.getUserById(userId);
+
+        // Add listeners to update total price when values change
+        licenseplateField.textProperty().addListener((obs, oldVal, newVal) -> updateTotalPrice());
         StartdateField.valueProperty().addListener((obs, oldVal, newVal) -> updateTotalPrice());
         endDateField.valueProperty().addListener((obs, oldVal, newVal) -> updateTotalPrice());
-
         startHourCombo.valueProperty().addListener((obs, oldVal, newVal) -> updateTotalPrice());
         startMinuteCombo.valueProperty().addListener((obs, oldVal, newVal) -> updateTotalPrice());
         endHourCombo.valueProperty().addListener((obs, oldVal, newVal) -> updateTotalPrice());
         endMinuteCombo.valueProperty().addListener((obs, oldVal, newVal) -> updateTotalPrice());
 
-
-        idUserField.setText(String.valueOf(connectedUserId));
-        idUserField.setDisable(true);
-
+        // Set up hour and minute values for the combo boxes
         ObservableList<String> hours = FXCollections.observableArrayList();
         ObservableList<String> minutes = FXCollections.observableArrayList();
 
@@ -158,20 +172,38 @@ public class UserBookingController {
         endHourCombo.setItems(hours);
         endMinuteCombo.setItems(minutes);
 
+        // Si un utilisateur est trouvé, on le stocke dans la session
+        if (user != null) {
+            Session.getInstance().setCurrentUser(user);
+
+            // Maintenant on peut accéder à l'utilisateur courant de la session
+            User currentUser = Session.getInstance().getCurrentUser();
+
+            // Afficher le username dans le champ
+            if (idUsernamefield != null) {
+                idUsernamefield.setText(currentUser.getUsername());
+                idUsernamefield.setEditable(true);  // Make sure the field is editable
+
+            } else {
+                System.out.println("Erreur : idUsernamefield est null !");
+            }
+        } else {
+            System.out.println("Erreur : L'utilisateur avec l'ID " + userId + " n'a pas été trouvé.");
+        }
+
+        // Initialize time values
         startHourCombo.setValue("08");
         startMinuteCombo.setValue("00");
         endHourCombo.setValue("09");
         endMinuteCombo.setValue("00");
+        // Execute your insert statement
+
     }
 
-    public void setConnectedUserId(int userId) {
-        this.connectedUserId = userId;
 
-        // Populate the text field (if it's already initialized)
-        if (idUserField != null) {
-            idUserField.setText(String.valueOf(userId));
-        }
-    }
+
+
+
 
     private void updateTotalPrice() {
         try {
