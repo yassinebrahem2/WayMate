@@ -14,134 +14,151 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" stylesheets="@loginstyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
-    <children>
-        <!-- Panneau gauche avec cercles et texte de bienvenue -->
-        <StackPane prefHeight="500.0" prefWidth="350.0" styleClass="left-panel">
-            <children>
-                <!-- Grands cercles bleus -->
-                <Circle fx:id="bigCircle1" radius="100.0" styleClass="big-circle" StackPane.alignment="BOTTOM_LEFT">
-                    <StackPane.margin>
-                        <Insets bottom="-50.0" left="-50.0" />
-                    </StackPane.margin>
-                </Circle>
-                <Circle fx:id="bigCircle2" radius="80.0" styleClass="big-circle" StackPane.alignment="CENTER_RIGHT">
-                    <StackPane.margin>
-                        <Insets right="-40.0" />
-                    </StackPane.margin>
-                </Circle>
 
-                <!-- Texte de bienvenue -->
-                <VBox alignment="CENTER_LEFT" maxWidth="280.0" StackPane.alignment="CENTER">
-                    <StackPane.margin>
-                        <Insets left="30.0" />
-                    </StackPane.margin>
-                    <children>
-                  <ImageView fitHeight="280.0" fitWidth="271.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../../../Downloads/whitelogo.png" />
-                     </image>
-                  </ImageView>
-                    </children>
-                </VBox>
-            </children>
-        </StackPane>
+<StackPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="controllers.LoginController" stylesheets="@loginstyle.css">
 
-        <!-- Panneau droit avec formulaire de connexion -->
-        <StackPane prefHeight="500.0" prefWidth="450.0" styleClass="right-panel">
-            <children>
-                <VBox alignment="CENTER" maxWidth="350.0" spacing="20.0">
-                    <children>
-                        <!-- Titre du formulaire -->
-                        <Label styleClass="signin-title" text="Sign in">
-                            <font>
-                                <Font name="System Bold" size="24.0" />
-                            </font>
-                        </Label>
-                        <Label styleClass="info-text" text="Use your credentials to access your account">
-                            <VBox.margin>
-                                <Insets bottom="10.0" top="-15.0" />
-                            </VBox.margin>
-                        </Label>
+    <!-- Main container with shadow effect -->
+    <HBox fx:id="loginContainer" maxHeight="-Infinity" maxWidth="-Infinity"
+          minHeight="500.0" minWidth="800.0" prefHeight="500.0" prefWidth="800.0"
+          styleClass="main-container">
+        <children>
+            <!-- Left panel with circles and welcome text -->
+            <StackPane prefHeight="500.0" prefWidth="350.0" styleClass="left-panel">
+                <children>
+                    <!-- Grands cercles bleus -->
+                    <Circle fx:id="bigCircle1" radius="100.0" styleClass="big-circle" StackPane.alignment="BOTTOM_LEFT">
+                        <StackPane.margin>
+                            <Insets bottom="-50.0" left="-50.0" />
+                        </StackPane.margin>
+                    </Circle>
+                    <Circle fx:id="bigCircle2" radius="80.0" styleClass="big-circle" StackPane.alignment="CENTER_RIGHT">
+                        <StackPane.margin>
+                            <Insets right="-40.0" />
+                        </StackPane.margin>
+                    </Circle>
 
-                        <!-- Champs de formulaire -->
-                        <VBox spacing="15.0">
-                            <!-- Email -->
-                            <children>
-                                <HBox alignment="CENTER_LEFT" styleClass="input-container">
-                                    <children>
-                                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../../../../../../Downloads/pngtree-outline-user-icon-png-image_1727916.jpg" />
-                                            </image>
-                                            <HBox.margin>
-                                                <Insets left="10.0" />
-                                            </HBox.margin>
-                                        </ImageView>
-                                        <TextField fx:id="emailField" promptText="Email Address" styleClass="modern-field">
-                                            <HBox.margin>
-                                                <Insets left="10.0" />
-                                            </HBox.margin>
-                                        </TextField>
-                                    </children>
-                                </HBox>
+                    <!-- Texte de bienvenue -->
+                    <VBox alignment="CENTER_LEFT" maxWidth="280.0" StackPane.alignment="CENTER">
+                        <StackPane.margin>
+                            <Insets left="30.0" />
+                        </StackPane.margin>
+                        <children>
+                            <ImageView fitHeight="280.0" fitWidth="271.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@image/WayMate-white-logo.png" />
+                                </image>
+                            </ImageView>
+                        </children>
+                    </VBox>
+                </children>
+            </StackPane>
 
-                                <!-- Mot de passe -->
-                                <HBox alignment="CENTER_LEFT" styleClass="input-container">
-                                    <children>
-                                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../../../../../../Downloads/pngtree-vector-lock-icon-png-image_515444%20(1).jpg" />
-                                            </image>
-                                            <HBox.margin>
-                                                <Insets left="10.0" />
-                                            </HBox.margin>
-                                        </ImageView>
-                                        <PasswordField fx:id="passwordField" promptText="Password" styleClass="modern-field">
-                                            <HBox.margin>
-                                                <Insets left="10.0" />
-                                            </HBox.margin>
-                                        </PasswordField>
-                                    </children>
-                                </HBox>
+            <!-- Right panel with login form -->
+            <StackPane prefHeight="500.0" prefWidth="450.0" styleClass="right-panel">
+                <children>
+                    <VBox alignment="CENTER" maxWidth="350.0" spacing="20.0">
+                        <children>
+                            <!-- Titre du formulaire -->
+                            <Label styleClass="signin-title" text="Sign in">
+                                <font>
+                                    <Font name="System Bold" size="24.0" />
+                                </font>
+                            </Label>
+                            <Label styleClass="info-text" text="Use your credentials to access your account">
+                                <VBox.margin>
+                                    <Insets bottom="10.0" top="-15.0" />
+                                </VBox.margin>
+                            </Label>
 
-                                <!-- Options supplémentaires -->
-                                <HBox alignment="CENTER_LEFT">
-                                    <children>
-                                        <Label text="Remember me" />
-                                        <Hyperlink styleClass="forgot-password" text="Forgot Password?" HBox.hgrow="ALWAYS">
-                                            <HBox.margin>
-                                                <Insets left="100.0" />
-                                            </HBox.margin>
-                                        </Hyperlink>
-                                    </children>
-                                </HBox>
-                            </children>
-                        </VBox>
 
-                        <!-- Boutons de connexion -->
-                        <VBox spacing="10.0">
-                            <children>
-                                <Button fx:id="loginButton" maxWidth="350.0" minWidth="350.0" mnemonicParsing="false" onAction="#handleLogin" styleClass="signin-button" text="Sign in" />
-                            </children>
-                        </VBox>
 
-                        <!-- Lien d'inscription -->
-                        <HBox alignment="CENTER" spacing="5.0">
-                            <children>
-                                <Label text="Don't have an account?" />
-                                <Hyperlink onAction="#goToRegister" styleClass="signup-link" text="Sign up" />
-                            </children>
-                            <VBox.margin>
-                                <Insets top="10.0" />
-                            </VBox.margin>
-                        </HBox>
-                    </children>
-                </VBox>
-            </children>
-            <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-            </padding>
-        </StackPane>
-    </children>
-</HBox>
+                            <!-- Champs de formulaire -->
+                            <VBox spacing="15.0">
+                                <!-- Email -->
+                                <children>
+                                    <HBox alignment="CENTER_LEFT" styleClass="input-container">
+                                        <children>
+                                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                <image>
+                                                    <Image url="@image/user-icon.png" />
+                                                </image>
+                                                <HBox.margin>
+                                                    <Insets left="10.0" />
+                                                </HBox.margin>
+                                            </ImageView>
+                                            <TextField fx:id="phoneField" promptText="Phone Number" styleClass="modern-field">
+                                                <HBox.margin>
+                                                    <Insets left="10.0" />
+                                                </HBox.margin>
+                                            </TextField>
+                                        </children>
+                                    </HBox>
+
+                                    <!-- Mot de passe -->
+                                    <HBox alignment="CENTER_LEFT" styleClass="input-container">
+                                        <children>
+                                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                <image>
+                                                    <Image url="@image/lock-icon.png" />
+                                                </image>
+                                                <HBox.margin>
+                                                    <Insets left="10.0" />
+                                                </HBox.margin>
+                                            </ImageView>
+                                            <PasswordField fx:id="passwordField" promptText="Password" styleClass="modern-field">
+                                                <HBox.margin>
+                                                    <Insets left="10.0" />
+                                                </HBox.margin>
+                                            </PasswordField>
+                                        </children>
+                                    </HBox>
+
+                                    <!-- Options supplémentaires -->
+                                    <HBox alignment="CENTER_LEFT">
+                                        <children>
+                                            <Hyperlink styleClass="forgot-password" text="Forgot Password?" HBox.hgrow="ALWAYS">
+                                                <HBox.margin>
+                                                    <Insets left="100.0" />
+                                                </HBox.margin>
+                                            </Hyperlink>
+                                        </children>
+                                    </HBox>
+                                </children>
+                            </VBox>
+
+
+                            <!-- Boutons de connexion -->
+                            <VBox spacing="10.0">
+                                <children>
+                                    <Button fx:id="loginButton" maxWidth="350.0" minWidth="350.0" mnemonicParsing="false" onAction="#handleLogin" styleClass="signin-button" text="Sign in" />
+                                </children>
+                            </VBox>
+
+                            <!-- Lien d'inscription -->
+                            <HBox alignment="CENTER" spacing="5.0">
+                                <children>
+                                    <Label text="Don't have an account?" />
+                                    <Hyperlink onAction="#goToRegister" styleClass="signup-link" text="Sign up" />
+                                </children>
+                                <VBox.margin>
+                                    <Insets top="10.0" />
+                                </VBox.margin>
+                            </HBox>
+                            <!-- Error message label - Add this -->
+                            <Label fx:id="errorMessage" styleClass="error-message" text="" visible="false">
+                                <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                </VBox.margin>
+                            </Label>
+                        </children>
+                    </VBox>
+                </children>
+                <padding>
+                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                </padding>
+            </StackPane>
+        </children>
+    </HBox>
+</StackPane>
+

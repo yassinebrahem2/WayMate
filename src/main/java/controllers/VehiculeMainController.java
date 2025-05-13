@@ -8,7 +8,17 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import services.VehicleService;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -41,10 +51,29 @@ public class VehiculeMainController {
 
     @FXML
     void addVehicle(ActionEvent event) {
-        // Create a dialog or new window for adding a vehicle
-        System.out.println("Add vehicle button clicked");
-        // You can implement this using a new FXML form
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/add-vehicle-admin.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Ajouter un Véhicule");
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            //stage.setAlwaysOnTop(true);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+    private void startAutoRefresh() {
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(10), event -> refreshTable())
+        );
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
+
+
 
     @FXML
     void delVehicle(ActionEvent event) {
@@ -61,6 +90,32 @@ public class VehiculeMainController {
             showAlert(Alert.AlertType.WARNING, "No Selection", "Please select a vehicle to delete");
         }
     }
+    @FXML
+    void modifyVehicle(ActionEvent event) {
+        Vehicle selectedVehicle = vehiclesTable.getSelectionModel().getSelectedItem();
+        System.out.println(selectedVehicle.getLicensePlate());
+        if (selectedVehicle != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/modify-vehicle-admin.fxml"));
+                Parent root = loader.load();
+
+                Stage stage = new Stage();
+                stage.setTitle("Modify un Véhicule");
+                stage.setScene(new Scene(root));
+                stage.setResizable(false);
+
+                ModifyVehicleController controller = loader.getController();
+                controller.setData(selectedVehicle);
+
+
+                //stage.setAlwaysOnTop(true);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
 
     @FXML
     void initialize() {
@@ -75,6 +130,7 @@ public class VehiculeMainController {
 
         // Add context menu for row actions
         setupContextMenu();
+        startAutoRefresh();
 
         // Load vehicle data
         refreshTable();

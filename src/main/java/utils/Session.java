@@ -17,16 +17,17 @@ public class Session {
         return instance;
     }
 
-    public static void setInstance(Session instance) {
-        Session.instance = instance;
-    }
 
+    // Get the currently logged-in user
     public User getCurrentUser() {
         return currentUser;
     }
 
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
+
+    // Set the currently logged-in user
+    public void setCurrentUser(User user) {
+        this.currentUser = user;
+
     }
 
     // Clear session data (e.g., on logout)
@@ -39,3 +40,6 @@ public class Session {
         return currentUser != null;
     }
 }
+
+
+

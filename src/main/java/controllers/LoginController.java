@@ -7,6 +7,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+import services.UserService;
+import utils.Session;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,25 +29,12 @@ public class LoginController implements Initializable {
     @FXML
     private ImageView logoImage;
 
-    @FXML
-    private ImageView lockIcon;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        // Les images sont déjà définies dans le FXML avec les URL directes
-        // Cependant, si vous préférez les charger par code :
-        /*
-        try {
-            Image logo = new Image(getClass().getResourceAsStream("/images/bird_logo.png"));
-            Image lock = new Image(getClass().getResourceAsStream("/images/lock_icon.png"));
-            
-            logoImage.setImage(logo);
-            lockIcon.setImage(lock);
-        } catch (Exception e) {
-            System.err.println("Erreur lors du chargement des images: " + e.getMessage());
-        }
-        */
-    }
+    @FXML
+    private void handleLogin() {
+        String phone = phoneField.getText();
+        String password = passwordField.getText();
+
 
     @FXML
     private void handleLogin() {
@@ -54,19 +45,54 @@ public class LoginController implements Initializable {
         if (username.isEmpty() || password.isEmpty()) {
             errorMessage.setText("Veuillez remplir tous les champs");
             errorMessage.setVisible(true);
-            return;
+
+        } else {
+            Session.getInstance().setCurrentUser(user);
+            errorMessage.setVisible(false);
+            try {
+                FXMLLoader loader;
+                if ("admin".equals(user.getRole())) {
+                    loader = new FXMLLoader(getClass().getResource("/admin-view.fxml"));
+                } else {
+                    loader = new FXMLLoader(getClass().getResource("/user-profile-view.fxml"));
+                }
+
+                Parent root = loader.load();
+
+                // Optionally, pass the logged-in user to the controller
+                if ("admin".equals(user.getRole())) {
+                    AdminController adminController = loader.getController();
+
+                } else {
+                    UserProfileController userController = loader.getController();
+                    // Optionally do something with the controller
+                }
+
+                Stage stage = (Stage) phoneField.getScene().getWindow();
+
+                // Set scene with dimensions 1400x700
+
+                stage.setScene(new Scene(root));
+                stage.setResizable(false); // Optional: lock resizing
+                stage.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
-        // Logique de connexion ici
-        System.out.println("Tentative de connexion avec: " + username);
-
-        // Simulation d'une connexion réussie
-        errorMessage.setVisible(false);
     }
+
 
     @FXML
     private void goToRegister() {
-        // Logique pour aller à l'écran d'inscription
-        System.out.println("Navigation vers l'écran d'inscription");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/register-view.fxml"));
+            Parent registerRoot = loader.load();
+            Stage stage = (Stage) phoneField.getScene().getWindow();
+
+            stage.setScene(new Scene(registerRoot));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

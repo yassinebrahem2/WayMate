@@ -10,6 +10,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import services.UserService;
+import utils.Session;
 
 import java.io.IOException;
 
@@ -35,8 +36,8 @@ public class UserEditController {
     private final UserService userService = new UserService();
     private User currentUser;
 
-    public void setUser(User user) {
-        this.currentUser = user;
+    public void initialize() {
+        this.currentUser = Session.getInstance().getCurrentUser();
         populateFields();
     }
 
@@ -54,19 +55,55 @@ public class UserEditController {
     private void handleSave() {
         messageLabel.setText(""); // Clear previous message
 
+        String newFirstName = firstNameField.getText().trim();
+        String newLastName = lastNameField.getText().trim();
+        String newUsername = usernameField.getText().trim();
+        String newEmail = emailField.getText().trim();
+        String newPhone = phoneField.getText().trim();
         String newPassword = passwordField.getText();
         String confirmPassword = confirmPasswordField.getText();
 
+        // Basic checks for non-empty fields (you might decide which are strictly required)
+        if (newFirstName.isEmpty() || newLastName.isEmpty() || newUsername.isEmpty() || newEmail.isEmpty() || newPhone.isEmpty()) {
+            messageLabel.setText("All fields (except password) are required!");
+            return;
+        }
+
+        // Password confirmation check (only if a new password is provided)
         if (!newPassword.isEmpty() && !newPassword.equals(confirmPassword)) {
             messageLabel.setText("Passwords do not match.");
             return;
         }
 
-        currentUser.setFirstName(firstNameField.getText());
-        currentUser.setLastName(lastNameField.getText());
-        currentUser.setUsername(usernameField.getText());
-        currentUser.setEmail(emailField.getText());
-        currentUser.setPhone(phoneField.getText());
+        // Password length check (only if a new password is provided)
+        if (!newPassword.isEmpty() && newPassword.length() < 8) {
+            messageLabel.setText("Password must be at least 8 characters long.");
+            return;
+        }
+
+        // Email validation
+        if (!isValidEmail(newEmail)) {
+            messageLabel.setText("Invalid email format.");
+            return;
+        }
+
+        // Phone number validation (Tunisian context - adjust regex if needed)
+        if (!isValidTunisianPhoneNumber(newPhone)) {
+            messageLabel.setText("Invalid Tunisian phone number format (e.g., 9xxxxxxxx).");
+            return;
+        }
+
+        // Username validation
+        if (!isValidUsername(newUsername)) {
+            messageLabel.setText("Username must be alphanumeric and can include underscores or hyphens.");
+            return;
+        }
+
+        currentUser.setFirstName(newFirstName);
+        currentUser.setLastName(newLastName);
+        currentUser.setUsername(newUsername);
+        currentUser.setEmail(newEmail);
+        currentUser.setPhone(newPhone);
 
         if (!newPassword.isEmpty()) {
             currentUser.setPassword(newPassword);
@@ -77,15 +114,26 @@ public class UserEditController {
         messageLabel.setTextFill(updated ? javafx.scene.paint.Color.GREEN : javafx.scene.paint.Color.RED);
     }
 
+    // Helper methods (reusing and adapting from registration)
+    private boolean isValidEmail(String email) {
+        return email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
+    }
+
+    private boolean isValidTunisianPhoneNumber(String phone) {
+        // Example for Tunisian phone numbers starting with 9, followed by 7 digits
+        return phone.matches("^9\\d{7}$");
+        // You might need to adjust this regex based on other possible formats
+    }
+
+    private boolean isValidUsername(String username) {
+        return username.matches("^[a-zA-Z0-9_-]+$");
+    }
+
     @FXML
     private void handleCancel() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/user-profile-view.fxml"));
             Parent profileRoot = loader.load();
-
-            // Optional: Pass back the current user
-            UserProfileController controller = loader.getController();
-            controller.setLoggedInUser(currentUser);
 
             Stage stage = (Stage) firstNameField.getScene().getWindow();
             stage.setScene(new Scene(profileRoot));
