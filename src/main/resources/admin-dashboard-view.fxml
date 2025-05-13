@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:id="mainPane" stylesheets="@styles.css">
+    <!-- Sidebar -->
+    <left>
+        <VBox fx:id="sidebar" spacing="10" prefWidth="200" styleClass="sidebar">
+            <children>
+                <ImageView fitWidth="150" preserveRatio="true">
+                    <image>
+                        <Image url="@/logoforblue.png" />
+                    </image>
+                </ImageView>
+                <Button text="Vehicles" styleClass="sidebar-button" />
+                <Button text="Users" styleClass="sidebar-button" />
+                <Button text="Notifications" styleClass="sidebar-button" />
+                <Button text="Payments" styleClass="sidebar-button" />
+                <Button text="Reservations" styleClass="sidebar-button" />
+            </children>
+            <padding>
+                <Insets top="20" left="10" right="10" bottom="10" />
+            </padding>
+        </VBox>
+    </left>
+
+    <!-- Main Content Area -->
+    <center>
+        <StackPane fx:id="mainContent" styleClass="main-area">
+            <!-- Empty initially -->
+        </StackPane>
+    </center>
+</BorderPane>
