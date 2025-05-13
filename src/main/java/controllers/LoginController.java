@@ -10,6 +10,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import services.UserService;
+import utils.Session;
 
 import java.io.IOException;
 
@@ -42,6 +43,7 @@ public class LoginController {
             errorMessage.setText("Wrong Password");
             errorMessage.setVisible(true);
         } else {
+            Session.getInstance().setCurrentUser(user);
             errorMessage.setVisible(false);
             try {
                 FXMLLoader loader;
@@ -59,7 +61,6 @@ public class LoginController {
                     adminController.setLoggedInAdmin(user); // You define this method
                 } else {
                     UserProfileController userController = loader.getController();
-                    userController.setLoggedInUser(user);
                 }
 
                 Stage stage = (Stage) phoneField.getScene().getWindow();
