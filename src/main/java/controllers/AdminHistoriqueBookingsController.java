@@ -1,14 +1,24 @@
 package controllers;
 
 import entities.Booking;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 import services.BookingService;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -58,38 +68,67 @@ public class AdminHistoriqueBookingsController {
     @FXML
     private TableColumn<Booking, String> actionColumn;
 
+    @FXML
+    private CheckBox confirmeeCheckBox;
+
+
     private ObservableList<Booking> allBookings;
     private ObservableList<Booking> filteredList;
     private BookingService bookingService;
+
+    private Timeline statusCheckTimer;
 
     @FXML
     public void initialize() throws SQLException {
         bookingService = new BookingService();
         allBookings = FXCollections.observableArrayList();
         filteredList = FXCollections.observableArrayList();
-        loadAllBookings();
+
         setupTableColumns();
         setupActionColumn();
+        loadAllBookings();
+
+        // Configuration du timer pour vérifier les statuts
+        if (statusCheckTimer == null) {
+            statusCheckTimer = new Timeline(
+                    new KeyFrame(Duration.seconds(30), e -> {
+                        try {
+                            checkAndUpdateBookingStatuses();
+                        } catch (SQLException ex) {
+                            ex.printStackTrace();
+                        }
+                    })
+            );
+            statusCheckTimer.setCycleCount(Animation.INDEFINITE);
+            statusCheckTimer.play();
+        }
+    }
+
+    private void checkAndUpdateBookingStatuses() throws SQLException {
+        // Mettre à jour les statuts en base de données
+        bookingService.updateBookingStatuses();
+
+        // Recharger les réservations avec les statuts à jour
+        loadAllBookings();
     }
 
     private void loadAllBookings() throws SQLException {
-        List<Booking> bookings = bookingService.getAllBookings(); // Fetch from service
+        List<Booking> bookings = bookingService.getAllBookings();
         allBookings.setAll(bookings);
-        filteredList.setAll(allBookings);
-        updateTable();
+        applyFilters(); // Applique les filtres actuels
     }
 
     private void setupTableColumns() {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
-        vehicleColumn.setCellValueFactory(new PropertyValueFactory<>("vehicle")); // Ensure this matches the getter
+        vehicleColumn.setCellValueFactory(new PropertyValueFactory<>("vehicleLicensePlate"));
         startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         endTimeColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
         createdAtColumn.setCellValueFactory(new PropertyValueFactory<>("createdAt"));
-        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price")); // Ensure this matches the getter
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("TotalPrice"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-        // Optional: Add cell factories for better formatting
+        // Formattage pour les cellules
         vehicleColumn.setCellFactory(column -> new TableCell<Booking, String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
@@ -102,7 +141,37 @@ public class AdminHistoriqueBookingsController {
             @Override
             protected void updateItem(Double item, boolean empty) {
                 super.updateItem(item, empty);
-                setText(empty ? null : String.format("%.2f", item));
+                setText(empty ? null : String.format("%.2f DT", item));
+            }
+        });
+
+        statusColumn.setCellFactory(column -> new TableCell<Booking, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty ? null : item);
+
+                if (item != null) {
+                    switch (item) {
+                        case "confirmée":
+                            setStyle("-fx-text-fill: blue;");
+                            break;
+                        case "en_cours":
+                            setStyle("-fx-text-fill: green;");
+                            break;
+                        case "terminée":
+                            setStyle("-fx-text-fill: black;");
+                            break;
+                        case "annulée":
+                            setStyle("-fx-text-fill: red;");
+                            break;
+                        default:
+                            setStyle("");
+                            break;
+                    }
+                } else {
+                    setStyle("");
+                }
             }
         });
 
@@ -110,78 +179,154 @@ public class AdminHistoriqueBookingsController {
     }
 
     private void setupActionColumn() {
-        actionColumn.setCellValueFactory(new PropertyValueFactory<>("action"));
         actionColumn.setCellFactory(column -> new TableCell<Booking, String>() {
-            final Button editButton = new Button("Edit");
-            final Button deleteButton = new Button("Delete");
-            final HBox hbox = new HBox(5, editButton, deleteButton);
+            private final Button editButton = new Button("Edit");
+            private final Button deleteButton = new Button("Delete");
+            private final HBox hbox = new HBox(5, editButton, deleteButton);
+
+            {
+                editButton.getStyleClass().add("action-button");
+                deleteButton.getStyleClass().add("action-button-delete");
+                hbox.setAlignment(javafx.geometry.Pos.CENTER);
+
+                editButton.setOnAction(event -> {
+                    Booking booking = getTableView().getItems().get(getIndex());
+                    try {
+                        // Use the correct FXML path (adjust based on your project structure)
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminEditPopUp.fxml"));
+                        Parent root = loader.load();
+                        Stage stage = new Stage();
+                        stage.setScene(new Scene(root));
+
+                        stage.show();
+
+                        AdminEditPopUpController controller = loader.getController();
+                        controller.setBooking(booking);
+                        controller.setOnSaveCallback(updatedBooking -> {
+                            try {
+                                bookingService.updateBooking(updatedBooking); // Persist changes to the database
+                                loadAllBookings(); // Reload bookings to refresh the UI
+                            } catch (SQLException e) {
+                                showAlert(Alert.AlertType.ERROR, "Error", "Failed to update booking: " + e.getMessage());
+                            }
+                            return null;
+                        });
+
+                        Stage popupStage = new Stage();
+                        popupStage.setTitle("Edit Booking");
+                        popupStage.setScene(new Scene(root));
+                        popupStage.initModality(Modality.APPLICATION_MODAL);
+                        popupStage.showAndWait();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        showAlert(Alert.AlertType.ERROR, "Error", "Failed to open edit popup: " + e.getMessage());
+                    }
+                });
+
+                deleteButton.setOnAction(event -> {
+                    Booking booking = getTableView().getItems().get(getIndex());
+                    Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                    confirmAlert.setTitle("Confirmation");
+                    confirmAlert.setHeaderText("Delete Booking");
+                    confirmAlert.setContentText("Are you sure you want to delete this booking?");
+
+                    confirmAlert.showAndWait().ifPresent(response -> {
+                        if (response == ButtonType.OK) {
+                            try {
+                                bookingService.deleteBooking(booking.getId());
+                                allBookings.remove(booking);
+                                filteredList.remove(booking);
+                                updateTable();
+                                showAlert(Alert.AlertType.INFORMATION, "Success", "Booking deleted successfully!");
+                            } catch (SQLException e) {
+                                showAlert(Alert.AlertType.ERROR, "Error", "Failed to delete booking: " + e.getMessage());
+                            }
+                        }
+                    });
+                });
+            }
 
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty) {
                     setGraphic(null);
-                } else {
-                    editButton.getStyleClass().add("action-button");
-                    deleteButton.getStyleClass().add("action-button-delete");
-                    hbox.setAlignment(javafx.geometry.Pos.CENTER);
-                    editButton.setOnAction(event -> {
-                        Booking booking = getTableView().getItems().get(getIndex());
-                        System.out.println("Edit booking: " + booking.getId());
-                    });
-                    deleteButton.setOnAction(event -> {
-                        Booking booking = getTableView().getItems().get(getIndex());
-                        try {
-                            bookingService.deleteBooking(booking.getId());
-                            allBookings.remove(booking);
-                            filteredList.remove(booking);
-                            updateTable();
-                        } catch (SQLException e) {
-                            System.err.println("Failed to delete booking: " + e.getMessage());
-                        }
-                    });
-                    setGraphic(hbox);
+                    return;
                 }
+
+                Booking booking = getTableView().getItems().get(getIndex());
+                editButton.setDisable("terminée".equalsIgnoreCase(booking.getStatus()) ||
+                        "annulée".equalsIgnoreCase(booking.getStatus()));
+                setGraphic(hbox);
             }
         });
-        updateTable();
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @FXML
     private void handleSearch() {
-        String searchText = vehicleSearchField.getText().trim().toLowerCase();
-        if (searchText.isEmpty()) {
-            filteredList.setAll(allBookings);
-        } else {
-            filteredList.setAll(allBookings.stream()
-                    .filter(booking -> booking.getVehicleLicensePlate().toLowerCase().contains(searchText))
-                    .collect(Collectors.toCollection(FXCollections::observableArrayList)));
-        }
-        updateTable();
+        applyFilters();
     }
 
     @FXML
     private void handleFilter() {
-        boolean enCours = enCoursCheckBox.isSelected();
-        boolean terminee = termineeCheckBox.isSelected();
-        boolean annulee = annuleeCheckBox.isSelected();
+        applyFilters();
+    }
+
+    private void applyFilters() {
+        String searchText = vehicleSearchField.getText().trim().toLowerCase();
+        boolean filterEnCours = enCoursCheckBox.isSelected();
+        boolean filterTerminee = termineeCheckBox.isSelected();
+        boolean filterAnnulee = annuleeCheckBox.isSelected();
+        boolean filterConfirmee = confirmeeCheckBox.isSelected(); // Nouveau filtre
+
+        // Si aucun filtre n'est sélectionné, on affiche tout
+        if (!filterEnCours && !filterTerminee && !filterAnnulee && !filterConfirmee) {
+            filterEnCours = true;
+            filterTerminee = true;
+            filterAnnulee = true;
+            filterConfirmee = true;
+        }
+
+        boolean finalFilterEnCours = filterEnCours;
+        boolean finalFilterTerminee = filterTerminee;
+        boolean finalFilterAnnulee = filterAnnulee;
+        boolean finalFilterConfirmee = filterConfirmee;
 
         filteredList.setAll(allBookings.stream()
                 .filter(booking -> {
-                    String status = booking.getStatus().toLowerCase();
-                    return (!enCours || status.contains("en cours")) &&
-                            (!terminee || status.contains("terminée")) &&
-                            (!annulee || status.contains("annulée"));
+                    // Filtre par recherche texte
+                    if (!searchText.isEmpty() &&
+                            !booking.getVehicleLicensePlate().toLowerCase().contains(searchText)) {
+                        return false;
+                    }
+
+                    // Filtre par statut
+                    String status = booking.getStatus();
+                    return (finalFilterEnCours && "en_cours".equals(status)) ||
+                            (finalFilterTerminee && "terminée".equals(status)) ||
+                            (finalFilterAnnulee && "annulée".equals(status)) ||
+                            (finalFilterConfirmee && "confirmée".equals(status));
                 })
-                .collect(Collectors.toCollection(FXCollections::observableArrayList)));
+                .collect(Collectors.toList()));
+
         updateTable();
     }
 
+
     private void updateTable() {
         bookingTableHistorique.setItems(filteredList);
+        bookingTableHistorique.refresh();
     }
 
     public void setConnectedUserId(int userId) {
-        // Implement if needed for your logic (e.g., filter by userId)
+        // Implémentation si nécessaire pour votre logique
     }
 }

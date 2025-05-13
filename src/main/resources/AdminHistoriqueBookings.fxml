@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="root-pane" stylesheets="@style.css" xmlns="http://javafx.com/javafx/22.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminHistoriqueBookingsController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0"  xmlns="http://javafx.com/javafx/22.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminHistoriqueBookingsController">
     <VBox prefHeight="600.0" prefWidth="800.0" spacing="15.0" AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
         <!-- Header with Title -->
         <Label text="Booking History" styleClass="header-label" alignment="CENTER" prefWidth="Infinity" />
@@ -27,6 +27,8 @@
             <CheckBox fx:id="enCoursCheckBox" text="En Cours" onAction="#handleFilter" styleClass="styled-checkbox" />
             <CheckBox fx:id="termineeCheckBox" text="Terminée" onAction="#handleFilter" styleClass="styled-checkbox" />
             <CheckBox fx:id="annuleeCheckBox" text="Annulée" onAction="#handleFilter" styleClass="styled-checkbox" />
+            <CheckBox fx:id="confirmeeCheckBox" text="Confirmée" onAction="#handleFilter" styleClass="styled-checkbox"/>
+
         </HBox>
 
         <!-- TableView for displaying filtered bookings -->

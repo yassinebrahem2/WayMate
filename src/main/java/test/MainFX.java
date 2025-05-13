@@ -17,7 +17,7 @@ import java.io.IOException;
 public class MainFX extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        // Fetch user info from UserService (assuming user ID 8 for this example)
+// Fetch user info from UserService (assuming user ID 8 for this example)
         UserService userService = new UserService();
         User loggedInUser = userService.getUserById(8); // Replace with dynamic user ID
 
@@ -100,4 +100,5 @@ public class MainFX extends Application {
     public static void main(String[] args) {
         launch();
     }
+
 }

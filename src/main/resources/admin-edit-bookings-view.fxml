@@ -5,8 +5,8 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/22.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminEditBookingsController">
-    <TableView fx:id="bookingTable" AnchorPane.topAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.bottomAnchor="60.0">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminEditBookingsController">
+    <TableView fx:id="bookingTable" prefHeight="530.0" prefWidth="722.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="68.0" AnchorPane.topAnchor="10.0">
         <columns>
             <TableColumn fx:id="idColumn" text="ID" />
             <TableColumn fx:id="userIdColumn" text="User ID" />
