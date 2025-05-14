@@ -20,7 +20,7 @@
                 <Button text="Profile" styleClass="sidebar-button" onAction="#handleProfileButton" />
                 <Button text="Vehicles" styleClass="sidebar-button" onAction="#handleVehiclesButton"/>
                 <Button text="Reviews" styleClass="sidebar-button" onAction="#handleReviewsButton" />
-                <Button text="Notifications" styleClass="sidebar-button" />
+                <Button text="Notifications" styleClass="sidebar-button" onAction="#handleNotificationsButton"/>
                 <Button text="Bookings History" styleClass="sidebar-button" />
             </children>
             <padding>

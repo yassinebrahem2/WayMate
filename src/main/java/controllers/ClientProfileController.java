@@ -187,6 +187,27 @@ public class ClientProfileController {
         }
     }
 
+    @FXML
+    private void handleNotificationsButton(ActionEvent event) {
+        try {
+            // Load the profile view
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/client-notifications-view.fxml"));
+            Parent root = loader.load();
+
+            // Get the current stage
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+            // Set the new scene
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Navigation Error", "Could not load profile view: " + e.getMessage());
+        }
+    }
+
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
