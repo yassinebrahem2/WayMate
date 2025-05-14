@@ -51,19 +51,11 @@ public class LoginController {
                 if ("admin".equals(user.getRole())) {
                     loader = new FXMLLoader(getClass().getResource("/admin-view.fxml"));
                 } else {
-                    loader = new FXMLLoader(getClass().getResource("/user-profile-view.fxml"));
+                    loader = new FXMLLoader(getClass().getResource("/client-profile-view.fxml"));
                 }
 
                 Parent root = loader.load();
 
-                // Optionally, pass the logged-in user to the controller
-                if ("admin".equals(user.getRole())) {
-                    AdminController adminController = loader.getController();
-
-                } else {
-                    UserProfileController userController = loader.getController();
-                    // Optionally do something with the controller
-                }
 
                 Stage stage = (Stage) phoneField.getScene().getWindow();
 
@@ -92,5 +84,5 @@ public class LoginController {
             e.printStackTrace();
         }
     }
-
 }
+

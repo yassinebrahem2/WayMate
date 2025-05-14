@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:id="mainPane" stylesheets="@styles.css" fx:controller="controllers.ClientPaymentController">
+    <!-- Sidebar (same as before) -->
+    <left>
+        <VBox fx:id="sidebar" spacing="10" prefWidth="200" styleClass="sidebar">
+            <children>
+                <ImageView fitWidth="120" preserveRatio="true">
+                    <image>
+                        <Image url="@/logoforblue.png" />
+                    </image>
+                </ImageView>
+                <Button text="Profile" styleClass="sidebar-button" onAction="#handleProfileButton" />
+                <Button text="Vehicles" styleClass="sidebar-button" onAction="#handleVehiclesButton"/>
+                <Button text="Reviews" styleClass="sidebar-button" onAction="#handleReviewsButton" />
+                <Button text="Notifications" styleClass="sidebar-button" onAction="#handleNotificationsButton"/>
+                <Button text="Bookings History" styleClass="sidebar-button" onAction="#handleBookingsButton" />
+            </children>
+            <padding>
+                <Insets top="20" left="10" right="10" bottom="10" />
+            </padding>
+        </VBox>
+    </left>
+
+    <!-- Main Content Area -->
+    <center>
+        <StackPane prefHeight="900.0" prefWidth="1600.0">
+            <!-- Payment Form Container -->
+            <VBox styleClass="payment-container" spacing="20" alignment="TOP_CENTER">
+                <padding>
+                    <Insets top="40" right="40" bottom="40" left="40"/>
+                </padding>
+
+                <!-- Title -->
+                <Label styleClass="payment-title" text="Payment Confirmation">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+
+                <!-- Booking Summary -->
+                <VBox styleClass="summary-card" spacing="30">
+                    <Label styleClass="summary-title" text="Booking Summary"/>
+
+                    <GridPane hgap="20" vgap="10">
+                        <columnConstraints>
+                            <ColumnConstraints halignment="RIGHT" minWidth="150"/>
+                            <ColumnConstraints halignment="LEFT" minWidth="200"/>
+                        </columnConstraints>
+
+                        <children>
+                            <Label text="Vehicle:" styleClass="detail-label" GridPane.rowIndex="0"/>
+                            <Label fx:id="vehicleLabel" styleClass="detail-value" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                            <Label text="Booking Period:" styleClass="detail-label" GridPane.rowIndex="1"/>
+                            <Label fx:id="periodLabel" styleClass="detail-value" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                            <Label text="Total Amount:" styleClass="detail-label" GridPane.rowIndex="2"/>
+                            <Label fx:id="amountLabel" styleClass="detail-value" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                        </children>
+                    </GridPane>
+                </VBox>
+
+                <!-- Payment Form -->
+                <VBox styleClass="payment-form" spacing="20">
+                    <Label styleClass="form-title" text="Payment Details"/>
+
+                    <GridPane hgap="20" vgap="15">
+                        <columnConstraints>
+                            <ColumnConstraints halignment="RIGHT" minWidth="150"/>
+                            <ColumnConstraints halignment="LEFT" minWidth="300"/>
+                        </columnConstraints>
+
+                        <children>
+                            <!-- Payment Method -->
+                            <Label text="Payment Method:" styleClass="form-label" GridPane.rowIndex="0"/>
+                            <ComboBox fx:id="paymentMethodCombo" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                            <!-- Card Number (shown when credit card selected) -->
+                            <Label text="Card Number:" styleClass="form-label" GridPane.rowIndex="1" visible="false" fx:id="cardNumberLabel"/>
+                            <TextField fx:id="cardNumberField" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="1" visible="false"/>
+
+                            <!-- Expiry Date -->
+                            <Label text="Expiry Date:" styleClass="form-label" GridPane.rowIndex="2" visible="false" fx:id="expiryDateLabel"/>
+                            <TextField fx:id="expiryDateField" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="2" visible="false" promptText="MM/YY"/>
+
+                            <!-- CVV -->
+                            <Label text="CVV:" styleClass="form-label" GridPane.rowIndex="3" visible="false" fx:id="cvvLabel"/>
+                            <TextField fx:id="cvvField" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="3" visible="false"/>
+                        </children>
+                    </GridPane>
+                </VBox>
+
+                <!-- Action Buttons -->
+                <HBox alignment="CENTER" spacing="30">
+                    <Button fx:id="confirmButton" text="Confirm Payment" styleClass="confirm-button" onAction="#handleConfirmPayment"/>
+                    <Button fx:id="cancelButton" text="Cancel" styleClass="cancel-button" onAction="#handleCancel"/>
+                </HBox>
+            </VBox>
+        </StackPane>
+    </center>
+</BorderPane>

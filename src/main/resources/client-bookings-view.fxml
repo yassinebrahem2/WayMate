@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:id="mainPane" stylesheets="@styles.css" fx:controller="controllers.ClientBookingsController">
+    <!-- Sidebar (same as before) -->
+    <left>
+        <VBox fx:id="sidebar" spacing="10" prefWidth="200" styleClass="sidebar">
+            <children>
+                <ImageView fitWidth="120" preserveRatio="true">
+                    <image>
+                        <Image url="@/logoforblue.png" />
+                    </image>
+                </ImageView>
+                <Button text="Profile" styleClass="sidebar-button" onAction="#handleProfileButton" />
+                <Button text="Vehicles" styleClass="sidebar-button" onAction="#handleVehiclesButton"/>
+                <Button text="Reviews" styleClass="sidebar-button" onAction="#handleReviewsButton" />
+                <Button text="Notifications" styleClass="sidebar-button" onAction="#handleNotificationsButton"/>
+                <Button text="Bookings History" styleClass="sidebar-button" onAction="#handleBookingsButton" />
+            </children>
+            <padding>
+                <Insets top="20" left="10" right="10" bottom="10" />
+            </padding>
+        </VBox>
+    </left>
+
+    <!-- Main Content Area -->
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="main-scroll-pane">
+            <VBox styleClass="bookings-main-container" spacing="20" alignment="TOP_CENTER">
+                <padding>
+                    <Insets top="40" right="40" bottom="40" left="40"/>
+                </padding>
+
+                <!-- Title -->
+                <Label styleClass="section-title" text="Your Bookings">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+
+                <!-- Bookings List -->
+                <VBox fx:id="bookingsContainer" styleClass="bookings-list-container" spacing="20"/>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>
