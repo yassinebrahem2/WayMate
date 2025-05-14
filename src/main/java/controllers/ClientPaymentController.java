@@ -1,5 +1,9 @@
 package controllers;
 
+import entities.Booking;
+import entities.Payment;
+import entities.User;
+import entities.Vehicle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,8 +12,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import services.PaymentService;
+import utils.Session;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 public class ClientPaymentController {
     @FXML private Label vehicleLabel;
@@ -24,18 +32,24 @@ public class ClientPaymentController {
     @FXML private Label cvvLabel;
 
     @FXML
+    private Label messageLabel;
+
+    private final PaymentService paymentService = new PaymentService();
+    private Payment payment;
+    private Booking currentBooking;
+
+    @FXML
     public void initialize() {
         // Setup payment methods
         paymentMethodCombo.getItems().addAll(
-                "Credit Card",
-                "PayPal",
-                "Bank Transfer",
-                "Cash"
+                "carte_bancaire",
+                "Paypal",
+                "en_espéces"
         );
 
         // Show/hide card fields based on selection
         paymentMethodCombo.valueProperty().addListener((obs, oldVal, newVal) -> {
-            boolean isCard = "Credit Card".equals(newVal);
+            boolean isCard = "carte_bancaire".equals(newVal);
             cardNumberField.setVisible(isCard);
             expiryDateField.setVisible(isCard);
             cvvField.setVisible(isCard);
@@ -52,24 +66,69 @@ public class ClientPaymentController {
         amountLabel.setText(amount);
     }
 
+
+    private void updateMessage(String message, boolean isSuccess) {
+        messageLabel.setText(message);
+        if (isSuccess) {
+            messageLabel.setStyle("-fx-text-fill: green; -fx-font-size: 16px;");
+        } else {
+            messageLabel.setStyle("-fx-text-fill: red; -fx-font-size: 16px;");
+        }
+    }
+
+    public void setBookingData(Booking booking) {
+        currentBooking = booking;
+    }
+
+
     @FXML
-    private void handleConfirmPayment() {
-        // Validate and process payment
+    private void handleConfirmPayment() throws SQLException {
+        Payment payment = new Payment();
         String method = paymentMethodCombo.getValue();
 
         if (method == null || method.isEmpty()) {
-            showAlert("Error", "Please select a payment method");
+
+            System.out.println("NULLLLLLLL");
+            updateMessage("Please select a payment method", false);
+
             return;
         }
 
-        if ("Credit Card".equals(method)) {
-            if (!validateCardDetails()) {
-                return;
-            }
+        boolean isCard = "carte_bancaire".equals(payment.getMethod());
+        if (isCard && (cardNumberField.getText().isEmpty() || cvvField.getText().isEmpty())) {
+            updateMessage("Veuillez remplir les informations de carte.", false);
+            return;
         }
+            /*if (isCard){
+                if (cardNumberField.getText().length() != 16 || !cardNumberField.getText().matches("\\d{16}")) {
+                    updateMessage("Le numéro de carte doit contenir exactement 16 chiffres.", false);
+                    return;
+                }
 
-        // Process payment...
-        showAlert("Success", "Payment processed successfully");
+                // Vérification du mot de passe (4 chiffres)
+                if (cardPasswordField.getText().length() != 4 || !cardPasswordField.getText().matches("\\d{4}")) {
+                    updateMessage("Le mot de passe doit contenir exactement 4 chiffres.", false);
+                    return;
+                }
+            }*/
+
+        if (payment != null) {
+            payment.setStatus("payé");
+            payment.setPaymentDate(LocalDateTime.now());
+
+
+            payment.setBookingId(currentBooking.getId());
+            payment.setAmount(currentBooking.getTotalPrice());
+            payment.setMethod(method);
+            payment.setStatus("en_attente");
+
+            paymentService.addPayment(payment);
+            messageLabel.setText("Paiement confirmé. Paiement enregistré, merci à la prochaine.");
+            messageLabel.setStyle("-fx-text-fill: green; -fx-font-size: 16px;");
+
+        } else {
+            updateMessage("Paiement échoué.", false);
+        }
     }
 
     private boolean validateCardDetails() {
@@ -82,6 +141,18 @@ public class ClientPaymentController {
         // Close the payment window
 //        ((Stage) cancelButton.getScene().getWindow()).close();
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     @FXML
     private void handleProfileButton(ActionEvent event) {

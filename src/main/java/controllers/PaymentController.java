@@ -3,15 +3,21 @@ package controllers;
 import entities.Payment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import services.PaymentService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -441,6 +447,119 @@ public class PaymentController implements Initializable {
             e.printStackTrace();
         }
         clearFields();
+    }
+
+    @FXML
+    private void handleProfileButton(ActionEvent event) {
+        try {
+            // Load the profile view
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/client-profile-view.fxml"));
+            Parent root = loader.load();
+
+            // Get the current stage
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+            // Set the new scene
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Navigation Error", "Could not load profile view: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void handleVehiclesButton(ActionEvent event) {
+        try {
+            // Load the profile view
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/client-vehicle-view.fxml"));
+            Parent root = loader.load();
+
+            // Get the current stage
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+            // Set the new scene
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Navigation Error", "Could not load profile view: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void handleReviewsButton(ActionEvent event) {
+        try {
+            // Load the profile view
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/client-reviews-view.fxml"));
+            Parent root = loader.load();
+
+            // Get the current stage
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+            // Set the new scene
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Navigation Error", "Could not load profile view: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void handleNotificationsButton(ActionEvent event) {
+        try {
+            // Load the profile view
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/client-notifications-view.fxml"));
+            Parent root = loader.load();
+
+            // Get the current stage
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+            // Set the new scene
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Navigation Error", "Could not load profile view: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void handleBookingsButton(ActionEvent event) {
+        try {
+            // Load the profile view
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/client-bookings-view.fxml"));
+            Parent root = loader.load();
+
+            // Get the current stage
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+            // Set the new scene
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Navigation Error", "Could not load profile view: " + e.getMessage());
+        }
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
 }
