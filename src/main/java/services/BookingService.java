@@ -41,7 +41,7 @@ public class BookingService {
                     Duration duration = Duration.between(booking.getStartTime(), booking.getEndTime());
                     double durationHours = duration.toMinutes() / 60.0;
                     double totalPrice = durationHours * pricePerHour;
-                    booking.setTotalPrice(totalPrice);
+//                    booking.setTotalPrice(totalPrice);
                 } else {
                     throw new SQLException("Véhicule non trouvé: " + booking.getVehicleLicensePlate());
                 }
