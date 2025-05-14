@@ -49,7 +49,7 @@ public class LoginController {
             try {
                 FXMLLoader loader;
                 if ("admin".equals(user.getRole())) {
-                    loader = new FXMLLoader(getClass().getResource("/admin-view.fxml"));
+                    loader = new FXMLLoader(getClass().getResource("/dashboard-main-view.fxml"));
                 } else {
                     loader = new FXMLLoader(getClass().getResource("/client-profile-view.fxml"));
                 }
