@@ -166,6 +166,7 @@ public class BookVehicleController {
         booking.setStatus("en_attente");
         booking.setTotalPrice(totalPrice);
 
+
         BookingService bookingService = new BookingService();
         try {
             bookingService.addBooking(booking);
@@ -186,6 +187,7 @@ public class BookVehicleController {
         Parent root = loader.load();
 
         ClientPaymentController paymentController = loader.getController();
+        paymentController.setBookingData(booking);
         paymentController.setBookingDetails(
                 currentVehicle.getBrand() + " " + currentVehicle.getModel(),
                 "From " + fullStartTime + " to " + fullEndTime,
