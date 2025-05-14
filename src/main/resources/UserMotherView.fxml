@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.layout.StackPane?>
+<BorderPane fx:id="mainPane" stylesheets="@styles.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="controllers.UserMotherViewController">
+    <!-- Sidebar -->
+    <left>
+        <VBox fx:id="sidebar" prefWidth="200" spacing="10" styleClass="sidebar">
+            <children>
+                <ImageView fitWidth="120" preserveRatio="true">
+                    <image>
+                        <Image url="@/logoforblue.png" />
+                    </image>
+                </ImageView>
+                <Button onAction="#openVehiclesUser" styleClass="sidebar-button" text="Vehicles" />
+                <Button onAction="#openUsersTableUser" styleClass="sidebar-button" text="Users" />
+                <Button onAction="#openNotificationsUser" styleClass="sidebar-button" text="Notifications" />
+                <Button onAction="#openPaymentsUser" styleClass="sidebar-button" text="Payments" />
+                <Button onAction="#openReservationsUser" styleClass="sidebar-button" text="Reservations" />
+            </children>
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="20" />
+            </padding>
+        </VBox>
+    </left>
+
+    <!-- Center content with StackPane -->
+    <center>
+        <StackPane fx:id="center" />
+    </center>
+</BorderPane>

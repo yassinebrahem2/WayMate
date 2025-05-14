@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="mainPane" stylesheets="@styles.css" xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            fx:controller="controllers.UserBookingListController">
+
+    <!-- Main Content Only -->
+    <center>
+        <AnchorPane>
+            <VBox alignment="TOP_CENTER" spacing="20.0"
+                  AnchorPane.topAnchor="20.0" AnchorPane.bottomAnchor="20.0"
+                  AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+
+                <!-- Title -->
+                <Label text="Mes Réservations"
+                       style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #0D47A1;" />
+
+                <!-- TableView -->
+                <TableView fx:id="bookingTableUser" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colLicensePlate" text="Matricule" resizable="true" prefWidth="150"/>
+                        <TableColumn fx:id="colStartTime" text="Date Début" resizable="true" prefWidth="180"/>
+                        <TableColumn fx:id="colEndTime" text="Date Fin" resizable="true" prefWidth="180"/>
+                        <TableColumn fx:id="colStatus" text="Statut" resizable="true" prefWidth="120"/>
+                        <TableColumn fx:id="colTotalPrice" text="Prix Total" resizable="true" prefWidth="120"/>
+                    </columns>
+                </TableView>
+
+                <!-- Delete Button -->
+                <Button fx:id="deletebooking" text="Supprimer" onAction="#handleDeleteBooking"/>
+            </VBox>
+
+            <!-- Back Button -->
+            <Button fx:id="Back" text="Back" onAction="#handleBackToProfile"
+                    AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0"/>
+        </AnchorPane>
+    </center>
+</BorderPane>

@@ -2,6 +2,7 @@ package controllers;
 
 import entities.Notification;
 import entities.User;
+import javafx.event.ActionEvent;
 import services.UserService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -405,5 +406,20 @@ public class AfficherNotificationController {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Erreur lors de l'ouverture du formulaire de modification").showAndWait();
         }
+    }
+
+    public void openVehiclesUser(ActionEvent actionEvent) {
+    }
+
+    public void openUsersTableUser(ActionEvent actionEvent) {
+    }
+
+    public void openNotificationsUser(ActionEvent actionEvent) {
+    }
+
+    public void openPaymentsUser(ActionEvent actionEvent) {
+    }
+
+    public void openReservationsUser(ActionEvent actionEvent) {
     }
 }

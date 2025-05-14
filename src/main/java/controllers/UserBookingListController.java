@@ -4,6 +4,7 @@ import entities.Booking;
 import entities.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -135,5 +136,20 @@ public class UserBookingListController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void openVehiclesUser(ActionEvent actionEvent) {
+    }
+
+    public void openUsersTableUser(ActionEvent actionEvent) {
+    }
+
+    public void openNotificationsUser(ActionEvent actionEvent) {
+    }
+
+    public void openPaymentsUser(ActionEvent actionEvent) {
+    }
+
+    public void openReservationsUser(ActionEvent actionEvent) {
     }
 }
