@@ -38,6 +38,8 @@ public class Review {;
     public void setVehicle_license_plate(String vehicle_license_plate) {
         this.vehicle_license_plate = vehicle_license_plate;
     }
+    public void setRating(int rating) { this.rating = rating; }
+    public void setComment(String comment) { this.comment = comment; }
     public void setCreated_at(String created_at) {
         this.created_at = created_at;
     }

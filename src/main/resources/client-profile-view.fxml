@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:id="mainPane" stylesheets="@styles.css" fx:controller="controllers.ClientProfileController">
+    <!-- Sidebar -->
+    <left>
+        <VBox fx:id="sidebar" spacing="10" prefWidth="200" styleClass="sidebar">
+            <children>
+                <ImageView fitWidth="120" preserveRatio="true">
+                    <image>
+                        <Image url="@/logoforblue.png" />
+                    </image>
+                </ImageView>
+                <Button text="Vehicles" styleClass="sidebar-button" />
+                <Button text="Users" styleClass="sidebar-button" />
+                <Button text="Notifications" styleClass="sidebar-button" />
+                <Button text="Payments" styleClass="sidebar-button" />
+                <Button text="Reservations" styleClass="sidebar-button" />
+            </children>
+            <padding>
+                <Insets top="20" left="10" right="10" bottom="10" />
+            </padding>
+        </VBox>
+    </left>
+
+    <!-- Main Content Area -->
+    <center>
+        <StackPane prefHeight="900.0" prefWidth="1600.0">
+            <!-- User Details Card -->
+            <VBox styleClass="user-details-container" alignment="CENTER">
+                <VBox styleClass="user-details-card" alignment="TOP_CENTER" spacing="20">
+                    <padding>
+                        <Insets top="40" right="40" bottom="40" left="40"/>
+                    </padding>
+
+                    <!-- Title -->
+                    <Label styleClass="user-details-title" text="PROFILE DETAILS">
+                        <font>
+                            <Font name="System Bold" size="24.0" />
+                        </font>
+                    </Label>
+
+                    <!-- User Details Grid -->
+                    <GridPane hgap="30" vgap="20" alignment="CENTER">
+                        <columnConstraints>
+                            <ColumnConstraints halignment="RIGHT" minWidth="200" prefWidth="200"/>
+                            <ColumnConstraints halignment="LEFT" minWidth="300" prefWidth="300"/>
+                        </columnConstraints>
+
+                        <children>
+                            <!-- Row 0 -->
+                            <Label text="First Name:" styleClass="user-detail-label" GridPane.rowIndex="0"/>
+                            <Label fx:id="firstNameLabel" styleClass="user-detail-value" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                            <!-- Row 1 -->
+                            <Label text="Last Name:" styleClass="user-detail-label" GridPane.rowIndex="1"/>
+                            <Label fx:id="lastNameLabel" styleClass="user-detail-value" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                            <!-- Row 2 -->
+                            <Label text="Username:" styleClass="user-detail-label" GridPane.rowIndex="2"/>
+                            <Label fx:id="usernameLabel" styleClass="user-detail-value" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                            <!-- Row 3 -->
+                            <Label text="Email:" styleClass="user-detail-label" GridPane.rowIndex="3"/>
+                            <Label fx:id="emailLabel" styleClass="user-detail-value" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+                            <!-- Row 4 -->
+                            <Label text="Phone:" styleClass="user-detail-label" GridPane.rowIndex="4"/>
+                            <Label fx:id="phoneLabel" styleClass="user-detail-value" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+                            <!-- Row 5 -->
+                            <Label text="Role:" styleClass="user-detail-label" GridPane.rowIndex="5"/>
+                            <Label fx:id="roleLabel" styleClass="user-detail-value" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+                            <!-- Row 6 -->
+                            <Label text="Member Since:" styleClass="user-detail-label" GridPane.rowIndex="6"/>
+                            <Label fx:id="createdAtLabel" styleClass="user-detail-value" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+                        </children>
+                    </GridPane>
+
+                    <!-- Action Buttons -->
+                    <HBox alignment="CENTER" spacing="30" styleClass="button-container">
+                        <Button fx:id="editUserButton" mnemonicParsing="false" onAction="#handleEdit"
+                                prefHeight="50.0" prefWidth="200.0" styleClass="edit-button" text="EDIT PROFILE" />
+                        <Button fx:id="deleteUserButton" mnemonicParsing="false" onAction="#handleDeleteAccount"
+                                prefHeight="50.0" prefWidth="200.0" styleClass="delete-button" text="DELETE ACCOUNT" />
+                    </HBox>
+                </VBox>
+            </VBox>
+        </StackPane>
+    </center>
+</BorderPane>

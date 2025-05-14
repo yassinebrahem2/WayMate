@@ -49,7 +49,7 @@ public class ReviewFormController {
             String createdAt = createdAtField.getText();
 
             Review review = new Review(0, userId, vehiclePlate, rating, comment, createdAt);
-            reviewService.ajouter(review);
+            reviewService.Add(review);
 
             showAlert(Alert.AlertType.INFORMATION, "Succès", "Avis ajouté avec succès !");
             clearFields();

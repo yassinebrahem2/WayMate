@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:id="mainPane" stylesheets="@styles.css" fx:controller="controllers.ClientVehicleController">
+    <!-- Sidebar (same as before) -->
+    <left>
+        <VBox fx:id="sidebar" spacing="10" prefWidth="200" styleClass="sidebar">
+            <children>
+                <ImageView fitWidth="120" preserveRatio="true">
+                    <image>
+                        <Image url="@/logoforblue.png" />
+                    </image>
+                </ImageView>
+                <Button text="Vehicles" styleClass="sidebar-button" />
+                <Button text="Users" styleClass="sidebar-button" />
+                <Button text="Notifications" styleClass="sidebar-button" />
+                <Button text="Payments" styleClass="sidebar-button" />
+                <Button text="Reservations" styleClass="sidebar-button" />
+            </children>
+            <padding>
+                <Insets top="20" left="10" right="10" bottom="10" />
+            </padding>
+        </VBox>
+    </left>
+
+    <!-- Main Content Area -->
+    <center>
+        <StackPane prefHeight="900.0" prefWidth="1600.0">
+            <VBox styleClass="vehicle-listing-container" spacing="20">
+                <!-- Filter Section -->
+                <VBox styleClass="filter-section">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+                    <children>
+                        <Label styleClass="section-title" text="Find Your Perfect Vehicle">
+                            <font>
+                                <Font name="System Bold" size="20.0" />
+                            </font>
+                        </Label>
+
+                        <HBox spacing="15" alignment="CENTER_LEFT">
+                            <children>
+                                <!-- Vehicle Type Filter -->
+                                <ComboBox fx:id="typeFilter" promptText="Vehicle Type" styleClass="filter-combo">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="All Types" />
+                                            <String fx:value="voiture" />
+                                            <String fx:value="vélo" />
+                                            <String fx:value="trotinette" />
+                                            <String fx:value="van" />
+                                        </FXCollections>
+                                    </items>
+                                </ComboBox>
+
+                                <!-- Price Range Filter -->
+                                <ComboBox fx:id="priceFilter" promptText="Price Range" styleClass="filter-combo">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="All Prices" />
+                                            <String fx:value="Under $50/day" />
+                                            <String fx:value="$50-$100/day" />
+                                            <String fx:value="Over $100/day" />
+                                        </FXCollections>
+                                    </items>
+                                </ComboBox>
+
+                                <!-- Search Field -->
+                                <TextField fx:id="searchField" promptText="Search vehicles..." styleClass="search-field">
+                                    <HBox.margin>
+                                        <Insets left="30"/>
+                                    </HBox.margin>
+                                </TextField>
+
+                                <!-- Filter Button -->
+                                <Button text="Apply Filters" styleClass="filter-button" onAction="#applyFilters"/>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+
+                <!-- Vehicle Cards Container -->
+                <VBox styleClass="cards-section">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+                    <ScrollPane fitToWidth="true" styleClass="vehicle-scroll-pane">
+                        <content>
+                            <FlowPane fx:id="vehicleCardsContainer" styleClass="vehicle-cards-container"
+                                      hgap="20" vgap="20" alignment="TOP_CENTER">
+                                <padding>
+                                    <Insets top="10" right="20" bottom="20" left="20"/>
+                                </padding>
+                            </FlowPane>
+                        </content>
+                    </ScrollPane>
+                </VBox>
+            </VBox>
+        </StackPane>
+    </center>
+</BorderPane>

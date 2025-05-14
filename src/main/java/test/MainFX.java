@@ -3,6 +3,7 @@ package test;
 
 import controllers.*;
 import entities.User;
+import services.UserService;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -163,24 +164,31 @@ public class MainFX extends Application {
 
 
 
-      public void start(Stage primaryStage) throws Exception {
-          // Load the FXML file
-          FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard-main-view.fxml"));
-          Parent root = loader.load();
+    public void start(Stage primaryStage) throws Exception {
+        UserService userService = new UserService();
+        User user = userService.getUserById(3);
+        Session.getInstance().setCurrentUser(user);
 
-          // Create the scene
-          Scene scene = new Scene(root);
 
-          // Load the CSS file
-          scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
 
-          // Set up the stage
-          primaryStage.setTitle("Système de Gestion des Véhicules");
-          primaryStage.setScene(scene);
-          primaryStage.setMaximized(false); // Optional: Start maximized
-          primaryStage.setResizable(true);
-          primaryStage.show();
-         }
+        // Load the FXML file
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/client-vehicle-view.fxml"));
+        Parent root = loader.load();
+
+        // Create the scene
+        Scene scene = new Scene(root);
+
+        // Load the CSS file
+        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+
+        // Set up the stage
+        primaryStage.setTitle("Système de Gestion des Véhicules");
+        primaryStage.setScene(scene);
+        primaryStage.setMaximized(false); // Optional: Start maximized
+        primaryStage.setResizable(true);
+        primaryStage.show();
+    }
 //          public static void main (String[] args){
 //              launch();
 //          }
