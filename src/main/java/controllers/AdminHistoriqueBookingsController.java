@@ -432,4 +432,37 @@ public class AdminHistoriqueBookingsController {
     public void setConnectedUserId(int userId) {
         // Implémentation si nécessaire pour votre logique
     }
+    @FXML
+    void BringCalendar(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/booking-admin-calendar.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Calendar");
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void editBookings(ActionEvent event) {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/admin-edit-bookings-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Edit Bookings");
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.show();
+            Stage originalStage = (Stage) mainPane.getScene().getWindow();
+            originalStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -1,23 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:id="mainPane" stylesheets="@styles.css" fx:controller="controllers.AdminEditBookingsController">
+    <!-- Sidebar -->
+    <left>
+        <VBox fx:id="sidebar" spacing="10" prefWidth="200" styleClass="sidebar">
+            <children>
+                <ImageView fitWidth="120" preserveRatio="true">
+                    <image>
+                        <Image url="@/logoforblue.png" />
+                    </image>
+                </ImageView>
+                <ImageView fitWidth="120" preserveRatio="true">
+                    <image>
+                        <Image url="@/logoforblue.png" />
+                    </image>
+                </ImageView>
+                <Button onAction="#openVehiclesAdmin" styleClass="sidebar-button" text="Vehicles" />
+                <Button onAction="#openUsersTableAdmin" styleClass="sidebar-button" text="Users" />
+                <Button onAction="#openNotificationsAdmin" styleClass="sidebar-button" text="Feedback" />
+                <Button onAction="#openPaymentsAdmin" styleClass="sidebar-button" text="Payments" />
+                <Button onAction="#openReservationsAdmin" styleClass="sidebar-button" text="Reservations" />
+            </children>
+            <padding>
+                <Insets top="20" left="10" right="10" bottom="10" />
+            </padding>
+        </VBox>
+    </left>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminEditBookingsController">
-    <TableView fx:id="bookingTable" prefHeight="530.0" prefWidth="722.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="68.0" AnchorPane.topAnchor="10.0">
-        <columns>
-            <TableColumn fx:id="idColumn" text="ID" />
-            <TableColumn fx:id="userIdColumn" text="User ID" />
-            <TableColumn fx:id="vehicleColumn" text="Vehicle" />
-            <TableColumn fx:id="startTimeColumn" text="Start Time" />
-            <TableColumn fx:id="endTimeColumn" text="End Time" />
-            <TableColumn fx:id="createdAtColumn" text="Created At" />
-            <TableColumn fx:id="priceColumn" text="Price" />
-            <TableColumn fx:id="statusColumn" text="Status" />
-            <TableColumn fx:id="actionColumn" text="Actions" />
-        </columns>
-    </TableView>
-    <Button fx:id="saveChangesButton" onAction="#handleSaveChanges" text="Enregistrer les modifications" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-</AnchorPane>
+    <!-- Main Content Area -->
+    <center>
+        <AnchorPane prefHeight="900.0" prefWidth="1600.0" styleClass="main-area" xmlns="http://javafx.com/javafx/23.0.1">
+            <children>
+                <TableView fx:id="bookingTable" prefHeight="830.0" prefWidth="1580.0" styleClass="table-view" AnchorPane.topAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.bottomAnchor="60.0">
+                    <columns>
+                        <TableColumn fx:id="idColumn" text="ID" prefWidth="100.0" />
+                        <TableColumn fx:id="userIdColumn" text="User ID" prefWidth="100.0" />
+                        <TableColumn fx:id="vehicleColumn" text="Vehicle" prefWidth="200.0" />
+                        <TableColumn fx:id="startTimeColumn" text="Start Time" prefWidth="200.0" />
+                        <TableColumn fx:id="endTimeColumn" text="End Time" prefWidth="200.0" />
+                        <TableColumn fx:id="createdAtColumn" text="Created At" prefWidth="200.0" />
+                        <TableColumn fx:id="priceColumn" text="Price" prefWidth="100.0" />
+                        <TableColumn fx:id="statusColumn" text="Status" prefWidth="100.0" />
+                        <TableColumn fx:id="actionColumn" text="Actions" prefWidth="150.0" />
+                    </columns>
+                </TableView>
+                <Button fx:id="saveChangesButton" onAction="#handleSaveChanges" text="Enregistrer les modifications" styleClass="sidebar-button" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+            </children>
+        </AnchorPane>
+    </center>
+</BorderPane>

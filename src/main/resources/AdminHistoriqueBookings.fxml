@@ -7,7 +7,6 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,7 +14,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="mainPane" stylesheets="@styles.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="controllers.AdminHistoriqueBookingsController">
+<BorderPane fx:id="mainPane" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminHistoriqueBookingsController">
     <!-- Sidebar -->
     <left>
         <VBox fx:id="sidebar" prefWidth="200" spacing="10" styleClass="sidebar">
@@ -39,36 +38,38 @@
     <!-- Center region with booking history view -->
     <center>
         <AnchorPane prefHeight="400.0" prefWidth="600.0">
-            <VBox prefHeight="600.0" prefWidth="800.0" spacing="15.0" AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+            <VBox prefHeight="600.0" prefWidth="800.0" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                 <!-- Header with Title -->
-                <Label text="Booking History" styleClass="header-label" alignment="CENTER" prefWidth="Infinity" />
+                <Label alignment="CENTER" prefWidth="Infinity" styleClass="header-label" text="Booking History" />
 
                 <!-- Search bar for vehicle license plate -->
-                <HBox spacing="15.0" alignment="CENTER_LEFT" styleClass="control-section">
-                    <Label text="Search by Vehicle License Plate:" styleClass="input-label" />
-                    <TextField fx:id="vehicleSearchField" promptText="Enter vehicle license plate" onAction="#handleSearch" styleClass="styled-textfield" prefWidth="250.0" />
+                <HBox alignment="CENTER_LEFT" spacing="15.0" styleClass="control-section">
+                    <Label styleClass="input-label" text="Search by Vehicle License Plate:" />
+                    <TextField fx:id="vehicleSearchField" onAction="#handleSearch" prefWidth="250.0" promptText="Enter vehicle license plate" styleClass="styled-textfield" />
+               <Button mnemonicParsing="false" onAction="#editBookings" text="Daily Bookings" />
+               <Button mnemonicParsing="false" onAction="#BringCalendar" text="Calendar" />
                 </HBox>
 
                 <!-- Checkboxes for filtering by status -->
-                <HBox spacing="25.0" alignment="CENTER_LEFT" styleClass="control-section">
-                    <CheckBox fx:id="enCoursCheckBox" text="En Cours" onAction="#handleFilter" styleClass="styled-checkbox" />
-                    <CheckBox fx:id="termineeCheckBox" text="Terminée" onAction="#handleFilter" styleClass="styled-checkbox" />
-                    <CheckBox fx:id="annuleeCheckBox" text="Annulée" onAction="#handleFilter" styleClass="styled-checkbox" />
-                    <CheckBox fx:id="confirmeeCheckBox" text="Confirmée" onAction="#handleFilter" styleClass="styled-checkbox"/>
+                <HBox alignment="CENTER_LEFT" spacing="25.0" styleClass="control-section">
+                    <CheckBox fx:id="enCoursCheckBox" onAction="#handleFilter" styleClass="styled-checkbox" text="En Cours" />
+                    <CheckBox fx:id="termineeCheckBox" onAction="#handleFilter" styleClass="styled-checkbox" text="Terminée" />
+                    <CheckBox fx:id="annuleeCheckBox" onAction="#handleFilter" styleClass="styled-checkbox" text="Annulée" />
+                    <CheckBox fx:id="confirmeeCheckBox" onAction="#handleFilter" styleClass="styled-checkbox" text="Confirmée" />
                 </HBox>
 
                 <!-- TableView for displaying filtered bookings -->
                 <TableView fx:id="bookingTableHistorique" styleClass="styled-table" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="idColumn" text="ID" prefWidth="60.0" />
-                        <TableColumn fx:id="userIdColumn" text="User ID" prefWidth="80.0" />
-                        <TableColumn fx:id="vehicleColumn" text="Vehicle" prefWidth="100.0" />
-                        <TableColumn fx:id="startTimeColumn" text="Start Time" prefWidth="150.0" />
-                        <TableColumn fx:id="endTimeColumn" text="End Time" prefWidth="150.0" />
-                        <TableColumn fx:id="createdAtColumn" text="Created At" prefWidth="150.0" />
-                        <TableColumn fx:id="priceColumn" text="Price" prefWidth="80.0" />
-                        <TableColumn fx:id="statusColumn" text="Status" prefWidth="100.0" />
-                        <TableColumn fx:id="actionColumn" text="Actions" prefWidth="120.0" />
+                        <TableColumn fx:id="idColumn" prefWidth="60.0" text="ID" />
+                        <TableColumn fx:id="userIdColumn" prefWidth="80.0" text="User ID" />
+                        <TableColumn fx:id="vehicleColumn" prefWidth="100.0" text="Vehicle" />
+                        <TableColumn fx:id="startTimeColumn" prefWidth="150.0" text="Start Time" />
+                        <TableColumn fx:id="endTimeColumn" prefWidth="150.0" text="End Time" />
+                        <TableColumn fx:id="createdAtColumn" prefWidth="150.0" text="Created At" />
+                        <TableColumn fx:id="priceColumn" prefWidth="80.0" text="Price" />
+                        <TableColumn fx:id="statusColumn" prefWidth="100.0" text="Status" />
+                        <TableColumn fx:id="actionColumn" prefWidth="120.0" text="Actions" />
                     </columns>
                 </TableView>
             </VBox>

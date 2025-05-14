@@ -4,16 +4,23 @@ package controllers;
 import entities.Booking;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import services.BookingService;
 import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.DoubleStringConverter;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -42,6 +49,7 @@ public class AdminEditBookingsController {
 
     @FXML
     private TableColumn<Booking, String> statusColumn;
+    @FXML private BorderPane mainPane;
 
     @FXML
     private TableColumn<Booking, Integer> userIdColumn;
@@ -284,6 +292,87 @@ public class AdminEditBookingsController {
             showError("Réservation non trouvée.");
         }
     }
+    @FXML
+    void openNotificationsAdmin(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/review-form-admin.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Reservation");
+            stage.setScene(new Scene(root));
+            stage.show();
+            Stage originalStage = (Stage) mainPane.getScene().getWindow();
+            originalStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void openPaymentsAdmin(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/payment-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Payments");
+            stage.setScene(new Scene(root));
+            stage.show();
+            Stage originalStage = (Stage) mainPane.getScene().getWindow();
+            originalStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void openReservationsAdmin(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminHistoriqueBookings.fxml"));
+            Parent root = loader.load();
+            root.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+            Stage stage = new Stage();
+            stage.setTitle("Reservation");
+            stage.setScene(new Scene(root));
+            stage.show();
+            Stage originalStage = (Stage) mainPane.getScene().getWindow();
+            originalStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void openUsersTableAdmin(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/admin-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Users");
+            stage.setScene(new Scene(root));
+            stage.show();
+            Stage originalStage = (Stage) mainPane.getScene().getWindow();
+            originalStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void openVehiclesAdmin(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/admin-dashboard-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Ajouter un Véhicule");
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.show();
+            Stage originalStage = (Stage) mainPane.getScene().getWindow();
+            originalStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 
@@ -312,6 +401,7 @@ public class AdminEditBookingsController {
     public void setConnectedUserId(int id) {
         // Optionally implement if needed
     }
+
 }
 
 
