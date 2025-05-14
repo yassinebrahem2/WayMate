@@ -173,11 +173,11 @@ public class MainFX extends Application {
 
         // Load the FXML file
 
-// <<<<<<< feature/admin
+// <<<<<<< feature/admi
 //           // Load the CSS file
 //           scene.getStylesheets().add(getClass().getResource("/dash.css").toExternalForm());
 // =======
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminHistoriqueBookings.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/login-view.fxml"));
         Parent root = loader.load();
 
 

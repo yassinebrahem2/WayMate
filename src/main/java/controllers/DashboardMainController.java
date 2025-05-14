@@ -387,4 +387,22 @@ public class DashboardMainController implements Initializable {
             e.printStackTrace();
         }
     }
+    @FXML
+    void bringNotif(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/affichernotification.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Ajouter un Véhicule");
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.show();
+            Stage originalStage = (Stage) mainPane.getScene().getWindow();
+            originalStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }

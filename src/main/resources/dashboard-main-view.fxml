@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.chart.PieChart?>
-<?import javafx.scene.chart.BarChart?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.ScrollPane?>
-<BorderPane fx:id="mainPane" stylesheets="@styles.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="controllers.DashboardMainController">
+<BorderPane fx:id="mainPane" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DashboardMainController">
     <!-- Sidebar -->
     <left>
         <VBox fx:id="sidebar" prefWidth="200" spacing="10" styleClass="sidebar">
@@ -34,6 +36,7 @@
                 <Button onAction="#openNotificationsAdmin" styleClass="sidebar-button" text="Feedback" />
                 <Button onAction="#openPaymentsAdmin" styleClass="sidebar-button" text="Payments" />
                 <Button onAction="#openReservationsAdmin" styleClass="sidebar-button" text="Reservations" />
+            <Button mnemonicParsing="false" onAction="#bringNotif" prefHeight="23.0" prefWidth="159.0" text="Notificantion" />
             </children>
             <padding>
                 <Insets bottom="10" left="10" right="10" top="20" />
@@ -45,12 +48,12 @@
             <content>
                 <VBox spacing="20" styleClass="dashboard-content">
                     <padding>
-                        <Insets top="20" right="20" bottom="20" left="20" />
+                        <Insets bottom="20" left="20" right="20" top="20" />
                     </padding>
 
                     <!-- Dashboard Header -->
                     <HBox alignment="CENTER_LEFT" spacing="10">
-                        <Label text="Dashboard Overview" styleClass="dashboard-title">
+                        <Label styleClass="dashboard-title" text="Dashboard Overview">
                             <font>
                                 <Font name="System Bold" size="24" />
                             </font>
@@ -58,55 +61,55 @@
                     </HBox>
 
                     <!-- Statistics Cards Row -->
-                    <HBox spacing="15" alignment="CENTER">
+                    <HBox alignment="CENTER" spacing="15">
                         <!-- Vehicles Card -->
                         <StackPane styleClass="stat-card">
-                            <Rectangle width="220" height="120" arcWidth="20" arcHeight="20" styleClass="card-background" />
+                            <Rectangle arcHeight="20" arcWidth="20" height="120" styleClass="card-background" width="220" />
                             <VBox alignment="CENTER" spacing="5">
-                                <Label text="Total Vehicles" styleClass="card-title" />
-                                <Label fx:id="totalVehiclesLabel" text="--" styleClass="card-value" />
+                                <Label styleClass="card-title" text="Total Vehicles" />
+                                <Label fx:id="totalVehiclesLabel" styleClass="card-value" text="--" />
                                 <HBox alignment="CENTER" spacing="5">
-                                    <Label text="Available:" styleClass="card-subtitle" />
-                                    <Label fx:id="availableVehiclesLabel" text="--" styleClass="card-subtitle" />
+                                    <Label styleClass="card-subtitle" text="Available:" />
+                                    <Label fx:id="availableVehiclesLabel" styleClass="card-subtitle" text="--" />
                                 </HBox>
                             </VBox>
                         </StackPane>
 
                         <!-- Users Card -->
                         <StackPane styleClass="stat-card">
-                            <Rectangle width="220" height="120" arcWidth="20" arcHeight="20" styleClass="card-background" />
+                            <Rectangle arcHeight="20" arcWidth="20" height="120" styleClass="card-background" width="220" />
                             <VBox alignment="CENTER" spacing="5">
-                                <Label text="Registered Users" styleClass="card-title" />
-                                <Label fx:id="totalUsersLabel" text="--" styleClass="card-value" />
+                                <Label styleClass="card-title" text="Registered Users" />
+                                <Label fx:id="totalUsersLabel" styleClass="card-value" text="--" />
                                 <HBox alignment="CENTER" spacing="5">
-                                    <Label text="New this month:" styleClass="card-subtitle" />
-                                    <Label fx:id="newUsersLabel" text="--" styleClass="card-subtitle" />
+                                    <Label styleClass="card-subtitle" text="New this month:" />
+                                    <Label fx:id="newUsersLabel" styleClass="card-subtitle" text="--" />
                                 </HBox>
                             </VBox>
                         </StackPane>
 
                         <!-- Bookings Card -->
                         <StackPane styleClass="stat-card">
-                            <Rectangle width="220" height="120" arcWidth="20" arcHeight="20" styleClass="card-background" />
+                            <Rectangle arcHeight="20" arcWidth="20" height="120" styleClass="card-background" width="220" />
                             <VBox alignment="CENTER" spacing="5">
-                                <Label text="Active Bookings" styleClass="card-title" />
-                                <Label fx:id="activeBookingsLabel" text="--" styleClass="card-value" />
+                                <Label styleClass="card-title" text="Active Bookings" />
+                                <Label fx:id="activeBookingsLabel" styleClass="card-value" text="--" />
                                 <HBox alignment="CENTER" spacing="5">
-                                    <Label text="Total Revenue:" styleClass="card-subtitle" />
-                                    <Label fx:id="totalRevenueLabel" text="--" styleClass="card-subtitle" />
+                                    <Label styleClass="card-subtitle" text="Total Revenue:" />
+                                    <Label fx:id="totalRevenueLabel" styleClass="card-subtitle" text="--" />
                                 </HBox>
                             </VBox>
                         </StackPane>
 
                         <!-- Reviews Card -->
                         <StackPane styleClass="stat-card">
-                            <Rectangle width="220" height="120" arcWidth="20" arcHeight="20" styleClass="card-background" />
+                            <Rectangle arcHeight="20" arcWidth="20" height="120" styleClass="card-background" width="220" />
                             <VBox alignment="CENTER" spacing="5">
-                                <Label text="Average Rating" styleClass="card-title" />
-                                <Label fx:id="avgRatingLabel" text="--" styleClass="card-value" />
+                                <Label styleClass="card-title" text="Average Rating" />
+                                <Label fx:id="avgRatingLabel" styleClass="card-value" text="--" />
                                 <HBox alignment="CENTER" spacing="5">
-                                    <Label text="Total Reviews:" styleClass="card-subtitle" />
-                                    <Label fx:id="totalReviewsLabel" text="--" styleClass="card-subtitle" />
+                                    <Label styleClass="card-subtitle" text="Total Reviews:" />
+                                    <Label fx:id="totalReviewsLabel" styleClass="card-subtitle" text="--" />
                                 </HBox>
                             </VBox>
                         </StackPane>
@@ -124,19 +127,19 @@
                         </rowConstraints>
 
                         <!-- Vehicle Types Chart -->
-                        <StackPane GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="chart-card">
-                            <Rectangle width="460" height="220" arcWidth="20" arcHeight="20" styleClass="card-background" />
+                        <StackPane styleClass="chart-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <Rectangle arcHeight="20" arcWidth="20" height="220" styleClass="card-background" width="460" />
                             <VBox alignment="CENTER" spacing="5">
-                                <Label text="Vehicle Types Distribution" styleClass="chart-title" />
+                                <Label styleClass="chart-title" text="Vehicle Types Distribution" />
                                 <PieChart fx:id="vehicleTypesChart" legendVisible="true" />
                             </VBox>
                         </StackPane>
 
                         <!-- Bookings Over Time -->
-                        <StackPane GridPane.columnIndex="1" GridPane.rowIndex="0" styleClass="chart-card">
-                            <Rectangle width="460" height="220" arcWidth="20" arcHeight="20" styleClass="card-background" />
+                        <StackPane styleClass="chart-card" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                            <Rectangle arcHeight="20" arcWidth="20" height="220" styleClass="card-background" width="460" />
                             <VBox alignment="CENTER" spacing="5">
-                                <Label text="Bookings Over Time" styleClass="chart-title" />
+                                <Label styleClass="chart-title" text="Bookings Over Time" />
                                 <LineChart fx:id="bookingsTimeChart">
                                     <xAxis>
                                         <CategoryAxis label="Date" />
@@ -149,10 +152,10 @@
                         </StackPane>
 
                         <!-- Revenue by Vehicle Type -->
-                        <StackPane GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="chart-card">
-                            <Rectangle width="460" height="220" arcWidth="20" arcHeight="20" styleClass="card-background" />
+                        <StackPane styleClass="chart-card" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                            <Rectangle arcHeight="20" arcWidth="20" height="220" styleClass="card-background" width="460" />
                             <VBox alignment="CENTER" spacing="5">
-                                <Label text="Revenue by Vehicle Type" styleClass="chart-title" />
+                                <Label styleClass="chart-title" text="Revenue by Vehicle Type" />
                                 <BarChart fx:id="revenueByVehicleChart">
                                     <xAxis>
                                         <CategoryAxis label="Vehicle Type" />
@@ -165,10 +168,10 @@
                         </StackPane>
 
                         <!-- User Activity -->
-                        <StackPane GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="chart-card">
-                            <Rectangle width="460" height="220" arcWidth="20" arcHeight="20" styleClass="card-background" />
+                        <StackPane styleClass="chart-card" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <Rectangle arcHeight="20" arcWidth="20" height="220" styleClass="card-background" width="460" />
                             <VBox alignment="CENTER" spacing="5">
-                                <Label text="Payment Status Distribution" styleClass="chart-title" />
+                                <Label styleClass="chart-title" text="Payment Status Distribution" />
                                 <PieChart fx:id="paymentStatusChart" legendVisible="true" />
                             </VBox>
                         </StackPane>

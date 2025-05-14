@@ -26,7 +26,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
-public class ClientNotificationsController {
+public class AdminNotificationController {
 
     @FXML private TableView<Notification> tableNotifications;
     @FXML private TableColumn<Notification, String> colNomPrenom;
@@ -36,12 +36,13 @@ public class ClientNotificationsController {
     @FXML private TableColumn<Notification, Void> colActions;
     @FXML private CheckBox checkUnreadOnly;
     @FXML private Button btnRefresh;
-
-
+    @FXML private Button btnAjouter;
+    @FXML private Button btnAfficherStats;
+    @FXML private Button btnSendEmail;
     private boolean triAscendant = true;
-   @FXML private Button btnSortDate;
-   @FXML private TextField searchField;
-   private final ContextMenu autoCompletePopup = new ContextMenu();
+    @FXML private Button btnSortDate;
+    @FXML private TextField searchField;
+    private final ContextMenu autoCompletePopup = new ContextMenu();
     private final UserService userService = new UserService();
 
     private User utilisateurConnecte = new User(2, "Bob", "Martin", null, null, null, null, "admin", null);
@@ -94,11 +95,68 @@ public class ClientNotificationsController {
             alert.showAndWait();
         });
 
-
+        if (utilisateurConnecte != null && utilisateurConnecte.getRole().equalsIgnoreCase("admin")) {
+            btnAjouter.setManaged(true);  // Le rendre visible uniquement pour l'admin
+        } else {
+            btnAjouter.setManaged(false);  // Le cacher pour les autres utilisateurs
+        }
+        btnAjouter.setOnAction(e -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ajouterNotification.fxml"));
+                Parent root = loader.load();
+                Stage stage = new Stage();
+                stage.setTitle("Ajouter Notification");
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Impossible d'ouvrir l'interface d'ajout").showAndWait();
+            }
+        });
         // Afficher le bouton "Statistiques" uniquement pour l'admin
-
+        if (utilisateurConnecte != null && utilisateurConnecte.getRole().equalsIgnoreCase("admin")) {
+            btnAfficherStats.setManaged(true);
+            btnAfficherStats.setVisible(true);
+        } else {
+            btnAfficherStats.setManaged(false);
+            btnAfficherStats.setVisible(false);
+        }
+        btnAfficherStats.setOnAction(e -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/statistiqueNotification.fxml"));
+                Parent root = loader.load();
+                Stage stage = new Stage();
+                stage.setTitle("Statistiques des Notifications");
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Impossible d'ouvrir la fenêtre des statistiques").showAndWait();
+            }
+        });
         // Gestion du bouton "Envoyer Email"
+        if (utilisateurConnecte != null && utilisateurConnecte.getRole().equalsIgnoreCase("admin")) {
+            btnSendEmail.setManaged(true);
+            btnSendEmail.setVisible(true);
 
+            btnSendEmail.setOnAction(e -> {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/emailNotification.fxml"));
+                    Parent root = loader.load();
+                    Stage stage = new Stage();
+                    stage.setTitle("Envoyer un Email");
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                    new Alert(Alert.AlertType.ERROR, "Erreur lors de l'ouverture de l'interface d'email").showAndWait();
+                }
+            });
+
+        } else {
+            btnSendEmail.setManaged(false);
+            btnSendEmail.setVisible(false);
+        }
         //Tri par date
         btnSortDate.setText("Trier par date ↑");
         //Auto-completion de la notification
