@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import services.UserService;
 import utils.Session;
@@ -32,6 +33,8 @@ public class ClientProfileController {
     private Label roleLabel;
     @FXML
     private Label createdAtLabel;
+    @FXML
+    private BorderPane mainPane;
 
     private final UserService userService = new UserService();
     private User currentUser;
@@ -123,6 +126,26 @@ public class ClientProfileController {
             }
         });
     }
+    @FXML
+    private void chatBot(ActionEvent event) {
+        try {
+            // Close the original window
+
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/chatbot-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("WayMate");
+            stage.setScene(new Scene(root));
+            //stage.setResizable(false);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     @FXML
     private void handleProfileButton(ActionEvent event) {
