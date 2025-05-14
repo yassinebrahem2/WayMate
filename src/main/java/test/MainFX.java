@@ -173,8 +173,13 @@ public class MainFX extends Application {
 
         // Load the FXML file
 
+// <<<<<<< feature/admin
+//           // Load the CSS file
+//           scene.getStylesheets().add(getClass().getResource("/dash.css").toExternalForm());
+// =======
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/client-profile-view.fxml"));
         Parent root = loader.load();
+
 
         // Create the scene
         Scene scene = new Scene(root);
@@ -240,43 +245,43 @@ public class MainFX extends Application {
 //    }
 
 
-    private Parent loadView(String fxmlPath, Stage stage, String viewName) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Parent view = loader.load();
-            stage.getProperties().put("controller", loader.getController());
-            return view;
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Erreur de chargement", "Impossible de charger la vue : " + viewName);
-            return null;
-        }
-    }
-
-    private void handleLogout(Stage stage) {
-        Session.getInstance().setCurrentUser(null); // Clear session
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/login-view.fxml")); // Replace with your login FXML
-            Parent loginView = loader.load();
-            Scene loginScene = new Scene(loginView);
-            loginScene.getStylesheets().add("/style.css");
-            stage.setFullScreen(false);
-            stage.setScene(loginScene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger la vue de connexion.");
-        }
-
-    }
-
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+//    private Parent loadView(String fxmlPath, Stage stage, String viewName) {
+//        try {
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+//            Parent view = loader.load();
+//            stage.getProperties().put("controller", loader.getController());
+//            return view;
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            showAlert(Alert.AlertType.ERROR, "Erreur de chargement", "Impossible de charger la vue : " + viewName);
+//            return null;
+//        }
+//    }
+//
+//    private void handleLogout(Stage stage) {
+//        Session.getInstance().setCurrentUser(null); // Clear session
+//        try {
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/login-view.fxml")); // Replace with your login FXML
+//            Parent loginView = loader.load();
+//            Scene loginScene = new Scene(loginView);
+//            loginScene.getStylesheets().add("/style.css");
+//            stage.setFullScreen(false);
+//            stage.setScene(loginScene);
+//            stage.show();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            showAlert(Alert.AlertType.ERROR, "Erreur", "Impossible de charger la vue de connexion.");
+//        }
+//
+//    }
+//
+//    private void showAlert(Alert.AlertType type, String title, String message) {
+//        Alert alert = new Alert(type);
+//        alert.setTitle(title);
+//        alert.setHeaderText(null);
+//        alert.setContentText(message);
+//        alert.showAndWait();
+//    }
 
 
     public static void main(String[] args) {

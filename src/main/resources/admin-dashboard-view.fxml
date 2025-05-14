@@ -16,11 +16,16 @@
                         <Image url="@/logoforblue.png" />
                     </image>
                 </ImageView>
-                <Button text="Vehicles" styleClass="sidebar-button" />
-                <Button text="Users" styleClass="sidebar-button" />
-                <Button text="Notifications" styleClass="sidebar-button" />
-                <Button text="Payments" styleClass="sidebar-button" />
-                <Button text="Reservations" styleClass="sidebar-button" />
+                <ImageView fitWidth="120" preserveRatio="true">
+                    <image>
+                        <Image url="@/logoforblue.png" />
+                    </image>
+                </ImageView>
+                <Button onAction="#openVehiclesAdmin" styleClass="sidebar-button" text="Vehicles" />
+                <Button onAction="#openUsersTableAdmin" styleClass="sidebar-button" text="Users" />
+                <Button onAction="#openNotificationsAdmin" styleClass="sidebar-button" text="Feedback" />
+                <Button onAction="#openPaymentsAdmin" styleClass="sidebar-button" text="Payments" />
+                <Button onAction="#openReservationsAdmin" styleClass="sidebar-button" text="Reservations" />
             </children>
             <padding>
                 <Insets top="20" left="10" right="10" bottom="10" />

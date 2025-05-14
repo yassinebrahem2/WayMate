@@ -1,0 +1,109 @@
+/* Dashboard Styles */
+
+/* Main Dashboard Style */
+.dashboard-content {
+    -fx-background-color: #f5f7fa;
+}
+
+.dashboard-title {
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 5 0 15 0;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    -fx-background-color: #3498db;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 0);
+}
+
+.sidebar-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10 15;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-alignment: CENTER_LEFT;
+    -fx-pref-width: 180;
+}
+
+.sidebar-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Card Styles */
+.stat-card, .chart-card {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 8, 0, 0, 2);
+}
+
+.card-background {
+    -fx-fill: white;
+    -fx-stroke: transparent;
+}
+
+.card-title {
+    -fx-text-fill: #7f8c8d;
+    -fx-font-size: 14;
+}
+
+.card-value {
+    -fx-text-fill: #2c3e50;
+    -fx-font-size: 28;
+    -fx-font-weight: bold;
+}
+
+.card-subtitle {
+    -fx-text-fill: #95a5a6;
+    -fx-font-size: 12;
+}
+
+/* Chart Styles */
+.chart-title {
+    -fx-text-fill: #2c3e50;
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+    -fx-padding: 5 0 10 0;
+}
+
+.pie-chart {
+    -fx-padding: 10;
+}
+
+.chart-pie {
+    -fx-border-color: white;
+    -fx-border-width: 2;
+}
+
+.chart-pie-label {
+    -fx-fill: #2c3e50;
+}
+
+.default-color0.chart-pie { -fx-pie-color: #3498db; }
+.default-color1.chart-pie { -fx-pie-color: #2ecc71; }
+.default-color2.chart-pie { -fx-pie-color: #e74c3c; }
+.default-color3.chart-pie { -fx-pie-color: #f39c12; }
+
+.chart-legend {
+    -fx-background-color: transparent;
+}
+
+.axis {
+    -fx-tick-label-fill: #7f8c8d;
+}
+
+.axis-label {
+    -fx-text-fill: #7f8c8d;
+}
+
+.chart-series-line {
+    -fx-stroke-width: 2px;
+}
+
+.default-color0.chart-series-line { -fx-stroke: #3498db; }
+.default-color0.chart-line-symbol { -fx-background-color: #3498db, white; }
+
+.default-color0.chart-bar { -fx-bar-fill: #3498db; }
+.default-color1.chart-bar { -fx-bar-fill: #2ecc71; }
+.default-color2.chart-bar { -fx-bar-fill: #e74c3c; }
+.default-color3.chart-bar { -fx-bar-fill: #f39c12; }

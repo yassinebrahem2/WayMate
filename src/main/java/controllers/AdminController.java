@@ -5,11 +5,20 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import services.UserService;
 import utils.Session;
+
+import java.io.IOException;
 
 
 public class AdminController {
@@ -36,6 +45,112 @@ public class AdminController {
     private final UserService userService = new UserService();
 
     private User currentUser;
+    @FXML
+    private BorderPane mainPane;
+
+    @FXML
+    private VBox sidebar;
+
+    @FXML
+    void openNotificationsAdmin(ActionEvent event) {
+        try {
+            // Close the original window
+
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/review-form-admin.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Reservation");
+            stage.setScene(new Scene(root));
+            stage.show();
+            Stage originalStage = (Stage) mainPane.getScene().getWindow();
+            originalStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void openPaymentsAdmin(ActionEvent event) {
+        try {
+            // Close the original window
+
+
+            // Add your payments admin view loading code here
+            // Example template:
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/payments-admin.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Payments");
+            stage.setScene(new Scene(root));
+            stage.show();
+            Stage originalStage = (Stage) mainPane.getScene().getWindow();
+            originalStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void openReservationsAdmin(ActionEvent event) {
+        try {
+            // Close the original window
+
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminHistoriqueBookings.fxml"));
+            Parent root = loader.load();
+            root.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+            Stage stage = new Stage();
+            stage.setTitle("Reservation");
+            stage.setScene(new Scene(root));
+            stage.show();
+            Stage originalStage = (Stage) mainPane.getScene().getWindow();
+            originalStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void openUsersTableAdmin(ActionEvent event) {
+        try {
+            // Close the original window
+
+
+            // Add your users table admin view loading code here
+            // Example template:
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(""));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Users");
+            stage.setScene(new Scene(root));
+            stage.show();
+            Stage originalStage = (Stage) mainPane.getScene().getWindow();
+            originalStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void openVehiclesAdmin(ActionEvent event) {
+        try {
+            // Close the original window
+
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/admin-dashboard-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Ajouter un Véhicule");
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.show();
+            Stage originalStage = (Stage) mainPane.getScene().getWindow();
+            originalStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void initialize() {
         this.currentUser = Session.getInstance().getCurrentUser();
