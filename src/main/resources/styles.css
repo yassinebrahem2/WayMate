@@ -918,3 +918,69 @@
     -fx-background-radius: 10;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);
 }
+
+
+
+/* Bookings Page Specific Styles */
+.bookings-main-container {
+    -fx-background-color: #f5f5f5;
+}
+
+.bookings-list-container {
+    -fx-padding: 0;
+    -fx-alignment: top-center;
+}
+
+.booking-card {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
+    -fx-min-width: 700;
+    -fx-max-width: 700;
+    -fx-alignment: center-left;
+}
+
+.booking-details {
+    -fx-spacing: 5;
+    -fx-alignment: center-left;
+}
+
+.booking-status {
+    -fx-spacing: 5;
+    -fx-alignment: center-right;
+    -fx-padding: 0 0 0 20;
+}
+
+.booking-id {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+.booking-price {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2a6fdb;
+}
+
+.status-completed {
+    -fx-text-fill: #28a745;
+    -fx-font-weight: bold;
+}
+
+.status-upcoming {
+    -fx-text-fill: #ffc107;
+    -fx-font-weight: bold;
+}
+
+.status-cancelled {
+    -fx-text-fill: #dc3545;
+    -fx-font-weight: bold;
+}
+
+.no-bookings-label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #666;
+    -fx-padding: 20 0;
+}

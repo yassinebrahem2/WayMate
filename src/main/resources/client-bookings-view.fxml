@@ -6,7 +6,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:id="mainPane" stylesheets="@styles.css" fx:controller="controllers.ClientReviewsController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:id="mainPane" stylesheets="@styles.css" fx:controller="controllers.ClientBookingsController">
     <!-- Sidebar (same as before) -->
     <left>
         <VBox fx:id="sidebar" spacing="10" prefWidth="200" styleClass="sidebar">
@@ -31,20 +31,20 @@
     <!-- Main Content Area -->
     <center>
         <ScrollPane fitToWidth="true" styleClass="main-scroll-pane">
-            <VBox styleClass="reviews-main-container" spacing="20" alignment="TOP_CENTER">
+            <VBox styleClass="bookings-main-container" spacing="20" alignment="TOP_CENTER">
                 <padding>
                     <Insets top="40" right="40" bottom="40" left="40"/>
                 </padding>
 
                 <!-- Title -->
-                <Label styleClass="section-title" text="Your Reviews">
+                <Label styleClass="section-title" text="Your Bookings">
                     <font>
                         <Font name="System Bold" size="24.0" />
                     </font>
                 </Label>
 
-                <!-- Reviews List -->
-                <VBox fx:id="reviewsContainer" styleClass="reviews-list-container" spacing="20"/>
+                <!-- Bookings List -->
+                <VBox fx:id="bookingsContainer" styleClass="bookings-list-container" spacing="20"/>
             </VBox>
         </ScrollPane>
     </center>

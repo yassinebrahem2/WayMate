@@ -3,125 +3,103 @@ package controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.scene.image.*;
-import javafx.geometry.*;
-import javafx.collections.*;
-
+import entities.Booking;
+import services.BookingService;
+import entities.User;
+import utils.Session;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-
-import entities.Vehicle;
-import services.VehicleService;
-
-
-public class ClientVehicleController {
-    @FXML private FlowPane vehicleCardsContainer;
-    @FXML private ComboBox<String> typeFilter;
-    @FXML private ComboBox<String> priceFilter;
-    @FXML private TextField searchField;
-
-    VehicleService vehicleService = new VehicleService();
-    List<Vehicle> vehicles;
+public class ClientBookingsController {
 
     @FXML
-    private void initialize() {
-        this.vehicles = vehicleService.getAllVehicles();
-        generateVehicleCards();
-    }
+    private VBox bookingsContainer;
 
     @FXML
-    private void applyFilters() {
-        String type = typeFilter.getValue();
-        if (!typeFilter.getValue().equals("All Types")) {
-            this.vehicles = vehicleService.getVehiclesByType(type);
-        } else {
-            this.vehicles = vehicleService.getAllVehicles();
-        }
+    private Button profileButton;
 
+    @FXML
+    private Button vehiclesButton;
 
-        generateVehicleCards(); // Regenerate based on filters
+    @FXML
+    private Button reviewsButton;
+
+    @FXML
+    private Button bookingsButton;
+
+    private User currentUser;
+
+    private final BookingService bookingService = new BookingService();
+    // Initialize method - called after FXML fields are populated
+    @FXML
+    public void initialize() {
+        currentUser = Session.getInstance().getCurrentUser();
+        loadBookings();
     }
 
-    private void generateVehicleCards() {
-        vehicleCardsContainer.getChildren().clear();
+    private void loadBookings() {
+        // Clear existing bookings
+        bookingsContainer.getChildren().clear();
 
+        // Example: Get bookings from a service (replace with your actual data source)
+        List<Booking> bookings = bookingService.getBookingsByUserId(currentUser.getId());
 
+        if (bookings.isEmpty()) {
+            Label noBookingsLabel = new Label("You don't have any bookings yet.");
+            noBookingsLabel.getStyleClass().add("no-bookings-label");
+            bookingsContainer.getChildren().add(noBookingsLabel);
+            return;
+        }
 
-        for (Vehicle vehicle : vehicles) {
-            VBox card = createVehicleCard(vehicle);
-            vehicleCardsContainer.getChildren().add(card);
+        // Create a card for each booking
+        for (Booking booking : bookings) {
+            bookingsContainer.getChildren().add(createBookingCard(booking));
         }
     }
 
-    private VBox createVehicleCard(Vehicle vehicle) {
-        VBox card = new VBox();
-        card.getStyleClass().add("vehicle-card");
-        card.setAlignment(Pos.TOP_CENTER);
-        card.setSpacing(10);
+    private HBox createBookingCard(Booking booking) {
+        HBox card = new HBox(20);
+        card.getStyleClass().add("booking-card");
 
-        // Vehicle Image
-        ImageView imageView = new ImageView(new Image(vehicle.getImageUrl()));
-        imageView.getStyleClass().add("vehicle-image");
-        imageView.setFitWidth(250);
-        imageView.setFitHeight(150);
-        imageView.setPreserveRatio(true);
+        // Left side - booking details
+        VBox detailsBox = new VBox(8);
+        detailsBox.getStyleClass().add("booking-details");
 
-        // Vehicle Name
-        Label nameLabel = new Label(vehicle.getModel());
-        nameLabel.getStyleClass().add("vehicle-name");
+        Label bookingIdLabel = new Label("Booking #" + booking.getId());
+        bookingIdLabel.getStyleClass().add("booking-id");
 
-        // Vehicle Details
-        Label detailsLabel = new Label(vehicle.getType());
-        detailsLabel.getStyleClass().add("vehicle-details");
+        Label vehicleLabel = new Label("Vehicle: " + booking.getVehicleLicensePlate());
+        Label datesLabel = new Label(booking.getEndTime().format(DateTimeFormatter.ofPattern("MMM dd, yyyy")) +
+                " - " + booking.getEndTime().format(DateTimeFormatter.ofPattern("MMM dd, yyyy")));
 
-        // Vehicle Price
-        Label priceLabel = new Label(String.format("$%.2f/hour", vehicle.getPricePerHour()));
-        priceLabel.getStyleClass().add("vehicle-price");
+        detailsBox.getChildren().addAll(bookingIdLabel, vehicleLabel, datesLabel);
 
-        // Book Button
-        Button bookButton = new Button("BOOK NOW");
-        bookButton.getStyleClass().add("book-button");
-        bookButton.setOnAction(e -> {
-            Node node = (Node) e.getSource();
-            bookVehicle(vehicle, node);
-        });
+        // Right side - status and price
+        VBox statusBox = new VBox(8);
+        statusBox.getStyleClass().add("booking-status");
 
-        card.getChildren().addAll(imageView, nameLabel, detailsLabel, priceLabel, bookButton);
+        Label statusLabel = new Label(booking.getStatus());
+        statusLabel.getStyleClass().add("status-" + booking.getStatus().toLowerCase());
+
+        Label priceLabel = new Label("$" + String.format("%.2f", booking.getTotalPrice()));
+        priceLabel.getStyleClass().add("booking-price");
+
+        statusBox.getChildren().addAll(statusLabel, priceLabel);
+
+        card.getChildren().addAll(detailsBox, statusBox);
         return card;
-    }
-
-    @FXML
-    public void bookVehicle(Vehicle vehicle, Node sourceNode) {  // Pass a node from your current scene
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/book-vehicle-view.fxml"));
-            Parent root = loader.load();
-
-            // Get the booking controller and pass the vehicle data
-            BookVehicleController bookingController = loader.getController();
-            bookingController.setVehicleData(vehicle);
-
-            // Get reference to current window from any node in the current scene
-            Stage currentStage = (Stage) sourceNode.getScene().getWindow();
-
-            // Create new scene and stage
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Book Vehicle");
-            stage.show();
-
-            // Close current window
-            currentStage.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Add your error handling here
-        }
     }
 
     @FXML
@@ -236,5 +214,4 @@ public class ClientVehicleController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
 }
