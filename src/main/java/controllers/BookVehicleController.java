@@ -5,6 +5,7 @@ import entities.Review;
 import entities.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -139,6 +140,8 @@ public class BookVehicleController {
         }
     }
 
+
+
     @FXML
     private void handleConfirmBooking() throws IOException {
         User currentUser = Session.getInstance().getCurrentUser();
@@ -169,14 +172,16 @@ public class BookVehicleController {
         } catch (SQLIntegrityConstraintViolationException e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Erreur de contrainte", "L'utilisateur ou le véhicule spécifié n'existe pas dans la base de données.");
+            return;
         } catch (Exception e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Erreur", "Une erreur s'est produite : " + e.getMessage());
+            return;
         }
 
         showAlert(Alert.AlertType.INFORMATION, "Succès", "Réservation ajoutée avec succès !");
 
-        // When proceeding to payment from booking
+        // Load payment view
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/client-payment-view.fxml"));
         Parent root = loader.load();
 
@@ -187,11 +192,17 @@ public class BookVehicleController {
                 "$" + totalPrice
         );
 
+        // Open new window
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setTitle("Payment");
         stage.show();
+
+        // Close current window
+        Stage currentStage = (Stage) confirmButton.getScene().getWindow();
+        currentStage.close();
     }
+
 
     @FXML
     private void handleCancel() {
@@ -340,6 +351,77 @@ public class BookVehicleController {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to submit review: " + e.getMessage());
         }
+    }
+
+    @FXML
+    private void handleProfileButton(ActionEvent event) {
+        try {
+            // Load the profile view
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/client-profile-view.fxml"));
+            Parent root = loader.load();
+
+            // Get the current stage
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+            // Set the new scene
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Navigation Error", "Could not load profile view: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void handleVehiclesButton(ActionEvent event) {
+        try {
+            // Load the profile view
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/client-vehicle-view.fxml"));
+            Parent root = loader.load();
+
+            // Get the current stage
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+            // Set the new scene
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Navigation Error", "Could not load profile view: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void handleReviewsButton(ActionEvent event) {
+        try {
+            // Load the profile view
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/client-reviews-view.fxml"));
+            Parent root = loader.load();
+
+            // Get the current stage
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+            // Set the new scene
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Navigation Error", "Could not load profile view: " + e.getMessage());
+        }
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
 }

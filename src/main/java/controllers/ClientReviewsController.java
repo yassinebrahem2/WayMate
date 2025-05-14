@@ -2,8 +2,10 @@ package controllers;
 
 import entities.Review;
 import entities.User;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -107,6 +109,69 @@ public class ClientReviewsController {
         } catch (IOException e) {
             e.printStackTrace();
             showAlert("Error", "Failed to open modification dialog");
+        }
+    }
+
+    @FXML
+    private void handleProfileButton(ActionEvent event) {
+        try {
+            // Load the profile view
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/client-profile-view.fxml"));
+            Parent root = loader.load();
+
+            // Get the current stage
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+            // Set the new scene
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Navigation Error", "Could not load profile view: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void handleVehiclesButton(ActionEvent event) {
+        try {
+            // Load the profile view
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/client-vehicle-view.fxml"));
+            Parent root = loader.load();
+
+            // Get the current stage
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+            // Set the new scene
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Navigation Error", "Could not load profile view: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void handleReviewsButton(ActionEvent event) {
+        try {
+            // Load the profile view
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/client-reviews-view.fxml"));
+            Parent root = loader.load();
+
+            // Get the current stage
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+            // Set the new scene
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Navigation Error", "Could not load profile view: " + e.getMessage());
         }
     }
 

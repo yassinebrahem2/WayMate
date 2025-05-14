@@ -18,11 +18,11 @@
                         <Image url="@/logoforblue.png" />
                     </image>
                 </ImageView>
-                <Button text="Vehicles" styleClass="sidebar-button" />
-                <Button text="Users" styleClass="sidebar-button" />
+                <Button text="Profile" styleClass="sidebar-button" onAction="#handleProfileButton" />
+                <Button text="Vehicles" styleClass="sidebar-button" onAction="#handleVehiclesButton"/>
+                <Button text="Reviews" styleClass="sidebar-button" onAction="#handleReviewsButton" />
                 <Button text="Notifications" styleClass="sidebar-button" />
-                <Button text="Payments" styleClass="sidebar-button" />
-                <Button text="Reservations" styleClass="sidebar-button" />
+                <Button text="Bookings History" styleClass="sidebar-button" />
             </children>
             <padding>
                 <Insets top="20" left="10" right="10" bottom="10" />
