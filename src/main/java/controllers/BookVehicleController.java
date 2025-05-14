@@ -316,6 +316,16 @@ public class BookVehicleController {
             review.setRating(rating);
             review.setComment(comment);
 
+            LocalDateTime now = LocalDateTime.now();
+
+            // Define your desired format
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+            // Convert LocalDateTime to String
+            String formattedDateTime = now.format(formatter);
+
+            review.setCreated_at(formattedDateTime);
+
             // Save to database
             reviewService.Add(review);
 

@@ -173,7 +173,7 @@ public class MainFX extends Application {
 
         // Load the FXML file
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/client-vehicle-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/client-profile-view.fxml"));
         Parent root = loader.load();
 
         // Create the scene
