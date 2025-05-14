@@ -7,6 +7,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import services.VehicleService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -48,7 +50,112 @@ public class VehiculeMainController {
 
     private final VehicleService vehicleService = new VehicleService();
     private final ObservableList<Vehicle> vehicleData = FXCollections.observableArrayList();
+    @FXML
+    private BorderPane mainPane;
 
+    @FXML
+    private VBox sidebar;
+
+    @FXML
+    void openNotificationsAdmin(ActionEvent event) {
+        try {
+            // Close the original window
+
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/review-form-admin.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Reservation");
+            stage.setScene(new Scene(root));
+            stage.show();
+            Stage originalStage = (Stage) mainPane.getScene().getWindow();
+            originalStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void openPaymentsAdmin(ActionEvent event) {
+        try {
+            // Close the original window
+
+
+            // Add your payments admin view loading code here
+            // Example template:
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/payments-admin.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Payments");
+            stage.setScene(new Scene(root));
+            stage.show();
+            Stage originalStage = (Stage) mainPane.getScene().getWindow();
+            originalStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void openReservationsAdmin(ActionEvent event) {
+        try {
+            // Close the original window
+
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminHistoriqueBookings.fxml"));
+            Parent root = loader.load();
+            root.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+            Stage stage = new Stage();
+            stage.setTitle("Reservation");
+            stage.setScene(new Scene(root));
+            stage.show();
+            Stage originalStage = (Stage) mainPane.getScene().getWindow();
+            originalStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void openUsersTableAdmin(ActionEvent event) {
+        try {
+            // Close the original window
+
+
+            // Add your users table admin view loading code here
+            // Example template:
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/admin-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Users");
+            stage.setScene(new Scene(root));
+            stage.show();
+            Stage originalStage = (Stage) mainPane.getScene().getWindow();
+            originalStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void openVehiclesAdmin(ActionEvent event) {
+        try {
+            // Close the original window
+
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/admin-dashboard-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Ajouter un Véhicule");
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.show();
+            Stage originalStage = (Stage) mainPane.getScene().getWindow();
+            originalStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     @FXML
     void addVehicle(ActionEvent event) {
         try {
