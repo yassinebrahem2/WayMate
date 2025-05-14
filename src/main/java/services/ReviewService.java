@@ -15,7 +15,7 @@ public class ReviewService {
         this.connection = DatabaseConnection.getInstance().getConnection();
     }
 
-    public void ajouter(Review review) throws SQLException {
+    public void Add(Review review) throws SQLException {
         String sql = "INSERT INTO reviews (user_id, vehicle_license_plate, rating, comment, created_at) " +
                 "VALUES (?, ?, ?, ?, ?)";
 
@@ -29,7 +29,7 @@ public class ReviewService {
         }
     }
 
-    public List<Review> afficher() {
+    public List<Review> getAllReviews() throws SQLException {
         List<Review> reviews = new ArrayList<>();
         String sql = "SELECT * FROM reviews ORDER BY created_at DESC";
 
@@ -49,10 +49,65 @@ public class ReviewService {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw e; // Re-throw to handle in controller
         }
 
         return reviews;
     }
+
+    public List<Review> getReviewsByLicensePlate(String licensePlate) throws SQLException {
+        List<Review> reviews = new ArrayList<>();
+
+        String sql = "SELECT r.* FROM reviews r " +
+                "WHERE r.vehicle_license_plate = ? " +
+                "ORDER BY r.created_at DESC";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, licensePlate);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Review review = new Review(
+                        rs.getInt("id"),
+                        String.valueOf(rs.getInt("user_id")),
+                        rs.getString("vehicle_license_plate"),
+                        rs.getInt("rating"),
+                        rs.getString("comment"),
+                        rs.getString("created_at")
+                );
+                reviews.add(review);
+            }
+        }
+        return reviews;
+    }
+
+    public List<Review> getReviewsByUserId(int userId) throws SQLException {
+        List<Review> reviews = new ArrayList<>();
+
+        String sql = "SELECT r.* FROM reviews r " +
+                "WHERE r.user_id = ? " +
+                "ORDER BY r.created_at DESC";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Review review = new Review(
+                        rs.getInt("id"),
+                        String.valueOf(rs.getInt("user_id")),
+                        rs.getString("vehicle_license_plate"),
+                        rs.getInt("rating"),
+                        rs.getString("comment"),
+                        rs.getString("created_at")
+                );
+                reviews.add(review);
+            }
+        }
+        return reviews;
+    }
+
+
 
     public void supprimer(int id) throws SQLException {
         String sql = "DELETE FROM reviews WHERE id = ?";
@@ -67,7 +122,7 @@ public class ReviewService {
         }
     }
 
-    public void modifier(Review review) throws SQLException {
+    public void updateReview(Review review) throws SQLException {
         String sql = "UPDATE reviews SET user_id = ?, vehicle_license_plate = ?, rating = ?, comment = ?, created_at = ? WHERE id = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {

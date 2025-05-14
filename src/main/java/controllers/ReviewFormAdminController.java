@@ -2,6 +2,7 @@ package controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -47,8 +48,14 @@ public class ReviewFormAdminController implements Initializable {
         commentColumn.setCellValueFactory(new PropertyValueFactory<>("comment"));
         createdAtColumn.setCellValueFactory(new PropertyValueFactory<>("created_at"));
 
-        List<Review> reviews = reviewService.afficher();
-        reviewTable.getItems().setAll(reviews);
+        try {
+            List<Review> reviews = reviewService.getAllReviews();
+            reviewTable.getItems().setAll(reviews);
+        }
+         catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 

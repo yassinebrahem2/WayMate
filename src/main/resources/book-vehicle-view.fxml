@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:id="mainPane" stylesheets="@styles.css" fx:controller="controllers.BookVehicleController">
+    <fx:define>
+        <ToggleGroup fx:id="ratingGroup"/>
+    </fx:define>
+    <!-- Sidebar (same as before) -->
+    <left>
+        <VBox fx:id="sidebar" spacing="10" prefWidth="200" styleClass="sidebar">
+            <children>
+                <ImageView fitWidth="120" preserveRatio="true">
+                    <image>
+                        <Image url="@/logoforblue.png" />
+                    </image>
+                </ImageView>
+                <Button text="Profile" styleClass="sidebar-button" onAction="#handleProfileButton" />
+                <Button text="Vehicles" styleClass="sidebar-button" onAction="#handleVehiclesButton"/>
+                <Button text="Reviews" styleClass="sidebar-button" onAction="#handleReviewsButton" />
+                <Button text="Notifications" styleClass="sidebar-button" />
+                <Button text="Bookings History" styleClass="sidebar-button" />
+            </children>
+            <padding>
+                <Insets top="20" left="10" right="10" bottom="10" />
+            </padding>
+        </VBox>
+    </left>
+
+    <!-- Main Content Area -->
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="main-scroll-pane">
+            <StackPane prefHeight="900.0" prefWidth="1600.0">
+                <!-- Main Booking Card -->
+                <VBox styleClass="booking-container" spacing="20" alignment="TOP_CENTER">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+
+                    <!-- Title -->
+                    <Label styleClass="booking-title" text="Vehicle Booking">
+                        <font>
+                            <Font name="System Bold" size="24.0" />
+                        </font>
+                    </Label>
+
+                    <!-- Vehicle Details Card -->
+                    <HBox styleClass="vehicle-details-card" spacing="30" alignment="CENTER_LEFT">
+                        <!-- Vehicle Image -->
+                        <ImageView fx:id="vehicleImage" fitWidth="400" fitHeight="250" preserveRatio="true" styleClass="vehicle-large-image"/>
+
+                        <!-- Vehicle Details -->
+                        <VBox spacing="15" alignment="TOP_LEFT">
+                            <Label styleClass="vehicle-detail-title" text="Vehicle Details"/>
+
+                            <GridPane hgap="20" vgap="15">
+                                <columnConstraints>
+                                    <ColumnConstraints halignment="RIGHT" minWidth="120"/>
+                                    <ColumnConstraints halignment="LEFT" minWidth="200"/>
+                                </columnConstraints>
+
+                                <children>
+                                    <!-- Row 0 -->
+                                    <Label text="Type:" styleClass="detail-label" GridPane.rowIndex="0"/>
+                                    <Label fx:id="typeLabel" styleClass="detail-value" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                                    <!-- Row 1 -->
+                                    <Label text="Brand:" styleClass="detail-label" GridPane.rowIndex="1"/>
+                                    <Label fx:id="brandLabel" styleClass="detail-value" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                                    <!-- Row 2 -->
+                                    <Label text="Model:" styleClass="detail-label" GridPane.rowIndex="2"/>
+                                    <Label fx:id="modelLabel" styleClass="detail-value" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                                    <!-- Row 3 -->
+                                    <Label text="Year:" styleClass="detail-label" GridPane.rowIndex="3"/>
+                                    <Label fx:id="yearLabel" styleClass="detail-value" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+                                    <!-- Row 4 -->
+                                    <Label text="Price/Hour:" styleClass="detail-label" GridPane.rowIndex="4"/>
+                                    <Label fx:id="priceLabel" styleClass="detail-value" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                                </children>
+                            </GridPane>
+                        </VBox>
+                    </HBox>
+
+                    <!-- Booking Form -->
+                    <VBox styleClass="booking-form" spacing="20">
+                        <Label styleClass="form-title" text="Booking Information"/>
+
+                        <GridPane hgap="20" vgap="15">
+                            <columnConstraints>
+                                <ColumnConstraints halignment="RIGHT" minWidth="150"/>
+                                <ColumnConstraints halignment="LEFT" minWidth="300"/>
+                            </columnConstraints>
+
+                            <children>
+                                <!-- Row 0 - Pickup Date -->
+                                <Label text="Pickup Date:" styleClass="form-label" GridPane.rowIndex="0"/>
+                                <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                    <DatePicker fx:id="pickupDatePicker" styleClass="form-field"/>
+                                    <ComboBox fx:id="pickupHourCombo" styleClass="time-combo" promptText="Hour"/>
+                                    <Label text=":" styleClass="time-separator"/>
+                                    <ComboBox fx:id="pickupMinuteCombo" styleClass="time-combo" promptText="Minute"/>
+                                </HBox>
+
+                                <!-- Row 1 - Return Date -->
+                                <Label text="Return Date:" styleClass="form-label" GridPane.rowIndex="1"/>
+                                <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                    <DatePicker fx:id="returnDatePicker" styleClass="form-field"/>
+                                    <ComboBox fx:id="returnHourCombo" styleClass="time-combo" promptText="Hour"/>
+                                    <Label text=":" styleClass="time-separator"/>
+                                    <ComboBox fx:id="returnMinuteCombo" styleClass="time-combo" promptText="Minute"/>
+                                </HBox>
+
+                                <!-- Row 2 - Total Price -->
+                                <Label text="Total Price:" styleClass="form-label" GridPane.rowIndex="2"/>
+                                <Label fx:id="totalPriceLabel" styleClass="form-value" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                            </children>
+                        </GridPane>
+                        <!-- Action Buttons -->
+                        <HBox alignment="CENTER" spacing="30">
+                            <Button fx:id="confirmButton" text="Confirm Booking" styleClass="confirm-button" onAction="#handleConfirmBooking" />
+                            <Button fx:id="cancelButton" text="Cancel" styleClass="cancel-button" onAction="#handleCancel" />
+                        </HBox>
+                    </VBox>
+                    <!-- Reviews Section -->
+                    <VBox styleClass="reviews-container" spacing="15">
+                        <Label styleClass="section-title" text="Customer Reviews"/>
+
+                        <ScrollPane fitToWidth="true" styleClass="reviews-scroll-pane">
+                            <VBox fx:id="reviewsContainer" spacing="15" styleClass="reviews-list"/>
+                        </ScrollPane>
+                    </VBox>
+
+                    <!-- Review Submission Section -->
+                    <VBox styleClass="review-submission-container" spacing="15">
+                        <Label styleClass="section-title" text="Add Your Review"/>
+
+                        <GridPane hgap="20" vgap="15">
+                            <columnConstraints>
+                                <ColumnConstraints halignment="RIGHT" minWidth="150"/>
+                                <ColumnConstraints halignment="LEFT" minWidth="300"/>
+                            </columnConstraints>
+
+                            <children>
+                                <!-- Rating -->
+                                <Label text="Your Rating:" styleClass="form-label" GridPane.rowIndex="0"/>
+                                <HBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                    <RadioButton text="1" toggleGroup="$ratingGroup" userData="1"/>
+                                    <RadioButton text="2" toggleGroup="$ratingGroup" userData="2"/>
+                                    <RadioButton text="3" toggleGroup="$ratingGroup" userData="3"/>
+                                    <RadioButton text="4" toggleGroup="$ratingGroup" userData="4"/>
+                                    <RadioButton text="5" toggleGroup="$ratingGroup" userData="5"/>
+                                </HBox>
+
+                                <!-- Review Comment -->
+                                <Label text="Your Review:" styleClass="form-label" GridPane.rowIndex="1"/>
+                                <TextArea fx:id="reviewCommentArea" styleClass="review-text-area"
+                                          GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                                <!-- Submit Button -->
+                                <Button text="Submit Review" styleClass="submit-button"
+                                        GridPane.columnIndex="1" GridPane.rowIndex="2"
+                                        onAction="#handleSubmitReview"/>
+                            </children>
+                        </GridPane>
+                    </VBox>
+
+                </VBox>
+            </StackPane>
+        </ScrollPane>
+    </center>
+</BorderPane>

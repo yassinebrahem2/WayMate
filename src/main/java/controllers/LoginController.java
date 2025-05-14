@@ -1,21 +1,22 @@
 package controllers;
 
+import entities.User;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import services.UserService;
 import utils.Session;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.io.IOException;
 
-public class LoginController implements Initializable {
+
+public class LoginController {
 
     @FXML
     private TextField phoneField;
@@ -26,8 +27,7 @@ public class LoginController implements Initializable {
     @FXML
     private Label errorMessage;
 
-    @FXML
-    private ImageView logoImage;
+    private final UserService userService = new UserService();
 
 
     @FXML
@@ -35,17 +35,14 @@ public class LoginController implements Initializable {
         String phone = phoneField.getText();
         String password = passwordField.getText();
 
+        User user = userService.findUserByPhone(phone);
 
-    @FXML
-    private void handleLogin() {
-        String username = phoneField.getText();
-        String password = passwordField.getText();
-
-        // Validation simple (à adapter selon vos besoins)
-        if (username.isEmpty() || password.isEmpty()) {
-            errorMessage.setText("Veuillez remplir tous les champs");
+        if (user == null) {
+            errorMessage.setText("User Not Found");
             errorMessage.setVisible(true);
-
+        } else if (!user.getPassword().equals(password)) {
+            errorMessage.setText("Wrong Password");
+            errorMessage.setVisible(true);
         } else {
             Session.getInstance().setCurrentUser(user);
             errorMessage.setVisible(false);
@@ -54,19 +51,11 @@ public class LoginController implements Initializable {
                 if ("admin".equals(user.getRole())) {
                     loader = new FXMLLoader(getClass().getResource("/admin-view.fxml"));
                 } else {
-                    loader = new FXMLLoader(getClass().getResource("/user-profile-view.fxml"));
+                    loader = new FXMLLoader(getClass().getResource("/client-profile-view.fxml"));
                 }
 
                 Parent root = loader.load();
 
-                // Optionally, pass the logged-in user to the controller
-                if ("admin".equals(user.getRole())) {
-                    AdminController adminController = loader.getController();
-
-                } else {
-                    UserProfileController userController = loader.getController();
-                    // Optionally do something with the controller
-                }
 
                 Stage stage = (Stage) phoneField.getScene().getWindow();
 
@@ -95,4 +84,5 @@ public class LoginController implements Initializable {
             e.printStackTrace();
         }
     }
+
 }

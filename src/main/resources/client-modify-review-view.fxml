@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="controllers.ClientModifyReviewController"
+           stylesheets="@styles.css"
+           prefWidth="600" prefHeight="400" alignment="CENTER">
+
+    <VBox fx:id="mainVBox"
+          spacing="20" alignment="CENTER"
+          maxWidth="400" styleClass="dialog-box">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+
+        <Label styleClass="dialog-title" text="Modify Your Review"/>
+
+        <GridPane hgap="10" vgap="10">
+            <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" minWidth="100"/>
+                <ColumnConstraints halignment="LEFT" minWidth="200"/>
+            </columnConstraints>
+
+            <Label text="Vehicle:" GridPane.rowIndex="0" styleClass="dialog-label"/>
+            <Label fx:id="vehicleLabel" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="dialog-value"/>
+
+            <Label text="Rating:" GridPane.rowIndex="1" styleClass="dialog-label"/>
+            <HBox GridPane.rowIndex="1" GridPane.columnIndex="1" spacing="5">
+                <RadioButton fx:id="rating1" text="1" userData="1"/>
+                <RadioButton fx:id="rating2" text="2" userData="2"/>
+                <RadioButton fx:id="rating3" text="3" userData="3"/>
+                <RadioButton fx:id="rating4" text="4" userData="4"/>
+                <RadioButton fx:id="rating5" text="5" userData="5"/>
+            </HBox>
+
+            <Label text="Comment:" GridPane.rowIndex="2" styleClass="dialog-label"/>
+            <TextArea fx:id="commentArea" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                      styleClass="dialog-text-area" wrapText="true"/>
+        </GridPane>
+
+        <HBox spacing="20" alignment="CENTER">
+            <Button fx:id="saveButton" text="Save Changes" styleClass="dialog-button"
+                    onAction="#handleSaveChanges"/>
+            <Button fx:id="cancelButton" text="Cancel" styleClass="dialog-cancel-button"
+                    onAction="#handleCancel"/>
+        </HBox>
+    </VBox>
+</StackPane>
