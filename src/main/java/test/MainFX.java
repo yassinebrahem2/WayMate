@@ -177,7 +177,7 @@ public class MainFX extends Application {
 //           // Load the CSS file
 //           scene.getStylesheets().add(getClass().getResource("/dash.css").toExternalForm());
 // =======
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/client-profile-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/login-view.fxml"));
         Parent root = loader.load();
 
 

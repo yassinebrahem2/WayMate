@@ -325,7 +325,7 @@ public class DashboardMainController implements Initializable {
     @FXML
     void openPaymentsAdmin(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/payments-admin.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/payment-view.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Payments");
