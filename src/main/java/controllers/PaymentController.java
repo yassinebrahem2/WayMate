@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import services.PaymentService;
 import javafx.collections.FXCollections;
@@ -55,6 +56,7 @@ public class PaymentController implements Initializable {
 
     @FXML
     private Label confirmationMessageLabel;
+    @FXML private BorderPane mainPane;
 
     private final PaymentService paymentService = new PaymentService();
 
@@ -324,7 +326,7 @@ public class PaymentController implements Initializable {
                 displayAmountField.setText(String.valueOf(totalAmount));
                 displayMethodField.setText(payment.getMethod());
                 boolean isCard = "carte_bancaire".equals(payment.getMethod());
-
+                toggleCardFields(isCard);
                 cardNumberField.setVisible(isCard);
                 cardPasswordField.setVisible(isCard);
                 confirmButton.setVisible(true);
@@ -352,20 +354,23 @@ public class PaymentController implements Initializable {
             boolean isCard = "carte_bancaire".equals(payment.getMethod());
             if (isCard && (cardNumberField.getText().isEmpty() || cardPasswordField.getText().isEmpty())) {
                 updateMessage("Veuillez remplir les informations de carte.", false);
+                toggleCardFields(true);
                 return;
             }
-            /*if (isCard){
+            if (isCard){
                 if (cardNumberField.getText().length() != 16 || !cardNumberField.getText().matches("\\d{16}")) {
                     updateMessage("Le numéro de carte doit contenir exactement 16 chiffres.", false);
+                    toggleCardFields(true);
                     return;
                 }
 
                 // Vérification du mot de passe (4 chiffres)
                 if (cardPasswordField.getText().length() != 4 || !cardPasswordField.getText().matches("\\d{4}")) {
                     updateMessage("Le mot de passe doit contenir exactement 4 chiffres.", false);
+                    toggleCardFields(true);
                     return;
                 }
-            }*/
+            }
 
             if (payment != null) {
                 payment.setStatus("payé");
@@ -450,116 +455,100 @@ public class PaymentController implements Initializable {
     }
 
     @FXML
-    private void handleProfileButton(ActionEvent event) {
+    void openNotificationsAdmin(ActionEvent event) {
         try {
-            // Load the profile view
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/client-profile-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/review-form-admin.fxml"));
             Parent root = loader.load();
-
-            // Get the current stage
-            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-
-            // Set the new scene
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+            Stage stage = new Stage();
+            stage.setTitle("Reservation");
+            stage.setScene(new Scene(root));
             stage.show();
-
+            Stage originalStage = (Stage) mainPane.getScene().getWindow();
+            originalStage.close();
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert("Navigation Error", "Could not load profile view: " + e.getMessage());
         }
     }
 
     @FXML
-    private void handleVehiclesButton(ActionEvent event) {
+    void openPaymentsAdmin(ActionEvent event) {
         try {
-            // Load the profile view
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/client-vehicle-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/payment-view.fxml"));
             Parent root = loader.load();
-
-            // Get the current stage
-            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-
-            // Set the new scene
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+            Stage stage = new Stage();
+            stage.setTitle("Payments");
+            stage.setScene(new Scene(root));
             stage.show();
-
+            Stage originalStage = (Stage) mainPane.getScene().getWindow();
+            originalStage.close();
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert("Navigation Error", "Could not load profile view: " + e.getMessage());
         }
     }
 
     @FXML
-    private void handleReviewsButton(ActionEvent event) {
+    void openReservationsAdmin(ActionEvent event) {
         try {
-            // Load the profile view
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/client-reviews-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AdminHistoriqueBookings.fxml"));
             Parent root = loader.load();
-
-            // Get the current stage
-            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-
-            // Set the new scene
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+            root.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+            Stage stage = new Stage();
+            stage.setTitle("Reservation");
+            stage.setScene(new Scene(root));
             stage.show();
-
+            Stage originalStage = (Stage) mainPane.getScene().getWindow();
+            originalStage.close();
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert("Navigation Error", "Could not load profile view: " + e.getMessage());
         }
     }
 
     @FXML
-    private void handleNotificationsButton(ActionEvent event) {
+    void openUsersTableAdmin(ActionEvent event) {
         try {
-            // Load the profile view
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/client-notifications-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/admin-view.fxml"));
             Parent root = loader.load();
-
-            // Get the current stage
-            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-
-            // Set the new scene
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+            Stage stage = new Stage();
+            stage.setTitle("Users");
+            stage.setScene(new Scene(root));
             stage.show();
-
+            Stage originalStage = (Stage) mainPane.getScene().getWindow();
+            originalStage.close();
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert("Navigation Error", "Could not load profile view: " + e.getMessage());
         }
     }
 
     @FXML
-    private void handleBookingsButton(ActionEvent event) {
+    void openVehiclesAdmin(ActionEvent event) {
         try {
-            // Load the profile view
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/client-bookings-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/admin-dashboard-view.fxml"));
             Parent root = loader.load();
-
-            // Get the current stage
-            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-
-            // Set the new scene
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+            Stage stage = new Stage();
+            stage.setTitle("Ajouter un Véhicule");
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
             stage.show();
-
+            Stage originalStage = (Stage) mainPane.getScene().getWindow();
+            originalStage.close();
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert("Navigation Error", "Could not load profile view: " + e.getMessage());
         }
     }
-
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+    @FXML
+    void bringNotif(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/affichernotification.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Ajouter un Véhicule");
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.show();
+            Stage originalStage = (Stage) mainPane.getScene().getWindow();
+            originalStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
 }

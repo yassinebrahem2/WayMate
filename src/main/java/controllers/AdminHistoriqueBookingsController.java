@@ -102,12 +102,7 @@ public class AdminHistoriqueBookingsController {
     @FXML
     void openPaymentsAdmin(ActionEvent event) {
         try {
-            // Close the original window
-
-
-            // Add your payments admin view loading code here
-            // Example template:
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/payments-admin.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/payment-view.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Payments");

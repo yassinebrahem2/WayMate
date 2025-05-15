@@ -17,11 +17,11 @@
                         <Image url="@/logoforblue.png" />
                     </image>
                 </ImageView>
-                <Button text="Profile" styleClass="sidebar-button" onAction="#handleProfileButton" />
-                <Button text="Vehicles" styleClass="sidebar-button" onAction="#handleVehiclesButton"/>
-                <Button text="Reviews" styleClass="sidebar-button" onAction="#handleReviewsButton" />
-                <Button text="Notifications" styleClass="sidebar-button" onAction="#handleNotificationsButton"/>
-                <Button text="Bookings History" styleClass="sidebar-button" onAction="#handleBookingsButton" />
+                <Button onAction="#openVehiclesAdmin" styleClass="sidebar-button" text="Vehicles" />
+                <Button onAction="#openUsersTableAdmin" styleClass="sidebar-button" text="Users" />
+                <Button onAction="#openNotificationsAdmin" styleClass="sidebar-button" text="Feedback" />
+                <Button onAction="#openPaymentsAdmin" styleClass="sidebar-button" text="Payments" />
+                <Button onAction="#openReservationsAdmin" styleClass="sidebar-button" text="Reservations" />
             </children>
             <padding>
                 <Insets top="20" left="10" right="10" bottom="10" />

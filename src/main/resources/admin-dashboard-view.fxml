@@ -16,11 +16,6 @@
                         <Image url="@/logoforblue.png" />
                     </image>
                 </ImageView>
-                <ImageView fitWidth="120" preserveRatio="true">
-                    <image>
-                        <Image url="@/logoforblue.png" />
-                    </image>
-                </ImageView>
                 <Button onAction="#openVehiclesAdmin" styleClass="sidebar-button" text="Vehicles" />
                 <Button onAction="#openUsersTableAdmin" styleClass="sidebar-button" text="Users" />
                 <Button onAction="#openNotificationsAdmin" styleClass="sidebar-button" text="Feedback" />
